@@ -1,0 +1,4 @@
+v0.1.0:
+  date: {%= grunt.template.today('yyyy-mm-dd') %}
+  changes:
+    - First commmit.
