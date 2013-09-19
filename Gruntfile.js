@@ -1,6 +1,7 @@
 /*
  * grunt-readme
  * https://github.com/assemble/grunt-readme
+ *
  * Copyright (c) 2013 Jon Schlinkert, contributors
  * Licensed under the MIT license.
  */
@@ -18,17 +19,7 @@ module.exports = function(grunt) {
 
     // The "readme" task
     readme: {
-      options: {
-        sections: 'tasks/templates/sections',
-        replacements: [
-          {
-            pattern: /(Getting)/gi,
-            replacement: 'Going'
-          }
-        ]
-      //   metadata: 'test/fixtures/metadata.json'
-      //   // templates: ['tasks/templates']
-      }
+      options: {templates: ['docs/']}
     },
 
     // Unit tests.

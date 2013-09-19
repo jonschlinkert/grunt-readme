@@ -14,22 +14,38 @@
   "bugs": {
     "url": "https://github.com/assemble/grunt-readme/issues"
   },
+  "contributors": [
+    {
+      "name": "Jon Schlinkert",
+      "url": "https://github.com/jonschlinkert"
+    },
+    {
+      "name": "Brian Woodward",
+      "url": "https://github.com/doowb"
+    }
+  ],
   "licenses": [
     {
       "type": "MIT",
       "url": "https://github.com/assemble/grunt-readme/blob/master/LICENSE-MIT"
+    },
+    {
+      "type": "EXAMPLE",
+      "url": "https://github.com/assemble/grunt-readme/blob/master/NONEXISTENT-LICENSE"
     }
   ],
-  "main": "Gruntfile.js",
   "engines": {
     "node": ">= 0.8.0"
   },
   "scripts": {
     "test": "grunt test"
   },
+  "dependencies": {
+    "resolve-dep": "~0.1.2",
+    "utils-glob": "~0.1.0"
+  },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
-    "resolve-dep": "~0.1.0",
     "grunt": "~0.4.1"
   },
   "keywords": [
@@ -37,8 +53,5 @@
     "readme",
     "generate",
     "template"
-  ],
-  "dependencies": {
-    "resolve-dep": "~0.1.1"
-  }
+  ]
 }
