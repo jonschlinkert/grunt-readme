@@ -30,24 +30,3 @@ exports.safename = function (name, patterns) {
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
 
-
-exports.contributors = function (prepend) {
-  prepend = prepend || "";
-  if (meta.contributors) {
-    return prepend + _.pluck(meta.contributors, "name").join("\n");
-  } else {
-    return;
-  }
-};
-
-exports.license = function (prepend, append) {
-  prepend = prepend || "Released under the ";
-  append = append || ".\n";
-  if (meta.licenses) {
-    return prepend + _.pluck(meta.licenses, "type").join(", ") + " license" + (meta.licenses.length === 1 ? '' : 's') + append;
-  } else if (meta.license) {
-    return prepend + meta.license.type + " license" + ".\n";
-  } else {
-    return;
-  }
-};

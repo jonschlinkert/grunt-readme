@@ -6,7 +6,7 @@
     }
     print('\n * ' + [
       date,
-      version,
+      '**' + version + '**',
       details.changes.join(' '),
     ].join('\u2003\u2003\u2003'));
   });

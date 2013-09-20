@@ -9,19 +9,17 @@
 
 'use strict';
 
-module.exports = function(grunt) {
+var path = require('path');
+var glob = require('utils-glob');
+var resolve = require('resolve-dep');
 
-  var frep = require('frep');
-  var path = require('path');
-  var glob = require('utils-glob');
-  var resolve = require('resolve-dep');
+module.exports = function(grunt) {
   var _ = grunt.util._;
 
   _.mixin(require('./lib/mixins'));
 
   // Add custom template delimiters for our templates.
   grunt.template.addDelimiters('readme', '{%', '%}');
-
 
   grunt.registerTask('readme', "Generate your project's README from a template. If you already use Grunt, this is a no brainer.", function() {
 
@@ -46,7 +44,7 @@ module.exports = function(grunt) {
 
     // The directory where our docs content will be stored.
     if(options.docs) {
-      docs = path.join.bind(options.docs, 'docs');
+      docs = path.join.bind(options.docs, options.docs + '');
     } else {
       docs = path.join.bind(process.cwd(), 'docs');
     }
@@ -99,8 +97,16 @@ module.exports = function(grunt) {
      * option is to define a README template that is used for multiple projects.
      */
     options.resolve = _.resolve(options.resolve || '') || '';
-    var tmpl = options.resolve ? options.resolve : grunt.file.read(templates('README.tmpl.md'));
 
+    var tmpl;
+    if(options.resolve) {
+      tmpl = options.resolve;
+    } else if(options.docs) {
+      tmpl = docs('README.tmpl.md');
+    } else {
+      tmpl = templates('README.tmpl.md');
+    }
+    tmpl = grunt.file.read(tmpl);
 
     /**
      * CHANGELOG
