@@ -54,6 +54,12 @@ module.exports = function(grunt) {
     // Add mixins for use in our templates.
     // TODO: externalize these.
     _.mixin({
+      /**
+       * {% _.resolve("module-name") %}
+       * Automagically include a template from node_modules. The path to the template must be defined
+       * in the `main` property of the package.json in the npm module. A potential use case for this
+       * option is to include fragments or "partials" that are used in multiple projects.
+       */
       resolve: function (filepath) {
         return glob.content(resolve.dev(filepath));
       },
@@ -88,7 +94,9 @@ module.exports = function(grunt) {
 
     /**
      * options.resolve
-     * Use a template from node_modules.
+     * Automagically use a template from node_modules. The path to the template must be defined
+     * in the `main` property of the package.json in the npm module. A potential use case for this
+     * option is to define a README template that is used for multiple projects.
      */
     options.resolve = _.resolve(options.resolve || '') || '';
     var tmpl = options.resolve ? options.resolve : grunt.file.read(templates('README.tmpl.md'));
