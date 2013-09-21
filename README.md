@@ -33,38 +33,31 @@ In your project's Gruntfile, load the plugin with `grunt.loadNpmTasks('grunt-rea
 
 ```js
 grunt.initConfig({
-  grunt.initConfig({
-    // tasks
-  });
-
-  grunt.loadNpmTasks('grunt-readme');
-  // Build the README.
-  grunt.registerTask('default', ['readme']);
+  // tasks
 });
+grunt.loadNpmTasks('grunt-readme');
+grunt.registerTask('default', ['readme']);
 ```
 
-Optionally, if you need to change the plugin's defaults, In your project's Gruntfile, add a section named `readme` to the data object passed into `grunt.initConfig()`:
+
+
+## Options
+> This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
+
+To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
 
 ```js
 grunt.initConfig({
 
   // The "readme" task
   readme: {
-    options: {
-      sep: '\n',
-      resolve: 'readme-template',
-      prefixes: ["helper", "util", "assemble", "mixin"],
-      metadata: 'test/fixtures/metadata.json',
-      templates: ['tasks/templates/']
-    }
+    options: {}
   }
+
 });
+grunt.loadNpmTasks('grunt-readme');
+grunt.registerTask('default', ['readme']);
 ```
-
-
-
-## Options
-This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
 ### readme
 Type: `String`
@@ -192,26 +185,34 @@ If defined, `resolve.metadata` will resolve to a specific file to
 Type: `Array`
 Default: `grunt|helper|mixin`
 
-Any prefixes defined will be removed from content passed in using the `{%= _.shortname() %}` template.
+Any prefixes defined will be removed from content passed in using the `{%= _.shortname() %}` template. Example:
 
-Example:
-
-```json
-{
-  "name": "helper-prettify"
+```js
+readme: {
+  options: {
+    prefixes: ["foo", "bar", "baz"]
+  }
 }
 ```
 
-Used in a template like this:
+Given a `package.json` with the following property:
+
+```json
+{
+  "name": "foo-module"
+}
+```
+
+when referenced in a template like this:
 
 ```js
 ## {%= _.titleize(_.shortname(name)) %}
 ```
 
-Renders to:
+will renders to:
 
 ```
-## Prettify
+## Module
 ```
 
 ### contributing
@@ -219,6 +220,7 @@ Type: `Boolean`
 Default: `True`
 
 By default, the README task copies a basic `CONTRIBUTING.md` file to the root of your project. If one exists, the task will skip this. If you wish to prevent the task from adding this file to your project, set the `contributing` option to `false`.
+
 
 ### sep
 Type: `String`
@@ -364,6 +366,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sat Sep 21 2013 11:24:14._
+_This file was generated on Sat Sep 21 2013 11:34:33._
 
 [minimatch]: https://github.com/isaacs/minimatch

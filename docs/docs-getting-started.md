@@ -23,30 +23,8 @@ In your project's Gruntfile, load the plugin with `grunt.loadNpmTasks('{%= name 
 
 ```js
 grunt.initConfig({
-  grunt.initConfig({
-    // tasks
-  });
-
-  grunt.loadNpmTasks('grunt-readme');
-  // Build the README.
-  grunt.registerTask('default', ['readme']);
+  // tasks
 });
-```
-
-Optionally, if you need to change the plugin's defaults, In your project's Gruntfile, add a section named `{%= _.shortname(name) %}` to the data object passed into `grunt.initConfig()`:
-
-```js
-grunt.initConfig({
-
-  // The "readme" task
-  readme: {
-    options: {
-      sep: '\n',
-      resolve: 'readme-template',
-      prefixes: ["helper", "util", "assemble", "mixin"],
-      metadata: 'test/fixtures/metadata.json',
-      templates: ['tasks/templates/']
-    }
-  }
-});
+grunt.loadNpmTasks('grunt-readme');
+grunt.registerTask('default', ['readme']);
 ```

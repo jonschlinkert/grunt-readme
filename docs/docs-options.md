@@ -1,4 +1,19 @@
-This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
+> This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
+
+To change the plugin's defaults, add a section to your project's Gruntfile named `{%= _.shortname(name) %}` to the data object passed into `grunt.initConfig()`:
+
+```js
+grunt.initConfig({
+
+  // The "readme" task
+  readme: {
+    options: {}
+  }
+
+});
+grunt.loadNpmTasks('grunt-readme');
+grunt.registerTask('default', ['readme']);
+```
 
 ## readme
 Type: `String`
@@ -126,26 +141,34 @@ If defined, `resolve.metadata` will resolve to a specific file to
 Type: `Array`
 Default: `grunt|helper|mixin`
 
-Any prefixes defined will be removed from content passed in using the `[%= _.shortname() %]` template.
+Any prefixes defined will be removed from content passed in using the `[%= _.shortname() %]` template. Example:
 
-Example:
-
-```json
-{
-  "name": "helper-prettify"
+```js
+readme: {
+  options: {
+    prefixes: ["foo", "bar", "baz"]
+  }
 }
 ```
 
-Used in a template like this:
+Given a `package.json` with the following property:
+
+```json
+{
+  "name": "foo-module"
+}
+```
+
+when referenced in a template like this:
 
 ```js
 # [%= _.titleize(_.shortname(name)) %]
 ```
 
-Renders to:
+will renders to:
 
 ```
-# Prettify
+# Module
 ```
 
 ## contributing
@@ -153,6 +176,7 @@ Type: `Boolean`
 Default: `True`
 
 By default, the README task copies a basic `CONTRIBUTING.md` file to the root of your project. If one exists, the task will skip this. If you wish to prevent the task from adding this file to your project, set the `contributing` option to `false`.
+
 
 ## sep
 Type: `String`
