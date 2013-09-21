@@ -4,14 +4,18 @@
 
 {%= _.doc("heads-up.md") %}
 
-## Overview
+## Getting Started
 {%= _.doc("docs-getting-started.md") %}
 
 ## Options
 {%= _.doc("docs-options.md") %}
 
+## Usage Examples
+{%= _.doc("docs-examples.md") %}
+
+{% if (changelog) { %}
 ## Release History
- * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
+{%= _.include("docs-changelog.md") %} {% } %}
 
 ## Author
 
@@ -20,3 +24,7 @@
 
 ## License
 {%= _.include("docs-license.md") %}
+
+***
+
+_This file was generated on {%= grunt.template.today() %}._

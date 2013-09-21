@@ -9,8 +9,6 @@ Please take note! If you add code examples to your templates that have a syntax 
 So convert anything that has a pattern like this: `{%= ... %}`, `{%- ... %}`, and `{% ... %}`. If anyone has problems, please file an issue and it will be resolved.
 
 
-
-## Overview
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
 
@@ -64,7 +62,6 @@ grunt.initConfig({
   }
 });
 ```
-
 
 
 
@@ -184,9 +181,12 @@ Same as the `include` mixin but is hard-coded to use the `docs/` folder of your 
 
 
 
+## Usage Examples
+
+
 
 ## Release History
- * 2013   v0.1.0   First commit
+ 
 
 ## Author
 
@@ -195,3 +195,7 @@ Same as the `include` mixin but is hard-coded to use the `docs/` folder of your 
 
 ## License
 
+
+***
+
+_This file was generated on Sat Sep 21 2013 06:00:36._
