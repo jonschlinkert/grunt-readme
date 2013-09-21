@@ -350,7 +350,8 @@ readme: {
 
 ## Release History
 
- * 2013-09-17   **v0.1.0**   First commmit.
+ * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
+ * 2013-09-19   **v0.1.0**   First commmit.
  
 
 ## Author
@@ -365,6 +366,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sat Sep 21 2013 11:00:41._
+_This file was generated on Sat Sep 21 2013 11:09:59._
 
 [minimatch]: https://github.com/isaacs/minimatch
