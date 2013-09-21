@@ -1,6 +1,23 @@
 This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
-### sep
+```js
+options: {
+  templates: '',
+  metadata: '',
+  resolve: {
+    cwd: '',
+    readme: '',
+    docs: 'grunt-foo',
+    templates: '',
+    metadata: ''
+  },
+  sep: '\n',
+  prefixes: [],
+  contributing: true
+}
+```
+
+## sep
 Type: `String`
 Default: `\n\n`
 
@@ -27,7 +44,7 @@ And/or as a second parameter in the `include` or `doc` mixins. For example:
 * `[%= _.doc("*.md", "\n***\n") %]`
 
 
-### templates
+## templates
 Type: `String`
 Default: `./node_modules/grunt-readme/tasks/templates/` (from your project)
 
@@ -43,7 +60,7 @@ readme: {
 }
 ```
 
-### metadata
+## metadata
 Type: `Object`
 Default: `package.json`
 
@@ -61,9 +78,9 @@ Context of the data object is the value of `this`, and properties in `package.js
 
 
 
-### mixins
+## mixins
 
-### _.resolve()
+## _.resolve()
 
 Use the `resolve` mixin in templates to include content _from named NPM modules listed in `devDependencies`_:
 
@@ -89,7 +106,7 @@ As an example, if we were working on a project named `foo`, here is what the `pa
 ```
 
 
-### _.include()
+## _.include()
 
 Use the `include` mixin in templates to pull in content from other files:
 
@@ -106,7 +123,7 @@ Use the `include` mixin in templates to pull in content from other files:
 Unless overridden in the `templates` option, the `include` mixin will use the `./node_modules/grunt-readme/tasks/templates/` directory (from the root of your project) as the `cwd` for templates.
 
 
-### _.doc()
+## _.doc()
 
 Same as the `include` mixin but is hard-coded to use the `docs/` folder of your project as the `cwd` for templates.
 

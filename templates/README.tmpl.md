@@ -2,7 +2,7 @@
 
 > {%= description %}
 
-{%= _.doc("heads-up.md") %}
+{%= _.doc("preface.md") %}
 
 ## Getting Started
 {%= _.doc("docs-getting-started.md") %}

@@ -2,7 +2,7 @@
 
 > {%= description %}
 
-{%= _.doc("heads-up.md") %}
+{%= _.doc("preface.md") %}
 
 ## Getting Started
 {%= _.doc("docs-getting-started.md") %}
@@ -15,7 +15,9 @@
 
 {% if (changelog) { %}
 ## Release History
-{%= _.include("docs-changelog.md") %} {% } %}
+{%= _.include("docs-changelog.md") %} {% } else { %}
+ * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
+{% } %}
 
 ## Author
 
