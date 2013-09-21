@@ -9,7 +9,6 @@
 {%= name %}
 ```
 
-
 ## Version
 
 ```js
@@ -25,7 +24,6 @@ v{%= version %}
 {%= description %}
 {%= description ? " * " + description + "\\n" : "" %}
 ```
-
 
 ## Homepage
 
@@ -59,7 +57,6 @@ Or, if you prefer to use an `AUTHORS` file in the root of the project:
 // [Brian Woodward](http://github.com/doowb)
 ```
 
-
 ## Time and date
 
 ```js
@@ -72,7 +69,6 @@ Or, if you prefer to use an `AUTHORS` file in the root of the project:
 {%= grunt.template.today("yyyy-mm-dd") %}
 // => 2013-09-17
 ```
-
 
 ## Banner
 
@@ -87,7 +83,6 @@ Or, if you prefer to use an `AUTHORS` file in the root of the project:
 
 ## Changelog / Release History
 
-
 ```js
 {%= _.include("docs-changelog.md") %}
 ```
@@ -99,7 +94,6 @@ Or:
 
  * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
 ```
-
 
 ## License
 

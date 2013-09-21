@@ -17,11 +17,6 @@ module.exports = function(grunt) {
       all: ['Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>']
     },
 
-    // The "readme" task
-    readme: {
-      options: {templates: ['docs/']}
-    },
-
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js'],

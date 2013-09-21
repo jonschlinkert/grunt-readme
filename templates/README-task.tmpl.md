@@ -2,8 +2,6 @@
 
 > {%= description %}
 
-{%= _.include("LICENSE-MIT") %}
-
 {% if (in_development) { %}
 _Note that this is not an official Grunt plugin release! If you want to use this in a project, please be sure to follow the instructions for installing development versions, as outlined in the [Installing Grunt](http://gruntjs.com/installing-grunt) guide._
 {% } %}

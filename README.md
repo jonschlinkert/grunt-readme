@@ -68,55 +68,72 @@ grunt.initConfig({
 ## Options
 This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
-```js
-options: {
-  templates: '',
-  metadata: '',
-  resolve: {
-    cwd: '',
-    readme: '',
-    docs: 'grunt-foo',
-    templates: '',
-    metadata: ''
-  },
-  sep: '\n',
-  prefixes: [],
-  contributing: true
-}
-```
-
-### sep
+### readme
 Type: `String`
-Default: `\n\n`
+Default: `./node_modules/grunt-readme/tasks/templates/README.tmpl.md`
 
-Separator to use between sections of content that is included using the `include` or `doc` mixins (more about those below):
-
-* `{%= _.include("CONTRIBUTING.md") %}`
-* `{%= _.doc("*.md") %}`
-
-This option is more useful when you use minimatch patterns to specify the files to include.
-
-The `sep` option can either be defined in the task options:
+By default, if no options are specified the task will look for a `README.md.tmpl` template to use, if none is found the task will use the "starter" file supplied by `grunt-readme` (more detail below). Example:
 
 ```js
 readme: {
   options: {
-    sep: '\n***\n'
+    readme: 'path/to/custom/README.md.tmpl'
   }
 }
 ```
 
-And/or as a second parameter in the `include` or `doc` mixins. For example:
+1. If the `readme` options is defined, the task will use that custom template.
+1. If (1) is undefined, the task uses the directory defined by `options: { docs: ''}`
+1. If (2) is undefined, the task checks if `README.tmpl.md` exists in the `./docs` directory (without having to define it in the options)
+1. if (3) is undefined, `options: { resolve: { readme: ''}}` attempts to automagically use a `README.tmpl.md` template from `node_modules`. The module must must be defined in `devDependencies`. Note that for a README template to resolve properly from `node_modules`, the `main` property in the `package.json` of the module being referenced must specify the path to the template. This option is probably most useful when you plan to use the same README template on a number of projects.
+1. If (4) is undefined, the task uses the "starter" README template from `grunt-readme`.
 
-* `{%= _.include("docs-*.md", "***") %}`
-* `{%= _.doc("*.md", "\n***\n") %}`
+
+### metadata
+Type: `String|Object`
+Default: `package.json`
+
+Optional source of metadata to _extend the data object_ that is passed as context into the templates. Context of the data object is the value of `this`, and properties in `package.json` will be ignored when matching properties are defined on the `metadata` object. Example:
+
+
+```js
+readme: {
+  options: {
+    metadata: 'docs/metadata.json'
+  }
+}
+```
+or
+
+```js
+readme: {
+  options: {
+    metadata: {
+      name: 'Foo',
+      description: 'This is foo.'
+    }
+  }
+}
+```
+
+Since context is the value of "this", the `metadata` path is not required in templates, only property names:
+
+* `{%= name %}` (e.g. not `{%= metadata.name %}`) => `Foo`
+* `{%= description %}` => `This is foo.`
+
+
+### docs
+Type: `String`
+Default: `./docs/`
+
+Override the default directory where your local docs ("includes") will be stored. This defaults to the `./docs` directory in the root of your project.  with the 'docs' option.
 
 
 ### templates
 Type: `String`
-Default: `./node_modules/grunt-readme/tasks/templates/` (from your project)
+Default: `./node_modules/grunt-readme/tasks/templates/` (relative to your project)
 
-Optional path to the local directory to use for templates. This path is used as the base path for the `_.include()` mixin, but by default the `include` mixin will look for files in the `./tasks/templates` directory of this project (grunt-readme), where some starter templates are stored. (also see [EXAMPLES.md](./EXAMPLES.md))
+The `cwd` for "includes" defined using the `{%= _.include() %}` template. By default, the `include` mixin will look for files in the `./tasks/templates` directory of this project (grunt-readme), where some starter templates are stored. (also see [EXAMPLES.md](./EXAMPLES.md))
 
 You may overide this by specifying a path in the `templates` option:
 
@@ -128,61 +145,125 @@ readme: {
 }
 ```
 
-### metadata
-Type: `Object`
-Default: `package.json`
 
-Optional source of metadata to **extend the data object** that is passed as context into the templates.
+### resolve
+
+All of the `resolve` options enable including content _from named NPM modules listed in `devDependencies`_.
+
+#### resolve.readme
+Type: `String`
+Default: `undefined`
+
+Name of the npm module containing the `README.tmpl.md` file to use for the README template. The module must be listed in the `devDependencies` of your project, and the template must be defined in the `main` property of the named module.
 
 ```js
-readme: {
-  options: {
-    metadata: 'docs/metadata.json'
+options: {
+  resolve: {
+    readme: 'my-npm-module'
+  }
+}
+```
+If defined properly in the `main` property of the `package.json` of `my-npm-module`, this would resolve to:  `./node_modules/my-npm-module/README.tmpl.md`.
+
+
+#### resolve.docs
+Type: `String`
+Default: `undefined`
+
+If defined, `resolve.docs` becomes the `cwd` for files to be included using the `{%= _.doc() %}` mixin.
+
+```js
+options: {
+  resolve: {
+    docs: 'my-npm-module'
   }
 }
 ```
 
-Context of the data object is the value of `this`, and properties in `package.json` will be ignored when matching properties are defined on the `metadata` object.
+This would resolve to:  `./node_modules/my-npm-module/`.
 
 
+#### resolve.metadata
+Type: `String`
+Default: `undefined`
 
-### mixins
+If defined, `resolve.metadata` will resolve to a specific file to
 
-### _.resolve()
 
-Use the `resolve` mixin in templates to include content _from named NPM modules listed in `devDependencies`_:
+### prefixes
+Type: `Array`
+Default: `grunt|helper|mixin`
 
-```js
-{%= _.resolve("example-template") %}
-```
+Any prefixes defined will be removed from content passed in using the `{%= _.shortname() %}` template.
 
-For the `resolve` mixin to work, the following must be true:
+Example:
 
-* The referenced "include" must be listed in the `devDependencies` of your project's `package.json`
-* The referenced include installed in the `node_modules` directory of your project
-* This is important! The name of the include must match the name of the module that is being referenced (e.g. the module's `pkg.name`).
-* There must be a `main` property defined in the `package.json` of the referenced module.
-* The `main` property must point to the template you want to use.
-
-As an example, if we were working on a project named `foo`, here is what the `package.json` might look like for the referenced module that contains the template to be used as an include:
-
-```js
+```json
 {
-  "name": "foo-readme-template",
-  "main": "README.tmpl.md"
+  "name": "helper-prettify"
 }
 ```
 
+Used in a template like this:
+
+```js
+## {%= _.titleize(_.shortname(name)) %}
+```
+
+Renders to:
+
+```
+## Prettify
+```
+
+### contributing
+Type: `Boolean`
+Default: `True`
+
+By default, the README task copies a basic `CONTRIBUTING.md` file to the root of your project. If one exists, the task will skip this. If you wish to prevent the task from adding this file to your project, set the `contributing` option to `false`.
+
+### sep
+Type: `String`
+Default: `\n`
+
+Separator to use between sections of content that is included using the `include` or `doc` mixins (more about these in the "Mixins" section below). This option is more useful when you use minimatch patterns to specify the files to include.
+
+The `sep` option can either be defined in the task options:
+
+```js
+readme: {
+  options: {
+    sep: '\n***\n'
+  }
+}
+```
+
+or as a second parameter in the `include` or `doc` mixins.
+
+* `{%= _.include("docs-*.md", "***") %}` (more below...)
+* `{%= _.doc("*.md", "\n***\n") %}` (more below...)
+
+
+
+
+## mixins
+> Three different mixins are built into the task for including "external" content: `include`, `doc` and `resolve`. Each is used for a different purpose.
+
+Here is a summary of what they do (settings for the `include` and `doc` mixins can be customized in the task options):
+
+* `{%= _.include("file.md") %}`: include a file (or files using [minimatch][minimatch] patterns) from the `./templates/` directory of _the grunt-readme task_.
+* `{%= _.doc("file.md") %}`:  include a file (or files using [minimatch][minimatch] patterns) from the `./docs/` directory of _your project_.
+* `{%= _.resolve("file.md") %}`: include a **specific file** from *node_modules*`.
+
 
 ### _.include()
-
 Use the `include` mixin in templates to pull in content from other files:
 
 ```js
 {%= _.include("examples.md") %}
 ```
 
-[Minimatch](https://github.com/isaacs/minimatch) patterns may also be used:
+[Minimatch][minimatch] patterns may also be used:
 
 ```js
 {%= _.include("docs-*.md") %}
@@ -192,9 +273,30 @@ Unless overridden in the `templates` option, the `include` mixin will use the `.
 
 
 ### _.doc()
-
 Same as the `include` mixin but is hard-coded to use the `docs/` folder of your project as the `cwd` for templates.
 
+
+### _.resolve()
+Use the `resolve` mixin in templates to include content _from named NPM modules listed in `devDependencies`_:
+
+```js
+{%= _.resolve("my-npm-module") %}
+```
+
+where `my-npm-module` is the name of a `devDependency` currently installed in `node_modules`. For the `resolve` mixin to work, the referenced file must be listed in the `devDependencies` of your project's `package.json`, it must be installed in `node_modules`, and the referenced project must have the file defined in the `main` property of that project's `package.json`. Last, in your templates make sure you _use the name of the module, not the name of the file to "include"_.
+
+
+#### _.resolve() example
+Here is a `package.json` for a bogus project we created, `my-npm-module`, to store the template we want to use as an include:
+
+```js
+{
+  "name": "my-npm-module",
+  "main": "README.tmpl.md"
+}
+```
+
+### _.contributors()
 
 
 
@@ -221,9 +323,34 @@ Copyright (c) 2012-{%= grunt.template.today('yyyy') %} [{%= author.name %}]({%= 
 ```
 
 
+### All options
+
+```js
+readme: {
+  options: {
+    templates: '',
+    metadata: '',
+    resolve: {
+      cwd: '',
+      readme: '',
+      docs: '',
+      templates: '',
+      metadata: ''
+    },
+    sep: '\n',
+    prefixes: [],
+    contributing: true
+  }
+}
+```
+
+
+
 
 
 ## Release History
+
+ * 2013-09-17   **v0.1.0**   First commmit.
  
 
 ## Author
@@ -232,8 +359,12 @@ Copyright (c) 2012-{%= grunt.template.today('yyyy') %} [{%= author.name %}]({%= 
 + [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
 
 ## License
+Copyright (c) 2013 Jon Schlinkert
+Released under the MIT license
 
 
 ***
 
-_This file was generated on Sat Sep 21 2013 07:16:34._
+_This file was generated on Sat Sep 21 2013 11:00:41._
+
+[minimatch]: https://github.com/isaacs/minimatch

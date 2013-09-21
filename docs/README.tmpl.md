@@ -10,6 +10,9 @@
 ## Options
 {%= _.doc("docs-options.md") %}
 
+## mixins
+{%= _.doc("docs-mixins.md") %}
+
 ## Usage Examples
 {%= _.doc("docs-examples.md") %}
 
@@ -30,3 +33,5 @@
 ***
 
 _This file was generated on {%= grunt.template.today() %}._
+
+[minimatch]: https://github.com/isaacs/minimatch

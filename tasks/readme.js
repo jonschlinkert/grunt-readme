@@ -27,12 +27,13 @@ module.exports = function(grunt) {
     // The 'readme' task options.
     var options = this.options({
       templates: '',
-      metadata: '',
+      metadata: '' || {},
       resolve: {
-        readme: 'grunt-readme',
         cwd: '',
-        metadata: '',
-        templates: ''
+        readme: '',
+        docs: '',
+        templates: '',
+        metadata: ''
       },
       sep: '\n',
       prefixes: [],
@@ -46,7 +47,9 @@ module.exports = function(grunt) {
      * Metadata from "metadata" option
      * @type {Object}
      */
-    options.metadata = _.isEmpty(options.metadata) ? {} : grunt.file.readJSON(options.metadata);
+    if(_.isString(options.metadata)) {
+      options.metadata = grunt.file.readJSON(options.metadata);
+    }
     grunt.verbose.writeln("metadata: ", options.metadata);
 
 
@@ -73,18 +76,21 @@ module.exports = function(grunt) {
     }
     grunt.verbose.writeln("templates: ", templates('README.tmpl.md'));
 
+
     /**
      * options: { docs: '' }
      * The directory where your docs will be stored. This defaults to the './docs'
      * directory in the root of your project. Override with the 'docs' option.
      */
     var docs;
-    if(_.isEmpty(options.docs)) {
+    if (resolve.docs) {
+      docs = path.join.bind(null, String(load.devDirname(resolve.docs)), '');
+    } else if(_.isEmpty(options.docs)) {
       docs = path.join.bind(options.docs, 'docs');
     } else {
       docs = path.join.bind(process.cwd(), options.docs + '');
     }
-    grunt.verbose.writeln("docs: ", docs('success'));
+    grunt.verbose.writeln("docs: ", docs('test'));
 
 
     /**
@@ -117,7 +123,7 @@ module.exports = function(grunt) {
     var tmpl;
     if (options.readme) {
       tmpl = options.readme;
-    } else if (options.docs) {
+    } else if (docs) {
       tmpl = docs('README.tmpl.md');
     } else if (grunt.file.exists('./docs/README.tmpl.md')) {
       tmpl = './docs/README.tmpl.md';
@@ -126,6 +132,7 @@ module.exports = function(grunt) {
     } else {
       tmpl = templates('README.tmpl.md');
     }
+
 
     // Write the template
     tmpl = grunt.file.read(tmpl);
@@ -136,13 +143,16 @@ module.exports = function(grunt) {
     grunt.verbose.writeflags(options, 'Options');
 
 
+    // var  = function (name, patterns) {
+    //   prefixes = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
+    //   var re = new RegExp('^(?:' + prefixes.join('|') + ')[\-_]?');
+    //   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
+    // };
+
+
     // Add mixins for use in our templates.
     // TODO: externalize these.
     _.mixin({
-
-      resolveTemplates: function (src) {
-        return path.normalize(path.join(String(resolve.templates), src));
-      },
 
       /**
        * `{% _.resolve("module-name") %}`
@@ -157,10 +167,6 @@ module.exports = function(grunt) {
         return load.dev(patterns).map(function(file) {
           return grunt.file.read(file).replace(/^#/gm, '##');
         });
-      },
-
-      resolveDir: function (module) {
-        return load.devDirname(module);
       },
 
       doc: function (filepath, sep) {
@@ -178,10 +184,10 @@ module.exports = function(grunt) {
         return _.safename(name, patterns);
       },
 
-      contributors: function (prepend) {
-        prepend = prepend || "";
+      contributors: function (sep) {
+        sep = sep || "";
         if(meta.contributors) {
-          return prepend + _.pluck(meta.contributors, "name").join("\n");
+          return _.pluck(meta.contributors, "name").join("\n") + sep;
         } else {return; }
       },
 
