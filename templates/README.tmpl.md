@@ -13,8 +13,9 @@
 ## Usage Examples
 {%= _.doc("docs-examples.md") %}
 
+{% if (changelog) { %}
 ## Release History
- * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
+{%= _.include("docs-changelog.md") %} {% } %}
 
 ## Author
 
