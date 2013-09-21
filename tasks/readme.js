@@ -1,7 +1,7 @@
 /**!
  * grunt-readme
- * http://github.com/assemble/
- * Inspired by grunt-contrib-internal
+ * http://github.com/assemble/grunt-readme
+ * Partially derived from and inspired by grunt-contrib-internal
  *
  * Copyright (c) 2013, Jon Schlinkert, contributors
  * Licensed under the MIT license.
@@ -14,15 +14,17 @@ var glob = require('utils-glob');
 var load = require('resolve-dep');
 
 module.exports = function(grunt) {
-  var _ = grunt.util._;
 
-  _.mixin(require('./lib/mixins'));
+  grunt.util._.mixin(require('./lib/mixins'));
 
   // Add custom template delimiters for our templates.
   grunt.template.addDelimiters('readme', '{%', '%}');
 
   grunt.registerTask('readme', "Generate your project's README from a template. If you already use Grunt, this is a no brainer.", function() {
 
+    var _ = grunt.util._;
+
+    // The 'readme' task options.
     var options = this.options({
       templates: '',
       metadata: '',
@@ -38,15 +40,6 @@ module.exports = function(grunt) {
     });
 
     var resolve = options.resolve;
-
-    /**
-     * resolved path to module to use as the cwd for metadata
-     * @type {String}
-     */
-    resolve.cwd       = _.isEmpty(resolve.cwd)       ? '' : load.devDirname(resolve.cwd);
-    resolve.metadata  = _.isEmpty(resolve.metadata)  ? '' : load.devDirname(resolve.metadata);
-    resolve.templates = _.isEmpty(resolve.templates) ? '' : load.devDirname(resolve.templates);
-
 
     /**
      * options: { metadata: {} }
@@ -78,7 +71,7 @@ module.exports = function(grunt) {
     } else {
       templates = path.join.bind(options.templates, options.templates + '');
     }
-    grunt.log.writeln("templates: ", templates('README.tmpl.md'));
+    grunt.verbose.writeln("templates: ", templates('README.tmpl.md'));
 
     /**
      * options: { docs: '' }
@@ -92,6 +85,17 @@ module.exports = function(grunt) {
       docs = path.join.bind(process.cwd(), options.docs + '');
     }
     grunt.verbose.writeln("docs: ", docs('success'));
+
+
+    /**
+     * Resolved paths to module to use as the cwd for metadata and templates.
+     * These options currently aren't used in the examples, and they aren't
+     * documented yet so don't get used to them because they might go away.
+     * @type {String}
+     */
+    resolve.cwd       = _.isEmpty(resolve.cwd)       ? '' : load.devDirname(resolve.cwd);
+    resolve.metadata  = _.isEmpty(resolve.metadata)  ? '' : load.devDirname(resolve.metadata);
+    resolve.templates = _.isEmpty(resolve.templates) ? '' : load.devDirname(resolve.templates);
 
 
     /**
@@ -125,26 +129,16 @@ module.exports = function(grunt) {
 
     // Write the template
     tmpl = grunt.file.read(tmpl);
-    grunt.log.writeln("tmpl: ", tmpl);
+    grunt.verbose.writeln("tmpl: ", tmpl);
 
+
+    // Show all options flags in verbose mode.
     grunt.verbose.writeflags(options, 'Options');
 
 
     // Add mixins for use in our templates.
     // TODO: externalize these.
     _.mixin({
-
-      readYAML: function (src) {
-        var data = {};
-        try {
-          data = grunt.file.readYAML(src);
-        } catch (e) {}
-        return data;
-      },
-
-      exists: function(src) {
-        return grunt.file.exists(src);
-      },
 
       resolveTemplates: function (src) {
         return path.normalize(path.join(String(resolve.templates), src));
@@ -160,8 +154,8 @@ module.exports = function(grunt) {
        * are used in multiple projects.
        */
       resolve: function (patterns) {
-        return load.dev(patterns).map(function(i) {
-          return grunt.file.read(i);
+        return load.dev(patterns).map(function(file) {
+          return grunt.file.read(file).replace(/^#/gm, '##');
         });
       },
 
@@ -171,12 +165,12 @@ module.exports = function(grunt) {
 
       doc: function (filepath, sep) {
         sep = sep || options.sep;
-        return glob.content(docs(filepath), sep);
+        return glob.content(docs(filepath), sep).replace(/^#/gm, '##');
       },
 
       include: function (filepath, sep) {
         sep = sep || options.sep;
-        return glob.content(templates(filepath), sep);
+        return glob.content(templates(filepath), sep).replace(/^#/gm, '##');
       },
 
       shortname: function (name, patterns) {
@@ -201,6 +195,8 @@ module.exports = function(grunt) {
       }
     });
 
+
+    // TODO: remove these.
     grunt.verbose.writeln('_.include: '.magenta, _.include('README.tmpl.md'));
     grunt.verbose.writeln('_.doc: '.magenta, _.doc('docs-options.md'));
     grunt.verbose.writeln('_.resolve: '.magenta, _.resolve('assemble-*'));
