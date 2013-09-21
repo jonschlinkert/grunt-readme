@@ -18,7 +18,6 @@ If the plugin has been installed correctly, running `grunt --help` at the comman
 [Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
 [package.json]: https://npmjs.org/doc/json.html
 
-
 In your project's Gruntfile, load the plugin with `grunt.loadNpmTasks('{%= name %}');` outside of `grunt.initConfig()`:
 
 ```js
@@ -28,3 +27,5 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
 ```
+
+If you are happy with the defaults, no other configuration is required.

@@ -2,11 +2,6 @@
 
 > Generate your README from a template. If you already use Grunt, this is a no brainer.
 
-## Heads up!
-
-To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
-
-
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
 
@@ -28,7 +23,6 @@ If the plugin has been installed correctly, running `grunt --help` at the comman
 [Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
 [package.json]: https://npmjs.org/doc/json.html
 
-
 In your project's Gruntfile, load the plugin with `grunt.loadNpmTasks('grunt-readme');` outside of `grunt.initConfig()`:
 
 ```js
@@ -39,6 +33,7 @@ grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
 ```
 
+If you are happy with the defaults, no other configuration is required.
 
 
 ## Options
@@ -347,6 +342,9 @@ readme: {
 
 
 
+# Heads up!
+To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
+
 
 ## Release History
 
@@ -366,6 +364,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sat Sep 21 2013 11:34:33._
+_This file was generated on Sat Sep 21 2013 11:37:15._
 
 [minimatch]: https://github.com/isaacs/minimatch
