@@ -381,17 +381,20 @@ readme: {
 # Heads up!
 To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
 
+## Contributing
+Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-readme/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
+
+## Author
+
++ [github/Jon Schlinkert](https://github.com/jonschlinkert)
++ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
+
 
 ## Release History
 
  * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
  * 2013-09-19   **v0.1.0**   First commmit.
  
-
-## Author
-
-+ [github/Jon Schlinkert](https://github.com/jonschlinkert)
-+ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
 
 ## License
 Copyright (c) 2013 Jon Schlinkert
@@ -400,6 +403,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 14:40:00._
+_This file was generated on Sun Sep 22 2013 14:54:58._
 
 [minimatch]: https://github.com/isaacs/minimatch

@@ -177,6 +177,14 @@ module.exports = function(grunt) {
         return _.safename(name, patterns);
       },
 
+      homepage: function () {
+        if(meta.homepage) {
+          return meta.homepage;
+        } else {
+          return meta.repository.url.replace(/^git@([^:]+):(.+)(?:.git)/, 'https://$1/$2');
+        }
+      },
+
       contributors: function (sep) {
         sep = sep || "";
         if(meta.contributors) {
