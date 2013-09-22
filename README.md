@@ -37,6 +37,8 @@ If you are happy with the defaults, no other configuration is required.
 
 
 ## Options
+assemble
+
 > This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
 To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
@@ -403,6 +405,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 14:54:58._
+_This file was generated on Sun Sep 22 2013 15:00:40._
 
 [minimatch]: https://github.com/isaacs/minimatch

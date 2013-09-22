@@ -177,6 +177,14 @@ module.exports = function(grunt) {
         return _.safename(name, patterns);
       },
 
+      username: function () {
+        if(meta.homepage) {
+          return meta.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
+        } else {
+          return meta.repository.url.replace(/^([^:]+):(.+)/, '$1');
+        }
+      },
+
       homepage: function () {
         if(meta.homepage) {
           return meta.homepage;
