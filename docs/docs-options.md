@@ -1,3 +1,5 @@
+{%= _.username() %}
+
 > This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
 To change the plugin's defaults, add a section to your project's Gruntfile named `{%= _.shortname(name) %}` to the data object passed into `grunt.initConfig()`:

@@ -13,14 +13,17 @@
 ## Usage Examples
 {%= _.doc("docs-examples.md") %}
 
-{% if (changelog) { %}
-## Release History
-{%= _.include("docs-changelog.md") %} {% } %}
+## Contributing
+Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
 
 ## Author
 
 + [github/{%= author.name %}]({%= author.url %})
 + [twitter/{%= author.name %}](http://twitter.com/{%= author.name %})
+
+{% if (changelog) { %}
+## Release History
+{%= _.include("docs-changelog.md") %} {% } %}
 
 ## License
 {%= _.include("docs-license.md") %}
