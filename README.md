@@ -2,6 +2,8 @@
 
 > Generate your README from a template. If you already use Grunt, this is a no brainer.
 
+### For inspiration [also see EXAMPLES.md →](./EXAMPLES.md)
+
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
 
@@ -329,6 +331,20 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
+### _.meta()
+
+Get the value of any property in `package.json`. Example:
+
+```js
+{%= _.meta('name') %}
+{%= _.meta('version') %}
+{%= _.meta('contributors') %}
+{%= _.meta('keywords') %}
+```
+A second paramter can be passed in to set the indentation on returned JSON: `{%= _.meta('contributors', 4) %}`. _This only works for stringified objects_.
+
+Also, if left undefined (`{%= _.meta() %}`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
+
 
 ### _.contributors()
 Render contributors listed in the project's package.json.
@@ -415,6 +431,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 15:05:01._
+_This file was generated on Sun Sep 22 2013 15:59:51._
 
 [minimatch]: https://github.com/isaacs/minimatch
