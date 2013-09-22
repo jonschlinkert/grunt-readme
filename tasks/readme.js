@@ -10,8 +10,9 @@
 'use strict';
 
 var path = require('path');
-var glob = require('utils-glob');
+var glob = require('glob-utils');
 var load = require('resolve-dep');
+
 
 module.exports = function(grunt) {
 
@@ -133,7 +134,6 @@ module.exports = function(grunt) {
       tmpl = templates('README.tmpl.md');
     }
 
-
     // Write the template
     tmpl = grunt.file.read(tmpl);
     grunt.verbose.writeln("tmpl: ", tmpl);
@@ -141,13 +141,6 @@ module.exports = function(grunt) {
 
     // Show all options flags in verbose mode.
     grunt.verbose.writeflags(options, 'Options');
-
-
-    // var  = function (name, patterns) {
-    //   prefixes = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
-    //   var re = new RegExp('^(?:' + prefixes.join('|') + ')[\-_]?');
-    //   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
-    // };
 
 
     // Add mixins for use in our templates.
