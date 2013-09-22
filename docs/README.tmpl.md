@@ -36,3 +36,5 @@ To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in
 _This file was generated on {%= grunt.template.today() %}._
 
 [minimatch]: https://github.com/isaacs/minimatch
+
+{%= _.jsdocs("tasks/lib/mixins.js") %}
