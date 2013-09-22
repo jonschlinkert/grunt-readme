@@ -345,6 +345,10 @@ A second paramter can be passed in to set the indentation on returned JSON: `{%=
 
 Also, if left undefined (`{%= _.meta() %}`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
 
+### _.jsdocs()
+
+Parse and extract comments from specified JavaScript files.
+
 
 ### _.license()
 
@@ -433,14 +437,14 @@ Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-
 
 ## Author
 
-+ [github/Jon Schlinkert](https://github.com/jonschlinkert)
-+ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
++ [github/https://github.com/jonschlinkert](https://github.com/jonschlinkert)
++ [twitter/https://github.com/jonschlinkert](http://twitter.com/https://github.com/jonschlinkert)
 
 
 ## Release History
 
- * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
- * 2013-09-19   **v0.1.0**   First commmit.
+ * 2013-09-21   v0.1.3   Completely refactored. Adds a lot of documentation.
+ * 2013-09-19   v0.1.0   First commmit.
  
 
 ## License
@@ -450,6 +454,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 16:59:52._
+_This file was generated on Sun Sep 22 2013 19:10:48._
 
 [minimatch]: https://github.com/isaacs/minimatch

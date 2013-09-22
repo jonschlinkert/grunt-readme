@@ -61,6 +61,10 @@ A second paramter can be passed in to set the indentation on returned JSON: `[%=
 
 Also, if left undefined (`[%= _.meta() %]`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
 
+## _.jsdocs()
+
+Parse and extract comments from specified JavaScript files.
+
 
 ## _.license()
 

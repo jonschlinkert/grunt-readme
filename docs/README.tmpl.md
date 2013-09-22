@@ -24,8 +24,8 @@ Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CON
 
 ## Author
 
-+ [github/{%= author.name %}]({%= author.url %})
-+ [twitter/{%= author.name %}](http://twitter.com/{%= author.name %})
++ [github/{%= author.url %}]({%= author.url %})
++ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %})
 
 {% if (changelog) { %}
 ## Release History
