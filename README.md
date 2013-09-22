@@ -2,7 +2,7 @@
 
 > Generate your README from a template. If you already use Grunt, this is a no brainer.
 
-### For inspiration [also see EXAMPLES.md →](./EXAMPLES.md)
+#### For inspiration [also see EXAMPLES.md →](./EXAMPLES.md)
 
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
@@ -450,7 +450,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 16:19:31._
+_This file was generated on Sun Sep 22 2013 17:16:27._
 
 [minimatch]: https://github.com/isaacs/minimatch
 
@@ -464,7 +464,7 @@ _This file was generated on Sun Sep 22 2013 16:19:31._
  * Licensed under the MIT license.
  */
 ```
-[View Source Code](tasks/lib/mixins.js#L1-6)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L1-6)
 
 ```js
 /*
@@ -475,18 +475,18 @@ _This file was generated on Sun Sep 22 2013 16:19:31._
  * @example: "helper-foo" => "foo"
  */
 ```
-[View Source Code](tasks/lib/mixins.js#L20-26)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L20-26)
 
 ```js
 /*
    * Parse the given file into an ast
    */
 ```
-[View Source Code](tasks/lib/mixins.js#L58-60)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L56-58)
 
 ```js
 /*
    * Output comment block with link to source code
    */
 ```
-[View Source Code](tasks/lib/mixins.js#L68-70)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L66-68)

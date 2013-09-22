@@ -40,12 +40,10 @@ exports.safename = function (name, patterns) {
 
 exports.jsdocs = function (file) {
 
-  console.log('loading...' + file);
   var output = '';
   var comments = [];
 
   function onComment(block, text, start, end, startLine, endLine) {
-    console.log('Found comments: ');
     if(block) {
       comments.push({
         text: text,
@@ -68,15 +66,17 @@ exports.jsdocs = function (file) {
   /*
    * Output comment block with link to source code
    */
+  if(file[0] !== '/') file = '/' + file;
   for (var i = 0; i < comments.length; i++) {
     output += '\n\n';
     output += '```js\n';
     output += '/*' + comments[i].text + '*/\n';
     output += '```\n';
-    output += '[View Source Code]({0}#L{1}-{2})'.
-      replace('{0}', file).
-      replace('{1}', comments[i].start.line).
-      replace('{2}', comments[i].end.line);
+    output += '[View Source Code]({0}{1}#L{2}-{3})'.
+      replace('{0}', _.homepage()).
+      replace('{1}', file).
+      replace('{2}', comments[i].start.line).
+      replace('{3}', comments[i].end.line);
   }
   return output;
 
