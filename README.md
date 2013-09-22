@@ -2,7 +2,7 @@
 
 > Generate your README from a template. If you already use Grunt, this is a no brainer.
 
-### For inspiration [also see EXAMPLES.md →](./EXAMPLES.md)
+[Also see examples →](./EXAMPLES.md)
 
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
@@ -450,6 +450,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 16:19:31._
+_This file was generated on Sun Sep 22 2013 16:59:52._
 
 [minimatch]: https://github.com/isaacs/minimatch

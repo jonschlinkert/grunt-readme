@@ -2,7 +2,7 @@
 
 > {%= description %}
 
-#### For inspiration [also see EXAMPLES.md →](./EXAMPLES.md)
+[Also see examples →](./EXAMPLES.md)
 
 ## Getting Started
 {%= _.doc("docs-getting-started.md") %}
