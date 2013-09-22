@@ -134,7 +134,43 @@ This would resolve to:  `./node_modules/my-npm-module/`.
 Type: `String`
 Default: `undefined`
 
-If defined, `resolve.metadata` will resolve to a specific file to
+The name of the module to use to _extend the data object_ that is passed as context into the templates. This works the same as `options.metadata` except that `resolve.metadata` will use the `main` property from the package.json of the specified module. As with other "resolve" options, for this to work the module must be specified in the `devDependencies` of your project's package.json, and it must be installed in `node_modules`.
+
+For example, let's say we have a project named **foo**, and this is the package.json for our project:
+
+```json
+{
+  "name": "foo",
+  "devDependencies": {
+    "bar": "*"
+  }
+}
+```
+Once we install our `devDependencies`, we might have a project structure like this:
+
+```
+docs
+node_modules
+  grunt-readme
+  bar
+    metadata.json
+    package.json // the "main" property specifies "./metadata.json"
+Gruntfile.js
+package.json
+```
+
+Now, in the Gruntfile for our project, "foo", to use the `metadata.json` file from "bar", we define the following in the `readme` task:
+
+```js
+readme: {
+  options: {
+    resolve: {
+      metadata: 'bar'
+    }
+  }
+}
+```
+
 
 
 ## prefixes
