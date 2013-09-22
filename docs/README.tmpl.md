@@ -41,5 +41,3 @@ Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CON
 _This file was generated on {%= grunt.template.today() %}._
 
 [minimatch]: https://github.com/isaacs/minimatch
-
-{%= _.jsdocs("tasks/lib/mixins.js") %}

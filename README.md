@@ -450,43 +450,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 17:16:27._
+_This file was generated on Sun Sep 22 2013 17:24:14._
 
 [minimatch]: https://github.com/isaacs/minimatch
-
-
-
-```js
-/*!
- * Utils
- * https://github.com/assemble/grunt-readme
- * Copyright (c) 2013 Jon Schlinkert, Brian Woodward, contributors.
- * Licensed under the MIT license.
- */
-```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L1-6)
-
-```js
-/*
- * _.safename("helper-foo")
- * @param  {[type]} name The name to be modified
- * @return {[type]}      The "safe" short version of the name
- * @example: "grunt-readme" => "readme"
- * @example: "helper-foo" => "foo"
- */
-```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L20-26)
-
-```js
-/*
-   * Parse the given file into an ast
-   */
-```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L56-58)
-
-```js
-/*
-   * Output comment block with link to source code
-   */
-```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/lib/mixins.js#L66-68)
