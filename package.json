@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "resolve-dep": "~0.1.2",
-    "utils-glob": "~0.1.0",
+    "glob-utils": "~0.1.0",
     "grunt": "~0.4.1",
     "acorn": "~0.3.1"
   },

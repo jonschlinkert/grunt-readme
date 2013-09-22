@@ -10,8 +10,9 @@
 'use strict';
 
 var path = require('path');
-var glob = require('utils-glob');
+var glob = require('glob-utils');
 var load = require('resolve-dep');
+
 
 module.exports = function(grunt) {
 
@@ -37,7 +38,7 @@ module.exports = function(grunt) {
       },
       sep: '\n',
       prefixes: [],
-      contributing: true
+      contributing: false
     });
 
     var resolve = options.resolve;
@@ -133,7 +134,6 @@ module.exports = function(grunt) {
       tmpl = templates('README.tmpl.md');
     }
 
-
     // Write the template
     tmpl = grunt.file.read(tmpl);
     grunt.verbose.writeln("tmpl: ", tmpl);
@@ -143,16 +143,22 @@ module.exports = function(grunt) {
     grunt.verbose.writeflags(options, 'Options');
 
 
-    // var  = function (name, patterns) {
-    //   prefixes = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
-    //   var re = new RegExp('^(?:' + prefixes.join('|') + ')[\-_]?');
-    //   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
-    // };
-
-
     // Add mixins for use in our templates.
     // TODO: externalize these.
     _.mixin({
+
+      meta: function (key, opts) {
+        opts = opts || 2;
+        if (_.isUndefined(key)) {
+          return JSON.stringify(meta, null, opts) || {};
+        } else if (_.isString(meta[key])) {
+          return meta[key] || "";
+        } else if (_.isObject(meta[key])) {
+          return JSON.stringify(meta[key], null, opts) || {};
+        } else {
+          return null;
+        }
+      },
 
       /**
        * `{% _.resolve("module-name") %}`
@@ -182,6 +188,22 @@ module.exports = function(grunt) {
       shortname: function (name, patterns) {
         patterns = patterns || options.prefixes;
         return _.safename(name, patterns);
+      },
+
+      username: function () {
+        if(meta.homepage) {
+          return meta.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
+        } else {
+          return meta.repository.url.replace(/^([^:]+):(.+)/, '$1');
+        }
+      },
+
+      homepage: function () {
+        if(meta.homepage) {
+          return meta.homepage;
+        } else {
+          return meta.repository.url.replace(/^git@([^:]+):(.+)(?:.git)/, 'https://$1/$2');
+        }
       },
 
       contributors: function (sep) {

@@ -2,6 +2,8 @@
 
 > Generate your README from a template. If you already use Grunt, this is a no brainer.
 
+### For inspiration [also see EXAMPLES.md →](./EXAMPLES.md)
+
 ## Getting Started
 _If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
 
@@ -37,6 +39,8 @@ If you are happy with the defaults, no other configuration is required.
 
 
 ## Options
+assemble
+
 > This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
 To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
@@ -173,7 +177,43 @@ This would resolve to:  `./node_modules/my-npm-module/`.
 Type: `String`
 Default: `undefined`
 
-If defined, `resolve.metadata` will resolve to a specific file to
+The name of the module to use to _extend the data object_ that is passed as context into the templates. This works the same as `options.metadata` except that `resolve.metadata` will use the `main` property from the package.json of the specified module. As with other "resolve" options, for this to work the module must be specified in the `devDependencies` of your project's package.json, and it must be installed in `node_modules`.
+
+For example, let's say we have a project named **foo**, and this is the package.json for our project:
+
+```json
+{
+  "name": "foo",
+  "devDependencies": {
+    "bar": "*"
+  }
+}
+```
+Once we install our `devDependencies`, we might have a project structure like this:
+
+```
+docs
+node_modules
+  grunt-readme
+  bar
+    metadata.json
+    package.json // the "main" property specifies "./metadata.json"
+Gruntfile.js
+package.json
+```
+
+Now, in the Gruntfile for our project, "foo", to use the `metadata.json` file from "bar", we define the following in the `readme` task:
+
+```js
+readme: {
+  options: {
+    resolve: {
+      metadata: 'bar'
+    }
+  }
+}
+```
+
 
 
 ### prefixes
@@ -291,7 +331,50 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
+### _.meta()
+
+Get the value of any property in `package.json`. Example:
+
+```js
+{%= _.meta('name') %}
+{%= _.meta('version') %}
+{%= _.meta('contributors') %}
+{%= _.meta('keywords') %}
+```
+A second paramter can be passed in to set the indentation on returned JSON: `{%= _.meta('contributors', 4) %}`. _This only works for stringified objects_.
+
+Also, if left undefined (`{%= _.meta() %}`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
+
+
+### _.license()
+
+Add a "license statement" to the README, using the license(s) specified in package.json. If you maintain a number of projects, some of which might have more than one license, while others only have one, you can use the `_.license()` mixin to automate the process of adding license info.
+
+Examples:
+
+```js
+{%= _.license() %}
+```
+> Released under the MIT license
+
+Customize the output:
+
+```js
+{%= _.license('Licensed under the ') %}
+```
+> Licensed under the MIT license
+
+
 ### _.contributors()
+Render contributors listed in the project's package.json.
+
+
+### _.username()
+Extract the username or org from URLs in the project's package.json. The mixin will extract the username from the `homepage` property if it exists. If not, it will try to extract the username from the `git.url` property.
+
+
+### _.homepage()
+Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.
 
 
 
@@ -345,17 +428,20 @@ readme: {
 # Heads up!
 To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
 
+## Contributing
+Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-readme/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
+
+## Author
+
++ [github/Jon Schlinkert](https://github.com/jonschlinkert)
++ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
+
 
 ## Release History
 
  * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
  * 2013-09-19   **v0.1.0**   First commmit.
  
-
-## Author
-
-+ [github/Jon Schlinkert](https://github.com/jonschlinkert)
-+ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
 
 ## License
 Copyright (c) 2013 Jon Schlinkert
@@ -364,7 +450,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 14:56:19._
+_This file was generated on Sun Sep 22 2013 16:19:31._
 
 [minimatch]: https://github.com/isaacs/minimatch
 

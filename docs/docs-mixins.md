@@ -47,4 +47,47 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
+## _.meta()
+
+Get the value of any property in `package.json`. Example:
+
+```js
+[%= _.meta('name') %]
+[%= _.meta('version') %]
+[%= _.meta('contributors') %]
+[%= _.meta('keywords') %]
+```
+A second paramter can be passed in to set the indentation on returned JSON: `[%= _.meta('contributors', 4) %]`. _This only works for stringified objects_.
+
+Also, if left undefined (`[%= _.meta() %]`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
+
+
+## _.license()
+
+Add a "license statement" to the README, using the license(s) specified in package.json. If you maintain a number of projects, some of which might have more than one license, while others only have one, you can use the `_.license()` mixin to automate the process of adding license info.
+
+Examples:
+
+```js
+[%= _.license() %]
+```
+> Released under the MIT license
+
+Customize the output:
+
+```js
+[%= _.license('Licensed under the ') %]
+```
+> Licensed under the MIT license
+
+
 ## _.contributors()
+Render contributors listed in the project's package.json.
+
+
+## _.username()
+Extract the username or org from URLs in the project's package.json. The mixin will extract the username from the `homepage` property if it exists. If not, it will try to extract the username from the `git.url` property.
+
+
+## _.homepage()
+Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.
