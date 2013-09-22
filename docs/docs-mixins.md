@@ -47,6 +47,20 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
+## _.meta()
+
+Get the value of any property in `package.json`. Example:
+
+```js
+[%= _.meta('name') %]
+[%= _.meta('version') %]
+[%= _.meta('contributors') %]
+[%= _.meta('keywords') %]
+```
+A second paramter can be passed in to set the indentation on returned JSON: `[%= _.meta('contributors', 4) %]`. _This only works for stringified objects_.
+
+Also, if left undefined (`[%= _.meta() %]`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
+
 
 ## _.contributors()
 Render contributors listed in the project's package.json.
