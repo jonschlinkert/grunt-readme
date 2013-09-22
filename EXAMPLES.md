@@ -8,6 +8,8 @@
 ```js
 {%= name %}
 ```
+> grunt-readme
+
 
 ## Version
 
@@ -17,6 +19,10 @@ v{%= version %}
 {%= version ? " v" + version : "" %}
 {%= version ? " * @version " + version + "\\n" : "" %}
 ```
+> 0.1.3
+> v0.1.3
+> v0.1.3
+> * @version 0.1.3\n
 
 ## Description
 
@@ -24,6 +30,10 @@ v{%= version %}
 {%= description %}
 {%= description ? " * " + description + "\\n" : "" %}
 ```
+> Generate your README from a template. If you already use Grunt, this is a no brainer.
+> * Generate your README from a template. If you already use Grunt, this is a no brainer.\n
+
+
 
 ## Homepage
 
@@ -32,6 +42,11 @@ v{%= version %}
 {%= homepage ? " * " + homepage + "\n" : "" %}
 {%= homepage ? " * @docs " + homepage + "\\n" : "" %}
 ```
+>  | https://github.com/assemble/grunt-readme
+> * https://github.com/assemble/grunt-readme
+>
+>  * @docs https://github.com/assemble/grunt-readme\n
+
 
 
 ## [AUTHORS](NPM https://npmjs.org/doc/json.html)
@@ -42,44 +57,59 @@ To use `author` data from `package.json`:
 
 ```js
 [{%= author.name %}]({%= author.url %})
-// => [Jon schlinkert](http://github.com/jonschlinkert)
+```
+> [Jon schlinkert](http://github.com/jonschlinkert)
 
+```js
 {%= author.name ? " * @author " + author.name + "\\n" : "" %}
 {%= author.url ? " * @link " + author.url + "\\n" : "" %}
 ```
+>  * @author Jon Schlinkert\n
+>  * @link https://github.com/jonschlinkert\n
 
 Or, if you prefer to use an `AUTHORS` file in the root of the project:
 
 ```js
 [{%= authors[0].name %}]({%= authors[0].url %})
-// =>
-// [Jon schlinkert](http://github.com/jonschlinkert)
-// [Brian Woodward](http://github.com/doowb)
 ```
+> [Jon schlinkert](http://github.com/jonschlinkert)
+> [Brian Woodward](http://github.com/doowb)
+
 
 ## Time and date
 
 ```js
 {%= grunt.template.today() %}
-// => Tue Sep 17 2013 18:38:42
-//
-{%= grunt.template.today("yyyy") %}
-// => 2013
-
-{%= grunt.template.today("yyyy-mm-dd") %}
-// => 2013-09-17
 ```
+> Tue Sep 17 2013 18:38:42
+
+```js
+{%= grunt.template.today("yyyy") %}
+```
+> 2013
+
+```js
+{%= grunt.template.today("yyyy-mm-dd") %}
+```
+> 2013-09-17
 
 ## Banner
 
 ```js
 /*!
  * {%= name %} v{%= version %},  {%= grunt.template.today("yyyy-mm-dd") %}
- * {%= website %}
+ * {%= homepage %}
  * Copyright (c) {%= grunt.template.today("yyyy") %} {%= author %}, contributors.
- * Licensed under the {%= license %}.
+ * {%= _.license() %}.
  */
 ```
+
+> /*!
+ * grunt-readme v0.1.3,  2013-09-22
+ * https://github.com/assemble/grunt-readme
+ * Copyright (c) 2013 [object Object], contributors.
+ * Released under the MIT license.
+ */
 
 ## Changelog / Release History
 
@@ -87,33 +117,26 @@ Or, if you prefer to use an `AUTHORS` file in the root of the project:
 {%= _.include("docs-changelog.md") %}
 ```
 
+> * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
+ * 2013-09-19   **v0.1.0**   First commmit.
+
+
 Or:
 
 ```js
-## Release History
-
  * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
 ```
+> * 2013   v0.1.0   First commit
+
+
 
 ## License
 
 ```
-Licensed under the [MIT license](./LICENSE-MIT).
-```
-Results in:
-
-Licensed under the [MIT license](./LICENSE-MIT).
-
-
-### _.license() mixin
-
-If you maintain a number of projects, some of which might have more than one license, while others only have one, you can use the `_.license()` mixin to automate the process of adding license info:
-
-```js
 {%= _.license() %}
-{%= _.license("Licensed under the ") %}
-{%= _.license("Licensed under the ", "\n") %}
 ```
+> Released under the [MIT license](./LICENSE-MIT).
+
 
 
 ## Contributors
@@ -121,4 +144,5 @@ If you maintain a number of projects, some of which might have more than one lic
 ```js
 {%= _.contributors() %}
 ```
-
+> Jon Schlinkert
+> Brian Woodward

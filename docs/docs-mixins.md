@@ -62,6 +62,25 @@ A second paramter can be passed in to set the indentation on returned JSON: `[%=
 Also, if left undefined (`[%= _.meta() %]`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
 
 
+## _.license()
+
+Add a "license statement" to the README, using the license(s) specified in package.json. If you maintain a number of projects, some of which might have more than one license, while others only have one, you can use the `_.license()` mixin to automate the process of adding license info.
+
+Examples:
+
+```js
+[%= _.license() %]
+```
+> Released under the MIT license
+
+Customize the output:
+
+```js
+[%= _.license('Licensed under the ') %]
+```
+> Licensed under the MIT license
+
+
 ## _.contributors()
 Render contributors listed in the project's package.json.
 
