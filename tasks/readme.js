@@ -147,6 +147,19 @@ module.exports = function(grunt) {
     // TODO: externalize these.
     _.mixin({
 
+      meta: function (key, opts) {
+        opts = opts || 2;
+        if (_.isUndefined(key)) {
+          return JSON.stringify(meta, null, opts) || {};
+        } else if (_.isString(meta[key])) {
+          return meta[key] || "";
+        } else if (_.isObject(meta[key])) {
+          return JSON.stringify(meta[key], null, opts) || {};
+        } else {
+          return null;
+        }
+      },
+
       /**
        * `{% _.resolve("module-name") %}`
        *
