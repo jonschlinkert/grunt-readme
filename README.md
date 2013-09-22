@@ -364,7 +364,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 14:52:22._
+_This file was generated on Sun Sep 22 2013 14:56:19._
 
 [minimatch]: https://github.com/isaacs/minimatch
 
@@ -376,8 +376,8 @@ _This file was generated on Sun Sep 22 2013 14:52:22._
  * https://github.com/assemble/grunt-readme
  * Copyright (c) 2013 Jon Schlinkert, Brian Woodward, contributors.
  * Licensed under the MIT license.
- 
-*/```
+ */
+```
 [View Source Code](tasks/lib/mixins.js#L1-6)
 
 ```js
@@ -387,20 +387,20 @@ _This file was generated on Sun Sep 22 2013 14:52:22._
  * @return {[type]}      The "safe" short version of the name
  * @example: "grunt-readme" => "readme"
  * @example: "helper-foo" => "foo"
- 
-*/```
+ */
+```
 [View Source Code](tasks/lib/mixins.js#L20-26)
 
 ```js
 /*
    * Parse the given file into an ast
-   
-*/```
+   */
+```
 [View Source Code](tasks/lib/mixins.js#L58-60)
 
 ```js
 /*
    * Output comment block with link to source code
-   
-*/```
+   */
+```
 [View Source Code](tasks/lib/mixins.js#L68-70)

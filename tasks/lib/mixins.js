@@ -71,7 +71,7 @@ exports.jsdocs = function (file) {
   for (var i = 0; i < comments.length; i++) {
     output += '\n\n';
     output += '```js\n';
-    output += '/*' + comments[i].text + '\n*/';
+    output += '/*' + comments[i].text + '*/\n';
     output += '```\n';
     output += '[View Source Code]({0}#L{1}-{2})'.
       replace('{0}', file).
