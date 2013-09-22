@@ -37,6 +37,8 @@ If you are happy with the defaults, no other configuration is required.
 
 
 ## Options
+assemble
+
 > This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
 To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
@@ -327,7 +329,17 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
+
 ### _.contributors()
+Render contributors listed in the project's package.json.
+
+
+### _.username()
+Extract the username or org from URLs in the project's package.json. The mixin will extract the username from the `homepage` property if it exists. If not, it will try to extract the username from the `git.url` property.
+
+
+### _.homepage()
+Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.
 
 
 
@@ -381,17 +393,20 @@ readme: {
 # Heads up!
 To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
 
+## Contributing
+Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-readme/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
+
+## Author
+
++ [github/Jon Schlinkert](https://github.com/jonschlinkert)
++ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
+
 
 ## Release History
 
  * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
  * 2013-09-19   **v0.1.0**   First commmit.
  
-
-## Author
-
-+ [github/Jon Schlinkert](https://github.com/jonschlinkert)
-+ [twitter/Jon Schlinkert](http://twitter.com/Jon Schlinkert)
 
 ## License
 Copyright (c) 2013 Jon Schlinkert
@@ -400,6 +415,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 14:40:00._
+_This file was generated on Sun Sep 22 2013 15:05:01._
 
 [minimatch]: https://github.com/isaacs/minimatch

@@ -47,4 +47,14 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
+
 ## _.contributors()
+Render contributors listed in the project's package.json.
+
+
+## _.username()
+Extract the username or org from URLs in the project's package.json. The mixin will extract the username from the `homepage` property if it exists. If not, it will try to extract the username from the `git.url` property.
+
+
+## _.homepage()
+Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.

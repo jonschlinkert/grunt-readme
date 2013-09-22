@@ -38,7 +38,7 @@ module.exports = function(grunt) {
       },
       sep: '\n',
       prefixes: [],
-      contributing: true
+      contributing: false
     });
 
     var resolve = options.resolve;
@@ -175,6 +175,22 @@ module.exports = function(grunt) {
       shortname: function (name, patterns) {
         patterns = patterns || options.prefixes;
         return _.safename(name, patterns);
+      },
+
+      username: function () {
+        if(meta.homepage) {
+          return meta.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
+        } else {
+          return meta.repository.url.replace(/^([^:]+):(.+)/, '$1');
+        }
+      },
+
+      homepage: function () {
+        if(meta.homepage) {
+          return meta.homepage;
+        } else {
+          return meta.repository.url.replace(/^git@([^:]+):(.+)(?:.git)/, 'https://$1/$2');
+        }
       },
 
       contributors: function (sep) {
