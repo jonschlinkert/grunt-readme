@@ -38,7 +38,7 @@ module.exports = function(grunt) {
       },
       sep: '\n',
       prefixes: [],
-      contributing: true
+      contributing: false
     });
 
     var resolve = options.resolve;
