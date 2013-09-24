@@ -8,43 +8,186 @@
 'use strict';
 
 // node_modules
-var acorn = require('acorn');
-var grunt = require('grunt');
-var _ = grunt.util._;
+var frontMatter = require('assemble-yaml');
+var grunt       = require('grunt');
+var acorn       = require('acorn');
+var path        = require('path');
+var load        = require('resolve-dep');
+var _           = grunt.util._;
+
 
 // Export the utils module.
 exports = module.exports = {};
 
+// Metadata
+var config = require(path.resolve(process.cwd(),'package.json'));
 
 
-/*
+/**
+ * `{% _.resolve("module-name") %}`
+ *
+ * Automagically include a template from node_modules. The
+ * path to the template must be defined in the `main` property
+ * of the package.json in the npm module. A potential use case
+ * for this option is to include fragments or "partials" that
+ * are used in multiple projects.
+ */
+exports.resolve = function (patterns) {
+  return load.dev(patterns).map(function(file) {
+    return grunt.file.read(file).replace(/^#/gm, '##');
+  });
+};
+
+
+/**
+ * Access properties from package.json
+ * @param  {Object|String|Array} key
+ * @param  {Number} opts Indentation for stringified JSON
+ * @return {Object}
+ */
+exports.pkg = function (key, opts) {
+  opts = opts || 2;
+  if (_.isUndefined(key)) {
+    return JSON.stringify(config, null, opts) || {};
+  } else if (_.isString(config[key])) {
+    return config[key] || "";
+  } else if (_.isObject(config[key])) {
+    return JSON.stringify(config[key], null, opts) || {};
+  } else {
+    return null;
+  }
+};
+
+
+/**
+ * Add a copyright statement, with author and year(s) in effect.
+ * @param  {Number} startYear Optional parameter to define the start year of the project.
+ * @return {String}           Complete copyright statement.
+ * @example
+ *   {%= _.copyright() %} => Copyright (c) 2013 Jeffrey Herb, contributors.
+ *   {%= _.copyright('2012') %} => Copyright (c) 2012-2013 Jeffrey Herb, contributors.
+ */
+exports.copyright = function (startYear) {
+  var author = config.author ? (config.author.name || config.author) : name;
+  var today = grunt.template.today('yyyy') + ' ';
+  var date = startYear ? startYear + '-' + today : today;
+  return 'Copyright (c) ' + date + author + ', contributors.';
+};
+
+
+
+exports.license = function (prepend) {
+  prepend = prepend || "Released under the ";
+  if(config.licenses) {
+    return prepend + _.pluck(config.licenses, "type").join(", ") + " license" + (config.licenses.length === 1 ? '' : 's');
+  } else if(config.license) {
+    return prepend + config.license.type + " license";
+  } else {
+    return;
+  }
+};
+
+
+exports.username = function () {
+  if(config.homepage) {
+    return config.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
+  } else {
+    return config.repository.url.replace(/^([^:]+):(.+)/, '$1');
+  }
+};
+
+
+exports.homepage = function () {
+  if(config.homepage) {
+    return config.homepage;
+  } else {
+    return config.repository.url.replace(/^git@([^:]+):(.+)(?:.git)/, 'https://$1/$2');
+  }
+};
+
+
+exports.contributors = function (sep) {
+  sep = sep || "";
+  if(config.contributors) {
+    return _.pluck(config.contributors, "name").join("\n") + sep;
+  } else {return; }
+};
+
+
+/**
  * _.safename("helper-foo")
  * @param  {[type]} name The name to be modified
  * @return {[type]}      The "safe" short version of the name
  * @example: "grunt-readme" => "readme"
  * @example: "helper-foo" => "foo"
  */
-
-var prefixes = [
-  "grunt",
-  "helper",
-  "mixin"
-];
-
 exports.safename = function (name, patterns) {
+  var prefixes = ["grunt", "helper", "mixin"];
   prefixes = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
   var re = new RegExp('^(?:' + prefixes.join('|') + ')[\-_]?');
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
+exports.shortname = function (name, patterns) {
+  return _.safename(name, patterns);
+};
 
 
+/**
+ * Extend context with YAML front matter from README template
+ * @param  {String} src  The README template
+ * @param  {Object} opts Options to pass to assemble-front-matter
+ * @return {Object}      The YAML front matter data object
+ */
+exports.extractYFM = function(src, opts) {
+  opts = opts || {fromFile: true};
+  var data = {};
+  try {
+    data = frontMatter.extract(src, opts).context;
+  } catch (e) {}
+  return data;
+};
+
+/**
+ * Strip YAML front matter
+ * @param  {String} src  The source file with YFM
+ * @param  {Object} opts Change delimiters with opts.start|opts.end
+ * @return {String}      Content of the file, sans YFM
+ */
+
+exports.strip = function (src, opts) {
+  opts = opts || {
+    start: '---',
+    end: '---'
+  };
+  var re = new RegExp('^'
+    + opts.start + '(?:\\s*)?([\\s\\S]*)?\\n?'
+    + opts.end + '\\s*$\\n?([\\s\\S]*)',
+  'm');
+  return src.replace(re, '$2');
+};
+
+// this is split out in anticipation of the front-matter
+// lib adding 'strip' or 'stripYFM' as a method
+exports.stripYFM = function(src, opts) {
+  var data = {};
+  try {
+    data = exports.strip(src, opts);
+  } catch (e) {}
+  return data;
+};
+
+
+/**
+ * jsdocs
+ * @param  {[type]} file [description]
+ * @return {[type]}      [description]
+ */
 exports.jsdocs = function (file) {
-
   var output = '';
   var comments = [];
 
   function onComment(block, text, start, end, startLine, endLine) {
-    if(block) {
+    if (block) {
       comments.push({
         text: text,
         start: startLine,
@@ -62,7 +205,7 @@ exports.jsdocs = function (file) {
     sourceFile: file
   };
   var ast = acorn.parse(grunt.file.read(file), opts);
-  
+
   /*
    * Output comment block with link to source code
    */
