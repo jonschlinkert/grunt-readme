@@ -59,7 +59,8 @@ module.exports = function(grunt) {
      * Root context object passed to templates with a value of "this"
      * @type {Object}
      */
-    var meta = _.extend({}, grunt.file.readJSON('package.json'), options.metadata);
+    var pkg = require(path.resolve(process.cwd(),'package.json'));
+    var meta = _.extend({}, pkg, options.metadata);
     grunt.verbose.writeln("meta: ", meta);
 
 
@@ -134,9 +135,17 @@ module.exports = function(grunt) {
       tmpl = templates('README.tmpl.md');
     }
 
-    // Write the template
-    tmpl = grunt.file.read(tmpl);
+    // Extract and parse YAML front matter
+    var yfm = _.extractYFM(tmpl);
+
+    // Extend context with data from YFM
+    meta = _.extend({}, meta, yfm);
+    tmpl = _.stripYFM(grunt.file.read(tmpl));
+
+
+    grunt.verbose.writeln("yfm: ", yfm);
     grunt.verbose.writeln("tmpl: ", tmpl);
+    grunt.verbose.writeln("meta: ", meta);
 
 
     // Show all options flags in verbose mode.
@@ -160,21 +169,6 @@ module.exports = function(grunt) {
         }
       },
 
-      /**
-       * `{% _.resolve("module-name") %}`
-       *
-       * Automagically include a template from node_modules. The
-       * path to the template must be defined in the `main` property
-       * of the package.json in the npm module. A potential use case
-       * for this option is to include fragments or "partials" that
-       * are used in multiple projects.
-       */
-      resolve: function (patterns) {
-        return load.dev(patterns).map(function(file) {
-          return grunt.file.read(file).replace(/^#/gm, '##');
-        });
-      },
-
       doc: function (filepath, sep) {
         sep = sep || options.sep;
         return glob.content(docs(filepath), sep).replace(/^#/gm, '##');
@@ -183,55 +177,9 @@ module.exports = function(grunt) {
       include: function (filepath, sep) {
         sep = sep || options.sep;
         return glob.content(templates(filepath), sep).replace(/^#/gm, '##');
-      },
-
-      shortname: function (name, patterns) {
-        patterns = patterns || options.prefixes;
-        return _.safename(name, patterns);
-      },
-
-      username: function () {
-        if(meta.homepage) {
-          return meta.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
-        } else {
-          return meta.repository.url.replace(/^([^:]+):(.+)/, '$1');
-        }
-      },
-
-      homepage: function () {
-        if(meta.homepage) {
-          return meta.homepage;
-        } else {
-          return meta.repository.url.replace(/^git@([^:]+):(.+)(?:.git)/, 'https://$1/$2');
-        }
-      },
-
-      contributors: function (sep) {
-        sep = sep || "";
-        if(meta.contributors) {
-          return _.pluck(meta.contributors, "name").join("\n") + sep;
-        } else {return; }
-      },
-
-      license: function (prepend) {
-        prepend = prepend || "Released under the ";
-        if(meta.licenses) {
-          return prepend + _.pluck(meta.licenses, "type").join(", ") + " license" + (meta.licenses.length === 1 ? '' : 's');
-        } else if(meta.license) {
-          return prepend + meta.license.type + " license";
-        } else {return; }
       }
+
     });
-
-
-    // TODO: remove these.
-    grunt.verbose.writeln('_.include: '.magenta, _.include('README.tmpl.md'));
-    grunt.verbose.writeln('_.doc: '.magenta, _.doc('docs-options.md'));
-    grunt.verbose.writeln('_.resolve: '.magenta, _.resolve('assemble-*'));
-    grunt.verbose.writeln('_.license: '.magenta, _.license());
-    grunt.verbose.writeln('_.contributors: '.magenta, _.contributors());
-    grunt.verbose.writeln('_.shortname: '.magenta, _.shortname('helper-success'));
-    grunt.verbose.writeln('_.shortname: '.magenta, _.shortname('grunt-success'));
 
 
     /**
@@ -284,8 +232,8 @@ module.exports = function(grunt) {
     var existingReadme = grunt.file.exists('README.md') ? grunt.file.read('README.md') : '';
     var re = /(\_(This file was generated on).*)/;
     if (existingReadme.replace(re, '') !== newReadme.replace(re, '')) {
-      // Replace square brackets with curly braces. Square brackets are used on templates
-      // that should not be evaluated in code examples.
+      // Replace square brackets with curly braces. Use square brackets on templates
+      // that should not be evaluated, such as in code examples.
       grunt.file.write('README.md', newReadme.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}'));
       grunt.log.ok('Created README.md');
     } else {
