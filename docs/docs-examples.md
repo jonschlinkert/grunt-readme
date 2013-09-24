@@ -1,4 +1,6 @@
-## Basic readme example
+## Basic readme
+
+[Also see examples →](./EXAMPLES.md)
 
 ```js
 # my-project
@@ -19,8 +21,9 @@ Copyright (c) 2012-[%= grunt.template.today('yyyy') %] [[%= author.name %]]([%= 
 [%= _.license() %]
 ```
 
+## All available options
 
-## All options
+[Also see examples →](./EXAMPLES.md)
 
 ```js
 readme: {

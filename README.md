@@ -282,6 +282,14 @@ or as a second parameter in the `include` or `doc` mixins.
 
 
 ## mixins
+Mixins use the following formats:
+
+* `_.mixin()`: when used in JavaScript
+* `{%= _.mixin() %}`: when used in templates
+
+
+### "include" mixins
+
 > Three different mixins are built into the task for including "external" content: `include`, `doc` and `resolve`. Each is used for a different purpose.
 
 Here is a summary of what they do (settings for the `include` and `doc` mixins can be customized in the task options):
@@ -291,7 +299,7 @@ Here is a summary of what they do (settings for the `include` and `doc` mixins c
 * `{%= _.resolve("file.md") %}`: include a **specific file** from *node_modules*`.
 
 
-### _.include()
+#### _.include()
 Use the `include` mixin in templates to pull in content from other files:
 
 ```js
@@ -307,11 +315,11 @@ Use the `include` mixin in templates to pull in content from other files:
 Unless overridden in the `templates` option, the `include` mixin will use the `./node_modules/grunt-readme/tasks/templates/` directory (from the root of your project) as the `cwd` for templates.
 
 
-### _.doc()
+#### _.doc()
 Same as the `include` mixin but is hard-coded to use the `docs/` folder of your project as the `cwd` for templates.
 
 
-### _.resolve()
+#### _.resolve()
 Use the `resolve` mixin in templates to include content _from named NPM modules listed in `devDependencies`_:
 
 ```js
@@ -331,7 +339,9 @@ Here is a `package.json` for a bogus project we created, `my-npm-module`, to sto
 }
 ```
 
-### _.meta()
+### convenience mixins
+
+#### _.meta()
 
 Get the value of any property in `package.json`. Example:
 
@@ -345,13 +355,29 @@ A second paramter can be passed in to set the indentation on returned JSON: `{%=
 
 Also, if left undefined (`{%= _.meta() %}`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
 
-### _.jsdocs()
-
+#### _.jsdocs()
 Parse and extract comments from specified JavaScript files.
 
 
-### _.license()
+#### _.copyright()
+Add a copyright statement, including the name of the author and the year, or range of years, the copyright is in effect. The primary advantage of using this is to ensure that the copyright dates are correct.
 
+Parameters:
+
+* `Number`: Optionally define the start year of the project.
+
+Examples:
+
+```js
+{%= _.copyright() %}
+// => Copyright (c) 2013 Jeffrey Herb, contributors.
+
+{%= _.copyright('2011') %}
+// => Copyright (c) 2011-2013 Jeffrey Herb, contributors.
+```
+
+
+#### _.license()
 Add a "license statement" to the README, using the license(s) specified in package.json. If you maintain a number of projects, some of which might have more than one license, while others only have one, you can use the `_.license()` mixin to automate the process of adding license info.
 
 Examples:
@@ -369,21 +395,23 @@ Customize the output:
 > Licensed under the MIT license
 
 
-### _.contributors()
+#### _.contributors()
 Render contributors listed in the project's package.json.
 
 
-### _.username()
+#### _.username()
 Extract the username or org from URLs in the project's package.json. The mixin will extract the username from the `homepage` property if it exists. If not, it will try to extract the username from the `git.url` property.
 
 
-### _.homepage()
+#### _.homepage()
 Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.
 
 
 
 ## Usage Examples
-### Basic readme example
+### Basic readme
+
+[Also see examples →](./EXAMPLES.md)
 
 ```js
 ## my-project
@@ -404,8 +432,9 @@ Copyright (c) 2012-{%= grunt.template.today('yyyy') %} [{%= author.name %}]({%= 
 {%= _.license() %}
 ```
 
+### All available options
 
-### All options
+[Also see examples →](./EXAMPLES.md)
 
 ```js
 readme: {
@@ -454,6 +483,6 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sun Sep 22 2013 19:10:48._
+_This file was generated on Tue Sep 24 2013 14:15:24._
 
 [minimatch]: https://github.com/isaacs/minimatch
