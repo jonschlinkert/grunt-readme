@@ -7,13 +7,6 @@
     "name": "Jon Schlinkert",
     "url": "https://github.com/jonschlinkert"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/assemble/grunt-readme.git"
-  },
-  "bugs": {
-    "url": "https://github.com/assemble/grunt-readme/issues"
-  },
   "contributors": [
     {
       "name": "Jon Schlinkert",
@@ -24,24 +17,28 @@
       "url": "https://github.com/doowb"
     }
   ],
-  "main": "tasks/readme.js",
   "licenses": [
     {
       "type": "MIT",
       "url": "https://github.com/assemble/grunt-readme/blob/master/LICENSE-MIT"
     }
   ],
-  "engines": {
-    "node": ">= 0.8.0"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assemble/grunt-readme.git"
   },
+  "bugs": {
+    "url": "https://github.com/assemble/grunt-readme/issues"
+  },
+  "main": "tasks/readme.js",
   "dependencies": {
     "resolve-dep": "~0.1.2",
     "glob-utils": "~0.1.0",
-    "grunt": "~0.4.1",
     "acorn": "~0.3.1",
     "assemble-front-matter": "~0.1.0"
   },
   "devDependencies": {
+    "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-nodeunit": "~0.2.0"
   },

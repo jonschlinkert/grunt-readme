@@ -8,7 +8,7 @@
 'use strict';
 
 // node_modules
-var frontMatter = require('assemble-yaml');
+var frontMatter = require('assemble-front-matter');
 var grunt       = require('grunt');
 var acorn       = require('acorn');
 var path        = require('path');
