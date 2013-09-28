@@ -8,12 +8,12 @@
 'use strict';
 
 // node_modules
-var frontMatter = require('assemble-front-matter');
 var grunt       = require('grunt');
 var acorn       = require('acorn');
 var path        = require('path');
 var load        = require('resolve-dep');
 var _           = grunt.util._;
+
 
 
 // Export the utils module.
@@ -129,51 +129,6 @@ exports.safename = function (name, patterns) {
 };
 exports.shortname = function (name, patterns) {
   return _.safename(name, patterns);
-};
-
-
-/**
- * Extend context with YAML front matter from README template
- * @param  {String} src  The README template
- * @param  {Object} opts Options to pass to assemble-front-matter
- * @return {Object}      The YAML front matter data object
- */
-exports.extractYFM = function(src, opts) {
-  opts = opts || {fromFile: true};
-  var data = {};
-  try {
-    data = frontMatter.extract(src, opts).context;
-  } catch (e) {}
-  return data;
-};
-
-/**
- * Strip YAML front matter
- * @param  {String} src  The source file with YFM
- * @param  {Object} opts Change delimiters with opts.start|opts.end
- * @return {String}      Content of the file, sans YFM
- */
-
-exports.strip = function (src, opts) {
-  opts = opts || {
-    start: '---',
-    end: '---'
-  };
-  var re = new RegExp('^'
-    + opts.start + '(?:\\s*)?([\\s\\S]*)?\\n?'
-    + opts.end + '\\s*$\\n?([\\s\\S]*)',
-  'm');
-  return src.replace(re, '$2');
-};
-
-// this is split out in anticipation of the front-matter
-// lib adding 'strip' or 'stripYFM' as a method
-exports.stripYFM = function(src, opts) {
-  var data = {};
-  try {
-    data = exports.strip(src, opts);
-  } catch (e) {}
-  return data;
 };
 
 

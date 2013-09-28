@@ -12,6 +12,7 @@
 var path = require('path');
 var glob = require('glob-utils');
 var load = require('resolve-dep');
+var frontMatter  = require('assemble-yaml');
 
 
 module.exports = function(grunt) {
@@ -136,11 +137,13 @@ module.exports = function(grunt) {
     }
 
     // Extract and parse YAML front matter
-    var yfm = _.extractYFM(tmpl);
+    var yfm = frontMatter.extract(tmpl).context;
 
     // Extend context with data from YFM
     meta = _.extend({}, meta, yfm);
-    tmpl = _.stripYFM(grunt.file.read(tmpl));
+
+    // Extract content from template
+    tmpl = frontMatter.extract(tmpl).content;
 
 
     grunt.verbose.writeln("yfm: ", yfm);
