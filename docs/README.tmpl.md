@@ -1,5 +1,5 @@
 ---
-name: grunt-readme
+username: jonschlinkert
 ---
 # {%= name %} [![NPM version](https://badge.fury.io/js/{%= name %}.png)](http://badge.fury.io/js/{%= name %}) {% if (travis) { %} [![Build Status]({%= travis %}.png)]({%= travis %}){% } %}
 
@@ -23,12 +23,7 @@ name: grunt-readme
 To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `[%= .. %]`, `[%- .. %]`, and `[% .. %]`. The square brackets will be replaced with curly braces in the rendered output.
 
 ## Contributing
-Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
-
-## Author
-
-+ [github/{%= author.url %}]({%= author.url %})
-+ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %})
+Please see the [Contributing to {%= name %}]({%= homepage %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
 
 {% if (changelog) { %}
 ## Release History
@@ -36,8 +31,14 @@ Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CON
  * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
 {% } %}
 
+## Author
+
++ [github.com/{%= username %}](https://github.com/{%= username %})
++ [twitter.com/{%= username %}](http://twitter.com/{%= username %})
+
 ## License
-{%= _.include("docs-license.md") %}
+{%= copyright %}
+{%= license %}
 
 ***
 
