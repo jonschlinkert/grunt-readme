@@ -464,11 +464,6 @@ To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in
 ## Contributing
 Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-readme/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
 
-## Author
-
-+ [github/https://github.com/jonschlinkert](https://github.com/jonschlinkert)
-+ [twitter/https://github.com/jonschlinkert](http://twitter.com/https://github.com/jonschlinkert)
-
 
 ## Release History
 
@@ -476,13 +471,17 @@ Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-
  * 2013-09-19   v0.1.0   First commmit.
  
 
-## License
-Copyright (c) 2013 Jon Schlinkert
-Released under the MIT license
+## Author
 
++ [github.com/jonschlinkert](https://github.com/jonschlinkert)
++ [twitter.com/jonschlinkert](http://twitter.com/jonschlinkert)
+
+## License
+Copyright (c) 2013 Jon Schlinkert, contributors.
+Released under the MIT license
 
 ***
 
-_This file was generated on Fri Sep 27 2013 23:14:03._
+_This file was generated on Fri Sep 27 2013 23:54:25._
 
 [minimatch]: https://github.com/isaacs/minimatch
