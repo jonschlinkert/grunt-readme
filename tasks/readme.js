@@ -64,6 +64,14 @@ module.exports = function(grunt) {
     var meta = _.extend({}, pkg, options.metadata);
     grunt.verbose.writeln("meta: ", meta);
 
+    /**
+     * Convenience variables.
+     */
+    meta.username = _.username();
+    meta.homepage = _.homepage();
+    meta.copyright = _.copyright();
+    meta.license = _.license();
+
 
     /**
      * Templates directory.
