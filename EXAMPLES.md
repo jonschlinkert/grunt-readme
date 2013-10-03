@@ -93,6 +93,12 @@ Or, if you prefer to use an `AUTHORS` file in the root of the project:
 ```
 > 2013-09-17
 
+```js
+_This file was generated on {%= grunt.template.date("fullDate") %}._
+```
+> _This file was generated on Monday, September 30, 2013._
+
+
 ## Banner
 
 ```js
