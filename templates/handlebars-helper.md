@@ -61,3 +61,5 @@ grunt.initConfig({
 
 Licensed under the [MIT License](./LICENSE-MIT)
 Copyright (c) Jon Schlinkert, contributors.
+
+_This file was generated on {%= grunt.template.date("fullDate") %}._

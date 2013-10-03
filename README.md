@@ -47,12 +47,10 @@ To change the plugin's defaults, add a section to your project's Gruntfile named
 
 ```js
 grunt.initConfig({
-
   // The "readme" task
   readme: {
     options: {}
   }
-
 });
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
@@ -261,7 +259,7 @@ By default, the README task copies a basic `CONTRIBUTING.md` file to the root of
 Type: `String`
 Default: `\n`
 
-Separator to use between sections of content that is included using the `include` or `doc` mixins (more about these in the "Mixins" section below). This option is more useful when you use minimatch patterns to specify the files to include.
+Separator to use between sections of content that is included using the `include` or `doc` mixins (more about these in the "Mixins" section below). This option is more useful when you use [minimatch][] patterns to specify the files to include.
 
 The `sep` option can either be defined in the task options:
 
@@ -278,6 +276,7 @@ or as a second parameter in the `include` or `doc` mixins.
 * `{%= _.include("docs-*.md", "***") %}` (more below...)
 * `{%= _.doc("*.md", "\n***\n") %}` (more below...)
 
+[minimatch]: https://github.com/isaacs/minimatch
 
 
 
@@ -406,6 +405,8 @@ Extract the username or org from URLs in the project's package.json. The mixin w
 #### _.homepage()
 Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.
 
+[minimatch]: https://github.com/isaacs/minimatch
+
 
 
 ## Usage Examples
@@ -457,19 +458,16 @@ readme: {
 
 
 
-
 # Heads up!
 To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
 
 ## Contributing
 Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-readme/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
 
-
 ## Release History
 
  * 2013-09-21   v0.1.3   Completely refactored. Adds a lot of documentation.
  * 2013-09-19   v0.1.0   First commmit.
- 
 
 ## Author
 
@@ -482,6 +480,5 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Fri Sep 27 2013 23:54:25._
+_This file was generated on Thursday, October 3, 2013._
 
-[minimatch]: https://github.com/isaacs/minimatch

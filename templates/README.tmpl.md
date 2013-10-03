@@ -30,4 +30,4 @@ Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CON
 
 ***
 
-_This file was generated on {%= grunt.template.today() %}._
+_This file was generated on {%= grunt.template.date("fullDate") %}._

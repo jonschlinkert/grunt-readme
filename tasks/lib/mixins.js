@@ -124,7 +124,7 @@ exports.contributors = function (sep) {
 exports.safename = function (name, patterns) {
   var prefixes = ["grunt", "helper", "mixin"];
   prefixes = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
-  var re = new RegExp('^(?:' + prefixes.join('|') + ')[\-_]?');
+  var re = new RegExp('^(?:' + prefixes.join('|') + ')[-_]?');
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
 exports.shortname = function (name, patterns) {
