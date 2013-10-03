@@ -52,4 +52,4 @@ _(Nothing yet)_
 
 Task submitted by [{%= authors[0].name %}]({%= authors[0].url %})
 
-*This file was generated on {%= grunt.template.today() %}.*
+_This file was generated on {%= grunt.template.date("fullDate") %}._

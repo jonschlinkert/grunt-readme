@@ -44,6 +44,7 @@ module.exports = function(grunt) {
 
     var resolve = options.resolve;
 
+
     /**
      * options: { metadata: {} }
      * Metadata from "metadata" option
@@ -64,13 +65,14 @@ module.exports = function(grunt) {
     var meta = _.extend({}, pkg, options.metadata);
     grunt.verbose.writeln("meta: ", meta);
 
+
     /**
      * Convenience variables.
      */
-    meta.username = _.username();
-    meta.homepage = _.homepage();
     meta.copyright = _.copyright();
-    meta.license = _.license();
+    meta.homepage  = _.homepage();
+    meta.license   = _.license();
+    meta.username  = _.username();
 
 
     /**
@@ -193,6 +195,7 @@ module.exports = function(grunt) {
     });
 
 
+
     /**
      * TRAVIS
      */
@@ -200,6 +203,7 @@ module.exports = function(grunt) {
     if (meta.travis) {
       meta.travis = meta.repository.url.replace(/.*:\/\/github.com\/(.*)\.git/, 'https://travis-ci.org/$1');
     }
+
 
 
     /**
@@ -211,6 +215,7 @@ module.exports = function(grunt) {
     }
 
 
+
     /**
      * CONTRIBUTING.md
      * Copy contributing guide from templates.
@@ -219,6 +224,7 @@ module.exports = function(grunt) {
       grunt.file.copy(templates('CONTRIBUTING.md'), 'CONTRIBUTING.md');
       grunt.log.ok('Created CONTRIBUTING.md');
     }
+
 
 
     /**
@@ -234,24 +240,21 @@ module.exports = function(grunt) {
     }
 
 
+
     /**
      * Generate README
      */
-    var newReadme = grunt.template.process(tmpl, {data: meta, delimiters: 'readme'});
-
-    // Only write readme if it has changed.
-    var existingReadme = grunt.file.exists('README.md') ? grunt.file.read('README.md') : '';
     var re = /(\_(This file was generated on).*)/;
-    if (existingReadme.replace(re, '') !== newReadme.replace(re, '')) {
-      // Replace square brackets with curly braces. Use square brackets on templates
-      // that should not be evaluated, such as in code examples.
-      grunt.file.write('README.md', newReadme.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}'));
-      grunt.log.ok('Created README.md');
-    } else {
-      grunt.log.ok('Keeping README.md.');
-    }
+    var writeReadme = grunt.template.process(tmpl, {
+      data: meta,
+      delimiters: 'readme'
+    });
 
-    // // Fail task if any errors were logged.
+    // Write the README.md file, and replace square brackets with curly braces.
+    grunt.file.write('README.md', writeReadme.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}'));
+    grunt.log.ok('Created README.md');
+
+    // Fail task if any errors were logged.
     if (this.errorCount > 0) {return false;}
   });
 };

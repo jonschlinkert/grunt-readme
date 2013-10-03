@@ -121,3 +121,5 @@ Extract the username or org from URLs in the project's package.json. The mixin w
 
 ### _.homepage()
 Extract the homepage URL from the project's package.json. If a `homepage` property doesn't exist, the mixin will create a `homepage` URL using the value defined in the `git.url` property.
+
+[minimatch]: https://github.com/isaacs/minimatch

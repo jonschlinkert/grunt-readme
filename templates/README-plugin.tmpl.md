@@ -105,4 +105,4 @@ Licensed under the [MIT license](LICENSE-MIT).
 
 Project created by [{%= author.name %}]({%= author.url %}).
 
-_This file was generated on {%= grunt.template.today() %}._
+_This file was generated on {%= grunt.template.date("fullDate") %}._

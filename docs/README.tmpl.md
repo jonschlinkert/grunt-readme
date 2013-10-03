@@ -25,10 +25,21 @@ To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in
 ## Contributing
 Please see the [Contributing to {%= name %}]({%= homepage %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
 
-{% if (changelog) { %}
 ## Release History
-{%= _.include("docs-changelog.md") %} {% } else { %}
- * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
+{% if (changelog) {
+  _.each(changelog, function(details, version) {
+    var date = details.date;
+    if (date instanceof Date) {
+      date = grunt.template.date(new Date(date.getTime() + date.getTimezoneOffset() * 60000), 'yyyy-mm-dd');
+    }
+    print('\n * ' + [
+      date,
+      version,
+      details.changes.join(' '),
+    ].join('\u2003\u2003\u2003'));
+  });
+} else { %}
+_(Nothing yet)_
 {% } %}
 
 ## Author
@@ -42,6 +53,5 @@ Please see the [Contributing to {%= name %}]({%= homepage %}/blob/master/CONTRIB
 
 ***
 
-_This file was generated on {%= grunt.template.today() %}._
+_This file was generated on {%= grunt.template.date("fullDate") %}._
 
-[minimatch]: https://github.com/isaacs/minimatch

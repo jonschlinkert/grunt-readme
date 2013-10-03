@@ -6,12 +6,10 @@ To change the plugin's defaults, add a section to your project's Gruntfile named
 
 ```js
 grunt.initConfig({
-
   // The "readme" task
   readme: {
     options: {}
   }
-
 });
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
@@ -220,7 +218,7 @@ By default, the README task copies a basic `CONTRIBUTING.md` file to the root of
 Type: `String`
 Default: `\n`
 
-Separator to use between sections of content that is included using the `include` or `doc` mixins (more about these in the "Mixins" section below). This option is more useful when you use minimatch patterns to specify the files to include.
+Separator to use between sections of content that is included using the `include` or `doc` mixins (more about these in the "Mixins" section below). This option is more useful when you use [minimatch][] patterns to specify the files to include.
 
 The `sep` option can either be defined in the task options:
 
@@ -237,3 +235,4 @@ or as a second parameter in the `include` or `doc` mixins.
 * `[%= _.include("docs-*.md", "***") %]` (more below...)
 * `[%= _.doc("*.md", "\n***\n") %]` (more below...)
 
+[minimatch]: https://github.com/isaacs/minimatch
