@@ -1,7 +1,7 @@
 {
   "name": "grunt-readme",
   "description": "Generate your README from a template. If you already use Grunt, this is a no brainer.",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "homepage": "https://github.com/assemble/grunt-readme",
   "author": {
     "name": "Jon Schlinkert",
@@ -40,7 +40,8 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-jshint": "~0.6.0",
-    "grunt-contrib-nodeunit": "~0.2.0"
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "glob": "~3.2.6"
   },
   "keywords": [
     "gruntplugin",

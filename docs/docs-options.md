@@ -1,4 +1,3 @@
-{%= _.username() %}
 
 > This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
 
@@ -37,20 +36,10 @@ readme: {
 
 
 ## metadata
-Type: `String|Object`
+Type: `Object`
 Default: `package.json`
 
 Optional source of metadata to _extend the data object_ that is passed as context into the templates. Context of the data object is the value of `this`, and properties in `package.json` will be ignored when matching properties are defined on the `metadata` object. Example:
-
-
-```js
-readme: {
-  options: {
-    metadata: 'docs/metadata.json'
-  }
-}
-```
-or
 
 ```js
 readme: {
@@ -62,6 +51,39 @@ readme: {
   }
 }
 ```
+
+### data files
+
+Or specify the path or paths to any `.json` or `.yml` files to use. Any of the following formats will work:
+
+```js
+readme: {
+  options: {
+    metadata: 'docs/metadata.json'
+  }
+}
+```
+
+Array of files:
+
+```js
+readme: {
+  options: {
+    metadata: ['docs/one.json', 'docs/two.yml'],
+  }
+}
+```
+
+[minimatch][] (wilcard/globbing) patterns:
+
+```js
+readme: {
+  options: {
+    metadata: ['docs/*.{json,yml}', 'foo.json']
+  }
+}
+```
+
 
 Since context is the value of "this", the `metadata` path is not required in templates, only property names:
 
