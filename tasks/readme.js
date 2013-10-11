@@ -10,6 +10,7 @@
 'use strict';
 
 var path = require('path');
+var grunt = require('grunt');
 var glob = require('glob-utils');
 var load = require('resolve-dep');
 var frontMatter  = require('assemble-yaml');
@@ -29,7 +30,6 @@ module.exports = function(grunt) {
     // The 'readme' task options.
     var options = this.options({
       templates: '',
-      metadata: '' || {},
       resolve: {
         cwd: '',
         readme: '',
@@ -48,10 +48,12 @@ module.exports = function(grunt) {
       var reader = grunt.file.readJSON;
       switch(ext) {
         case '.json':
+          grunt.verbose.writeln('>> Reading JSON'.yellow);
           reader = grunt.file.readJSON;
           break;
         case '.yml':
         case '.yaml':
+          grunt.verbose.writeln('>> Reading YAML'.yellow);
           reader = grunt.file.readYAML;
           break;
       }
@@ -60,42 +62,45 @@ module.exports = function(grunt) {
 
 
     /**
-     * options: { metadata: {} }
+     * options.metadata
      * Metadata from "metadata" option
      * @type {Object}
      */
-    var metadata = options.metadata || [];
-    grunt.verbose.writeln("metadata: ", metadata);
+    var metadata = {};
+    if (options.metadata && options.metadata.length > 0) {
+      grunt.verbose.writeln('\n' + 'Processing data files: '.bold + '"' + options.metadata + '"');
 
-    if(metadata && metadata.length > 0) {
-      grunt.verbose.writeln(('\n' + 'Processing data...').grey);
-
-      metadata.forEach(function(file) {
-        var ext = path.extname(file);
-        var fileReader = dataFileReaderFactory(ext);
+      grunt.file.expand(options.metadata).map(function(file) {
+        var ext         = path.extname(file);
+        var fileReader  = dataFileReaderFactory(ext);
         var filecontent = grunt.file.read(file);
 
-        //Skip empty data files, as they'd cause an error with compiler
-        if(filecontent === '') {
+        // Skip empty data files to avoid compiling errors
+        if (filecontent === '') {
           grunt.verbose.writeln('Reading ' + file + '...empty, ' + 'skipping'.yellow);
         } else {
-          var metadataFile = fileReader(file);
-          if(metadataFile) {
-            metadata = _.extend({}, (metadata || {}), metadataFile);
-          } 
+          return {
+            data: fileReader(file)
+          };
         }
+      }).map(function(obj) {
+        metadata = _.extend({}, metadata, obj.data || {});
       });
-    }
+      grunt.log.ok("Metadata: ".yellow, metadata);
 
+    } else if (_.isObject(options.metadata)) {
+      metadata = options.metadata;
+      grunt.log.ok("Metadata: ".yellow, metadata);
+    }
 
     /**
      * meta: {}
      * Root context object passed to templates with a value of "this"
      * @type {Object}
      */
-    var pkg = require(path.resolve(process.cwd(),'package.json'));
-    var meta = _.extend({}, pkg, metadata);
-    grunt.verbose.writeln("meta: ", meta);
+    var pkg  = require(path.resolve(process.cwd(),'package.json'));
+    var meta = _.defaults(metadata, pkg);
+    grunt.verbose.writeln(">> Meta: \n".yellow, JSON.stringify(meta, null, 2));
 
 
     /**
@@ -282,10 +287,12 @@ module.exports = function(grunt) {
       delimiters: 'readme'
     });
 
-
+    function replaceBrackets(str) {
+      return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}');
+    }
 
     // Write the README.md file, and replace square brackets with curly braces.
-    grunt.file.write('README.md', writeReadme.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}'));
+    grunt.file.write('README.md', replaceBrackets(writeReadme).replace(/^\s*/, ''));
     grunt.log.ok('Created README.md');
 
     // Fail task if any errors were logged.
