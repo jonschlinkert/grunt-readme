@@ -44,16 +44,48 @@ module.exports = function(grunt) {
 
     var resolve = options.resolve;
 
+    var dataFileReaderFactory = function(ext) {
+      var reader = grunt.file.readJSON;
+      switch(ext) {
+        case '.json':
+          reader = grunt.file.readJSON;
+          break;
+        case '.yml':
+        case '.yaml':
+          reader = grunt.file.readYAML;
+          break;
+      }
+      return reader;
+    };
+
 
     /**
      * options: { metadata: {} }
      * Metadata from "metadata" option
      * @type {Object}
      */
-    if(_.isString(options.metadata)) {
-      options.metadata = grunt.file.readJSON(options.metadata);
+    var metadata = options.metadata || [];
+    grunt.verbose.writeln("metadata: ", metadata);
+
+    if(metadata && metadata.length > 0) {
+      grunt.verbose.writeln(('\n' + 'Processing data...').grey);
+
+      metadata.forEach(function(file) {
+        var ext = path.extname(file);
+        var fileReader = dataFileReaderFactory(ext);
+        var filecontent = grunt.file.read(file);
+
+        //Skip empty data files, as they'd cause an error with compiler
+        if(filecontent === '') {
+          grunt.verbose.writeln('Reading ' + file + '...empty, ' + 'skipping'.yellow);
+        } else {
+          var metadataFile = fileReader(file);
+          if(metadataFile) {
+            metadata = _.extend({}, (metadata || {}), metadataFile);
+          } 
+        }
+      });
     }
-    grunt.verbose.writeln("metadata: ", options.metadata);
 
 
     /**
@@ -62,7 +94,7 @@ module.exports = function(grunt) {
      * @type {Object}
      */
     var pkg = require(path.resolve(process.cwd(),'package.json'));
-    var meta = _.extend({}, pkg, options.metadata);
+    var meta = _.extend({}, pkg, metadata);
     grunt.verbose.writeln("meta: ", meta);
 
 
@@ -249,6 +281,8 @@ module.exports = function(grunt) {
       data: meta,
       delimiters: 'readme'
     });
+
+
 
     // Write the README.md file, and replace square brackets with curly braces.
     grunt.file.write('README.md', writeReadme.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}'));
