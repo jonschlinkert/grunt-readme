@@ -86,11 +86,11 @@ module.exports = function(grunt) {
       }).map(function(obj) {
         metadata = _.extend({}, metadata, obj.data || {});
       });
-      grunt.log.ok("Metadata: ".yellow, metadata);
+      grunt.verbose.ok("Metadata: ".yellow, metadata);
 
     } else if (_.isObject(options.metadata)) {
       metadata = options.metadata;
-      grunt.log.ok("Metadata: ".yellow, metadata);
+      grunt.verbose.ok("Metadata: ".yellow, metadata);
     }
 
     /**
@@ -98,7 +98,7 @@ module.exports = function(grunt) {
      * Root context object passed to templates with a value of "this"
      * @type {Object}
      */
-    var pkg  = require(path.resolve(process.cwd(),'package.json'));
+    var pkg  = require(path.resolve(process.cwd(), 'package.json'));
     var meta = _.defaults(metadata, pkg);
     grunt.verbose.writeln(">> Meta: \n".yellow, JSON.stringify(meta, null, 2));
 
@@ -111,6 +111,17 @@ module.exports = function(grunt) {
     meta.license   = _.license();
     meta.username  = _.username();
 
+
+
+    /**
+     * Resolved paths to module to use as the cwd for metadata and templates.
+     * These options currently aren't used in the examples, and they aren't
+     * documented yet so don't get used to them because they might go away.
+     * @type {String}
+     */
+    resolve.cwd       = _.isEmpty(resolve.cwd)       ? '' : load.devDirname(resolve.cwd);
+    resolve.metadata  = _.isEmpty(resolve.metadata)  ? '' : load.devDirname(resolve.metadata);
+    resolve.templates = _.isEmpty(resolve.templates) ? '' : load.devDirname(resolve.templates);
 
     /**
      * Templates directory.
@@ -137,22 +148,12 @@ module.exports = function(grunt) {
       docs = path.join.bind(null, String(load.devDirname(resolve.docs)), '');
     } else if(_.isEmpty(options.docs)) {
       docs = path.join.bind(options.docs, 'docs');
+    } else if(options.docs) {
+      docs = path.join.bind(process.cwd(), options.docs, '');
     } else {
-      docs = path.join.bind(process.cwd(), options.docs + '');
+      docs = path.join.bind(null, __dirname, '../docs');
     }
     grunt.verbose.writeln("docs: ", docs('test'));
-
-
-    /**
-     * Resolved paths to module to use as the cwd for metadata and templates.
-     * These options currently aren't used in the examples, and they aren't
-     * documented yet so don't get used to them because they might go away.
-     * @type {String}
-     */
-    resolve.cwd       = _.isEmpty(resolve.cwd)       ? '' : load.devDirname(resolve.cwd);
-    resolve.metadata  = _.isEmpty(resolve.metadata)  ? '' : load.devDirname(resolve.metadata);
-    resolve.templates = _.isEmpty(resolve.templates) ? '' : load.devDirname(resolve.templates);
-
 
     /**
      * README.tmpl.md
@@ -173,7 +174,7 @@ module.exports = function(grunt) {
     var tmpl;
     if (options.readme) {
       tmpl = options.readme;
-    } else if (docs) {
+    } else if (options.docs || resolve.docs) {
       tmpl = docs('README.tmpl.md');
     } else if (grunt.file.exists('./docs/README.tmpl.md')) {
       tmpl = './docs/README.tmpl.md';
