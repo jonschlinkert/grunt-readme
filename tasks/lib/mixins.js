@@ -122,8 +122,8 @@ exports.contributors = function (sep) {
  * @example: "helper-foo" => "foo"
  */
 exports.safename = function (name, patterns) {
-  var prefixes = ['grunt', 'helper', 'mixin', 'assemble-contrib', 'assemble'];
-  prefixes = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
+  var blacklist = ['grunt', 'helper', 'handlebars-helper', 'mixin', 'assemble-contrib', 'assemble'];
+  var prefixes = _.unique(_.flatten(_.union([], blacklist, patterns || [])));
   var re = new RegExp('^(?:' + prefixes.join('|') + ')[-_]?');
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
