@@ -110,7 +110,7 @@ module.exports = function(grunt) {
     meta.homepage  = _.homepage();
     meta.license   = _.license();
     meta.username  = _.username();
-
+    meta.shortname = _.shortname(meta.name);
 
 
     /**

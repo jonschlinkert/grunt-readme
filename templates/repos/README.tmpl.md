@@ -1,0 +1,42 @@
+# {%= name %} [![NPM version](https://badge.fury.io/js/{%= name %}.png)](http://badge.fury.io/js/{%= name %}) {% if (travis) { %} [![Build Status]({%= travis %}.png)]({%= travis %}){% } %}
+
+> {%= description %}
+
+This repo is based on [grunt-contrib](https://github.com/gruntjs/grunt-contrib/).
+
+## Overview
+This list is here as a convenience, you will still need to download the tasks individually.
+
+### [assemble](http://assemble.io) [![NPM version](https://badge.fury.io/js/assemble.png)](http://badge.fury.io/js/assemble)
+> Static site generator for Grunt.js, Yeoman and Node.js. Used by H5BP/Effeckt, Topcoat, Web Experience Toolkit, and hundreds of other projects to build sites, themes, components, documentation, blogs and gh-pages.
+
+{% _.each(repos, function(task) { %}{% if(/\b(grunt-(?:(?!(init|assemble|metadata|data))))\b/g.test(task.name)) { %}
+
+### [{%= task.name %}]({%= task.url %}) [![NPM version](https://badge.fury.io/js/{%= task.name %}.png)](http://badge.fury.io/js/{%= task.name %})
+> {%= task.description %} {% } %} {% }); %}
+
+To update this list, from the root of the project run `node docs/repos && grunt`.
+
+## Contributing
+Please see the [Contributing](http://assemble.io/contributing.html) guide for information on contributing to this project.
+
+## Authors
+
+**Jon Schlinkert**
+
++ [github/jonschlinkert](https://github.com/jonschlinkert)
++ [twitter/jonschlinkert](http://twitter.com/jonschlinkert)
+
+**Brian Woodward**
+
++ [github/doowb](https://github.com/doowb)
++ [twitter/doowb](http://twitter.com/jonschlinkert)
+
+
+## License
+{%= copyright %}
+{%= license %}
+
+***
+
+_This file was generated on {%= grunt.template.date("fullDate") %}._

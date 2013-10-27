@@ -34,6 +34,26 @@ module.exports = function(grunt) {
       tests: ['test/*_test.js'],
     },
 
+    // Pull down a list of repos from Github.
+    repos: {
+      helpers: {
+        options: {
+          path: '/orgs/helpers/'
+        },
+        files: {
+          'tmp/helpers.json': ['repos?page=1&per_page=100']
+        }
+      },
+      assemble: {
+        options: {
+          path: '/orgs/assemble/'
+        },
+        files: {
+          'tmp/assemble.json': ['repos?page=1&per_page=100']
+        }
+      }
+    },
+
     readme: {
       options: {
         // metadata: 'docs/one.json',
