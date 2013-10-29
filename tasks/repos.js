@@ -61,7 +61,7 @@ module.exports = function(grunt) {
                 git_url    : repo.git_url,
                 clone_url  : repo.clone_url,
                 url        : repo.html_url,
-                download   : repo.html_url + 'archive/master.zip'
+                download   : repo.html_url + '/archive/master.zip'
               });
             });
 
