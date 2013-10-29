@@ -51,10 +51,17 @@ module.exports = function(grunt) {
             var repos = [];
             json.forEach(function (repo) {
               repos.push({
-                name: repo.name,
-                version: repo.version,
+                name       : repo.name,
+                forks      : repo.forks,
+                watchers   : repo.watchers,
+                fullname   : repo.full_name,
+                version    : repo.version,
                 description: repo.description,
-                url: repo.html_url
+                language   : repo.language,
+                git_url    : repo.git_url,
+                clone_url  : repo.clone_url,
+                url        : repo.html_url,
+                download   : repo.html_url + 'archive/master.zip'
               });
             });
 
