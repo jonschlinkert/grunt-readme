@@ -5,22 +5,15 @@ username: jonschlinkert
 
 > {%= description %}
 
-[Also see examples →](./EXAMPLES.md)
+[Also see examples →](./EXAMPLES.md) and [documentation →](./DOCS.md)
+
+Please [report any bugs or feature requests](https://github.com/helpers/{%= name %}/issues/new), thanks!
 
 ## Getting Started
 {%= _.doc("docs-getting-started.md") %}
 
-## Options
-{%= _.doc("docs-options.md") %}
-
-## mixins
-{%= _.doc("docs-mixins.md") %}
-
-## Usage Examples
-{%= _.doc("docs-examples.md") %}
-
-# Heads up!
-To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `[%= .. %]`, `[%- .. %]`, and `[% .. %]`. The square brackets will be replaced with curly braces in the rendered output.
+## Example README template
+{%= _.doc("docs-example.md") %}
 
 ## Contributing
 Please see the [Contributing to {%= name %}]({%= homepage %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
@@ -55,3 +48,7 @@ _(Nothing yet)_
 
 _This file was generated on {%= grunt.template.date("fullDate") %}._
 
+
+[grunt]: http://gruntjs.com/
+[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
+[package.json]: https://npmjs.org/doc/json.html

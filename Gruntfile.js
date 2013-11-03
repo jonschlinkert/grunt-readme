@@ -56,12 +56,7 @@ module.exports = function(grunt) {
 
     readme: {
       options: {
-        // metadata: 'docs/one.json',
-        // metadata: ['docs/one.json', 'docs/two.yml'],
-        // metadata: ['docs/*.{json,yml}'],
-        // metadata: {
-        //   name: "Bar"
-        // }
+        alt: 'docs/DOCS.tmpl.md'
       }
     }
 
