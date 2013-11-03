@@ -23,6 +23,10 @@ exports = module.exports = {};
 var config = require(path.resolve(process.cwd(),'package.json'));
 
 
+exports.replaceBrackets = function(str) {
+  return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}');
+};
+
 /**
  * `{% _.resolve("module-name") %}`
  *
@@ -122,9 +126,9 @@ exports.contributors = function (sep) {
  * @example: "helper-foo" => "foo"
  */
 exports.safename = function (name, patterns) {
-  var blacklist = ['grunt', 'helper', 'handlebars-helper', 'mixin', 'assemble-contrib', 'assemble'];
-  var prefixes = _.unique(_.flatten(_.union([], blacklist, patterns || [])));
-  var re = new RegExp('^(?:' + prefixes.join('|') + ')[-_]?');
+  var prefixes = ['grunt', 'helper', 'handlebars-helper', 'mixin', 'assemble-contrib', 'assemble'];
+  var blacklist = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
+  var re = new RegExp('^(?:' + blacklist.join('|') + ')[-_]?');
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
 exports.shortname = function (name, patterns) {

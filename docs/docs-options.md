@@ -1,17 +1,24 @@
+## Overview of available options
 
-> This task does not require any configuration in the Gruntfile, so all of the following options are... ahem, optional.
-
-To change the plugin's defaults, add a section to your project's Gruntfile named `{%= _.shortname(name) %}` to the data object passed into `grunt.initConfig()`:
+[Also see examples →](./EXAMPLES.md)
 
 ```js
-grunt.initConfig({
-  // The "readme" task
-  readme: {
-    options: {}
+readme: {
+  options: {
+    templates: '',
+    metadata: '',
+    resolve: {
+      cwd: '',
+      readme: '',
+      docs: '',
+      templates: '',
+      metadata: ''
+    },
+    sep: '\n',
+    prefixes: [],
+    contributing: true
   }
-});
-grunt.loadNpmTasks('grunt-readme');
-grunt.registerTask('default', ['readme']);
+}
 ```
 
 ## readme
@@ -91,25 +98,32 @@ Since context is the value of "this", the `metadata` path is not required in tem
 * `[%= description %]` => `This is foo.`
 
 
-## docs
+
+### docs
 Type: `String`
 Default: `./docs/`
 
-Override the default directory where your local docs ("includes") will be stored. This defaults to the `./docs` directory in the root of your project.  with the 'docs' option.
-
-
-## templates
-Type: `String`
-Default: `./node_modules/grunt-readme/tasks/templates/` (relative to your project)
-
-The `cwd` for "includes" defined using the `[%= _.include() %]` template. By default, the `include` mixin will look for files in the `./tasks/templates` directory of this project (grunt-readme), where some starter templates are stored. (also see [EXAMPLES.md](./EXAMPLES.md))
-
-You may overide this by specifying a path in the `templates` option:
+Override the default directory for files included using `[%= _.doc('foo.md') %]`. This defaults to the `./docs` directory in the root of your project.
 
 ```js
 readme: {
   options: {
-    templates: 'docs/templates'
+    docs: 'foo/'
+  }
+}
+```
+
+
+### templates
+Type: `String`
+Default: `./node_modules/grunt-readme/tasks/templates/` (relative to your project)
+
+Override the default `cwd` for files included by using `[%= _.include('foo.md') %]`. By default, the `include` mixin will look for files in `./node_modules/grunt-readme/tasks/templates` directory, where some starter templates are stored. (also see [EXAMPLES.md](./EXAMPLES.md))
+
+```js
+readme: {
+  options: {
+    templates: 'bar/'
   }
 }
 ```
@@ -195,16 +209,16 @@ readme: {
 
 
 
-## prefixes
+## blacklist
 Type: `Array`
 Default: `grunt|helper|mixin`
 
-Any prefixes defined will be removed from content passed in using the `[%= _.shortname() %]` template. Example:
+Any blacklist defined will be removed from content passed in using the `[%= _.shortname() %]` template. Example:
 
 ```js
 readme: {
   options: {
-    prefixes: ["foo", "bar", "baz"]
+    blacklist: ["foo", "bar", "baz"]
   }
 }
 ```

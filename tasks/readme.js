@@ -9,23 +9,27 @@
 
 'use strict';
 
+
+// Node.js
 var path = require('path');
+
+// node_modules
 var grunt = require('grunt');
-var glob = require('glob-utils');
-var load = require('resolve-dep');
-var frontMatter  = require('assemble-yaml');
+var _     = grunt.util._;
+var glob  = require('glob-utils');
+var load  = require('resolve-dep');
+var name  = require('node-name');
+var yaml  = require('assemble-yaml');
 
 
 module.exports = function(grunt) {
 
-  grunt.util._.mixin(require('./lib/mixins'));
+  _.mixin(require('./lib/mixins'));
 
   // Add custom template delimiters for our templates.
   grunt.template.addDelimiters('readme', '{%', '%}');
 
   grunt.registerTask('readme', "Generate your project's README from a template. If you already use Grunt, this is a no brainer.", function() {
-
-    var _ = grunt.util._;
 
     // The 'readme' task options.
     var options = this.options({
@@ -38,7 +42,7 @@ module.exports = function(grunt) {
         metadata: ''
       },
       sep: '\n',
-      prefixes: [],
+      blacklist: [],
       contributing: false
     });
 
@@ -66,8 +70,8 @@ module.exports = function(grunt) {
      * Metadata from "metadata" option
      * @type {Object}
      */
-    var metadata = {};
-    if (options.metadata && options.metadata.length > 0) {
+    var metadata;
+    if (_.isString(options.metadata) || _.isArray(options.metadata)) {
       grunt.verbose.writeln('\n' + 'Processing data files: '.bold + '"' + options.metadata + '"');
 
       grunt.file.expand(options.metadata).map(function(file) {
@@ -79,19 +83,27 @@ module.exports = function(grunt) {
         if (filecontent === '') {
           grunt.verbose.writeln('Reading ' + file + '...empty, ' + 'skipping'.yellow);
         } else {
-          return {
-            data: fileReader(file)
-          };
+          metadata = _.extend({}, metadata, fileReader(file) || {});
         }
-      }).map(function(obj) {
-        metadata = _.extend({}, metadata, obj.data || {});
       });
-      grunt.verbose.ok("Metadata: ".yellow, metadata);
-
     } else if (_.isObject(options.metadata)) {
       metadata = options.metadata;
-      grunt.verbose.ok("Metadata: ".yellow, metadata);
+    } else {
+      metadata = {};
     }
+    grunt.verbose.ok("Metadata: ".yellow, metadata);
+
+
+    // All of the following configs should work:
+    //   metadata: 'docs/one.json',
+    //   metadata: ['docs/one.json', 'docs/two.yml'],
+    //   metadata: 'docs/*.{json,yml}',
+    //   metadata: ['docs/*.{json,yml}'],
+    //   metadata: ['docs/*.json', 'docs/*.yml'],
+    //   metadata: {
+    //     name: "Bar"
+    //   }
+
 
     /**
      * meta: {}
@@ -185,13 +197,13 @@ module.exports = function(grunt) {
     }
 
     // Extract and parse YAML front matter
-    var yfm = frontMatter.extract(tmpl).context;
+    var yfm = yaml.extract(tmpl).context;
 
     // Extend context with data from YFM
     meta = _.extend({}, meta, yfm);
 
     // Extract content from template
-    tmpl = frontMatter.extract(tmpl).content;
+    tmpl = yaml.extract(tmpl).content;
 
 
     grunt.verbose.writeln("yfm: ", yfm);
@@ -282,18 +294,26 @@ module.exports = function(grunt) {
     /**
      * Generate README
      */
-    var re = /(\_(This file was generated on).*)/;
     var writeReadme = grunt.template.process(tmpl, {
       data: meta,
       delimiters: 'readme'
     });
 
-    function replaceBrackets(str) {
-      return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}');
-    }
+    var first = function(str) {
+      return str.split('.').slice(0, 1)[0];
+    };
+
+    var altDocs = grunt.file.read(options.alt) || '';
+    var altDocsName = name.base(options.alt);
+    var writeAltDocs = grunt.template.process(altDocs, {
+      data: meta,
+      delimiters: 'readme'
+    });
+
 
     // Write the README.md file, and replace square brackets with curly braces.
-    grunt.file.write('README.md', replaceBrackets(writeReadme).replace(/^\s*/, ''));
+    grunt.file.write('README.md', _.replaceBrackets(writeReadme).replace(/^\s*/, ''));
+    grunt.file.write(altDocsName + '.md', _.replaceBrackets(writeAltDocs).replace(/^\s*/, ''));
     grunt.log.ok('Created README.md');
 
     // Fail task if any errors were logged.
