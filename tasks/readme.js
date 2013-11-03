@@ -303,18 +303,22 @@ module.exports = function(grunt) {
       return str.split('.').slice(0, 1)[0];
     };
 
-    var altDocs = grunt.file.read(options.alt) || '';
-    var altDocsName = name.base(options.alt);
-    var writeAltDocs = grunt.template.process(altDocs, {
-      data: meta,
-      delimiters: 'readme'
-    });
-
 
     // Write the README.md file, and replace square brackets with curly braces.
     grunt.file.write('README.md', _.replaceBrackets(writeReadme).replace(/^\s*/, ''));
-    grunt.file.write(altDocsName + '.md', _.replaceBrackets(writeAltDocs).replace(/^\s*/, ''));
     grunt.log.ok('Created README.md');
+
+    // Options for for defining an additional document
+    if(!_.isUndefined(options.alt)) {
+      var altDocs = grunt.file.read(options.alt) || '';
+      var altDocsName = name.base(options.alt);
+      var writeAltDocs = grunt.template.process(altDocs, {
+        data: meta,
+        delimiters: 'readme'
+      });
+      grunt.file.write(altDocsName + '.md', _.replaceBrackets(writeAltDocs).replace(/^\s*/, ''));
+      grunt.log.ok('Created', altDocsName + '.md');
+    }
 
     // Fail task if any errors were logged.
     if (this.errorCount > 0) {return false;}
