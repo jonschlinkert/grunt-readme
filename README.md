@@ -1,6 +1,6 @@
 # grunt-readme [![NPM version](https://badge.fury.io/js/grunt-readme.png)](http://badge.fury.io/js/grunt-readme) 
 
-> Generate your README from a template. If you already use Grunt, this is a no brainer.
+> Grunt plugin for generating a README from templates, including an optional table of contents. No Gruntfile config is necessary, just choose a starter template and you'll be ready to go.
 
 [Also see examples →](./EXAMPLES.md) and [documentation →](./DOCS.md)
 
@@ -36,6 +36,8 @@ Feel free to use [any of the templates](./templates) included in this repo, or c
 
 > {%= description %}
 
+{%= toc %}
+
 ## Overview
 {%= _.doc("overview.md") %}
 
@@ -58,8 +60,9 @@ Please see the [Contributing to grunt-readme](https://github.com/assemble/grunt-
 
 ## Release History
 
+ * 2013-11-08   v0.2.4   Adds table of contents generation. Just use `{%= toc %}` where you want it to go.
  * 2013-11-03   v0.2.2   Fixes the function for the `metadata` option. Externalizes advanced docs since no config is really needed for this task.
- * 2013-10-11   v0.1.9   adds ability to specify multiple metadata files in yaml or json format.
+ * 2013-10-11   v0.1.9   Adds ability to specify multiple metadata files in yaml or json format.
  * 2013-09-21   v0.1.3   Completely refactored. Adds a lot of documentation.
  * 2013-09-19   v0.1.0   First commmit.
 
@@ -74,7 +77,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Sunday, November 3, 2013._
+_This file was generated on Friday, November 8, 2013._
 
 
 [grunt]: http://gruntjs.com/
