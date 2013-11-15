@@ -14,12 +14,13 @@
 var path = require('path');
 
 // node_modules
-var grunt = require('grunt');
-var _     = grunt.util._;
-var glob  = require('glob-utils');
-var load  = require('resolve-dep');
-var name  = require('node-name');
-var yaml  = require('assemble-yaml');
+var grunt   = require('grunt');
+var _       = grunt.util._;
+var glob    = require('glob-utils');
+var load    = require('resolve-dep');
+var name    = require('node-name');
+var yaml    = require('assemble-yaml');
+var makeTOC = require('marked-toc');
 
 
 module.exports = function(grunt) {
@@ -67,7 +68,6 @@ module.exports = function(grunt) {
 
     /**
      * options.metadata
-     * Metadata from "metadata" option
      * @type {Object}
      */
     var metadata;
@@ -290,6 +290,12 @@ module.exports = function(grunt) {
     }
 
 
+    /**
+     * Generate a Table of Contents
+     * @usage: {%= toc %}
+     */
+    meta.toc = makeTOC(tmpl);
+
 
     /**
      * Generate README
@@ -298,10 +304,6 @@ module.exports = function(grunt) {
       data: meta,
       delimiters: 'readme'
     });
-
-    var first = function(str) {
-      return str.split('.').slice(0, 1)[0];
-    };
 
 
     // Write the README.md file, and replace square brackets with curly braces.

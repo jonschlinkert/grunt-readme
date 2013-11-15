@@ -7,6 +7,8 @@ Feel free to use [any of the templates](./templates) included in this repo, or c
 
 > [%= description %]
 
+[%= toc %]
+
 # Overview
 [%= _.doc("overview.md") %]
 
