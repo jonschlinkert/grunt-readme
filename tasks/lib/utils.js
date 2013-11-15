@@ -42,18 +42,27 @@ exports.dataFileReaderFactory = function(filepath) {
 };
 
 
-
 exports.optionsDataFormatFactory = function(data) {
   var metadata;
   if (_.isString(data) || _.isArray(data)) {
-    grunt.file.expand(data).map(function(file) {
-      grunt.verbose.ok('Processing:'.yellow, file);
-      var checkForContent = grunt.file.read(file);
-      // Skip empty data files to avoid compiling errors
-      if (checkForContent.length === 0) {
-        grunt.verbose.writeln('Skipping empty file:'.yellow, file);
-      } else {
-        metadata = grunt.config.process(exports.dataFileReaderFactory(file)) || {};
+
+    data.map(function(val) {
+      grunt.verbose.ok('Type:'.yellow, grunt.util.kindOf(val));
+      // Skip empty data files to avoid compiler errors
+      if (_.isString(val)) {
+        grunt.file.expand(val).forEach(function(filepath) {
+          var checkForContent = grunt.file.read(filepath);
+          if (checkForContent.length === 0 || checkForContent === '') {
+            grunt.verbose.warn('Skipping empty path:'.yellow, val);
+          } else {
+            var parsedData = exports.dataFileReaderFactory(filepath);
+            metadata = grunt.config.process(_.extend({}, metadata, parsedData));
+            grunt.verbose.ok('metadata:'.yellow, metadata);
+          }
+        });
+      }
+      if (_.isObject(val)) {
+        metadata = grunt.config.process(_.extend({}, metadata, val));
         grunt.verbose.ok('metadata:'.yellow, metadata);
       }
     });
@@ -69,20 +78,24 @@ exports.optionsDataFormatFactory = function(data) {
 
 exports.compileTemplate = function (src, dest, options, fn) {
   options = options || {};
-  options.data = options.data || {};
+
   var output = grunt.template.process(src, {
-    data: options.data,
+    data: options.data || {},
     delimiters: options.delimiters || 'readme'
   });
-  function process(src, fn) {return fn(src);}
+
+  function postprocess(src, fn) {return fn(src);}
   var fallbackFn = function(src) {return src;};
-  output = process(output, fn || fallbackFn);
+  output = postprocess(output, fn || fallbackFn);
 
   grunt.file.write(dest, output);
   grunt.verbose.ok('Created:', dest);
 };
 
 
+/**
+ * Revert [%= foo %] to {%= foo %}
+ */
 exports.revertBrackets = function(str) {
   return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}').replace(/^\s*/, '');
 };

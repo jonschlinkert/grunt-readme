@@ -54,23 +54,16 @@ module.exports = function(grunt) {
       }
     },
 
+
+    // None of this config is needed, it's all for tests!!!
     readme: {
-      // None of this config is needed, it's all for tests!!!
       options: {
-      //   metadata: 'test/fixtures/data/one.json',
-      //   metadata: ['test/fixtures/data/one.json', 'test/fixtures/data/two.yml'],
-      //   metadata: 'test/fixtures/data/*.{json,yml}',
-      //   metadata: ['test/fixtures/data/*.{json,yml}'],
-      //   metadata: ['test/fixtures/data/*.json', 'test/fixtures/data/*.yml'],
-      //   metadata: {
-      //     description: 'Foo',
-      //     name: 'Bar'
-      //   },
         alt: {
           src: 'docs/DOCS.tmpl.md',
           dest: './'
         },
-        // Run some tests.
+        // This is only for tests,
+        // don't use this in real projects!
         test: {
           src: ['test/fixtures/*.tmpl.md'],
           dest: 'test/actual/'

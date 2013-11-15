@@ -49,7 +49,7 @@ module.exports = function(grunt) {
      * @type {Object}
      */
     var metadata = Utils.optionsDataFormatFactory(options.metadata);
-
+    grunt.verbose.ok('README metadata:'.yellow, metadata);
 
     /**
      * meta: {}
@@ -58,7 +58,7 @@ module.exports = function(grunt) {
      */
     var pkg = require(path.resolve(process.cwd(), 'package.json'));
     var meta = _.defaults(metadata, pkg);
-    grunt.verbose.writeln(">> Meta: \n".yellow, JSON.stringify(meta, null, 2));
+    grunt.verbose.ok(">> Meta:".yellow, JSON.stringify(meta, null, 2));
 
 
     /**

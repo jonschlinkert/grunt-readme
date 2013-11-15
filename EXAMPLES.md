@@ -152,3 +152,51 @@ Or:
 ```
 > Jon Schlinkert
 > Brian Woodward
+
+
+## Metadata
+
+You can mix and match formats in the `metadata` option, all of the following shoulw work:
+
+```js
+grunt.initConfig({
+  pkg: 'package.json',
+  foo: 'package.json',
+  bar: grunt.file.readJSON('package.json'),
+  qux: grunt.file.readJSON('test/fixtures/data/one.json'),
+  baz: ['<%= bar %>'],
+
+  config: {
+    one: 'test/fixtures/data/one.json',
+    two: 'test/fixtures/data/two.yml',
+    three: 'test/fixtures/data/three.json',
+    pkg: grunt.file.readJSON('package.json'),
+    qux: grunt.file.readJSON('test/fixtures/data/one.json')
+  },
+
+
+  // Obviously you can't have duplicate properties on an
+  // object, so this is just for illustrative purposes
+  // The point is.. you can get just about as crazy as you want.
+  readme: {
+    options: {
+      metadata: ['<%= pkg %>', '<%= qux %>'],
+      metadata: ['<%= config.pkg %>', '<%= config.qux %>'],
+      metadata: ['<%= pkg %>', {foo: 'bar'}],
+      metadata: ['<%= pkg %>', 'test/fixtures/data/*.{json,yml}'],
+      metadata: '<%= config.one %>',
+      metadata: 'test/fixtures/data/one.json',
+      metadata: ['test/fixtures/data/one.json', 'test/fixtures/data/two.yml'],
+      metadata: ['test/fixtures/data/two.yml', {description: 'Foo', name: 'Bar'}, '<%= pkg %>', 'test/fixtures/data/*.json', {alpha: 1, beta: 2 }, {kappa: 3, gamma: 4 }, {zed: {orange: 5, apple: 6 } }, '<%= config.one %>', {name: 'New'}, {quux: '<%= qux %>'}, ['one', {pkg: '<%= config.pkg %>'}, 'three'], {arr: ['one', 'two', 'three']}],
+      metadata: ['<%= config.one %>', '<%= config.two %>'], metadata: 'test/fixtures/data/*.{json,yml}',
+      metadata: ['test/fixtures/data/*.{json,yml}'],
+      metadata: ['test/fixtures/data/*.json', 'test/fixtures/data/*.yml'],
+      metadata: ['test/fixtures/data/*.json', '<%= config.two %>'],
+      metadata: {
+        description: 'Foo',
+        name: 'Bar'
+      }
+    }
+  }
+}
+```
