@@ -24,7 +24,8 @@ exports.meta = function (key, obj) {
 };
 
 
-exports.dataFileReaderFactory = function(ext) {
+exports.dataFileReaderFactory = function(filepath) {
+  var ext = path.extname(filepath);
   var reader = grunt.file.readJSON;
   switch(ext) {
     case '.json':
@@ -37,25 +38,22 @@ exports.dataFileReaderFactory = function(ext) {
       reader = grunt.file.readYAML;
       break;
   }
-  return reader;
+  return reader(filepath);
 };
+
 
 
 exports.optionsDataFormatFactory = function(data) {
   var metadata;
   if (_.isString(data) || _.isArray(data)) {
-
     grunt.file.expand(data).map(function(file) {
       grunt.verbose.ok('Processing:'.yellow, file);
-      var ext             = path.extname(file);
-      var selectedReader  = exports.dataFileReaderFactory(ext);
       var checkForContent = grunt.file.read(file);
-      grunt.verbose.ok('selectedReader:'.yellow, selectedReader(file));
       // Skip empty data files to avoid compiling errors
-      if (checkForContent === '') {
-        grunt.verbose.writeln('Reading ' + file + '...empty, ' + 'skipping'.yellow);
+      if (checkForContent.length === 0) {
+        grunt.verbose.writeln('Skipping empty file:'.yellow, file);
       } else {
-        metadata = grunt.config.process(selectedReader(file)) || {};
+        metadata = grunt.config.process(exports.dataFileReaderFactory(file)) || {};
         grunt.verbose.ok('metadata:'.yellow, metadata);
       }
     });
@@ -68,12 +66,13 @@ exports.optionsDataFormatFactory = function(data) {
 };
 
 
+
 exports.compileTemplate = function (src, dest, options, fn) {
   options = options || {};
   options.data = options.data || {};
   var output = grunt.template.process(src, {
     data: options.data,
-    delimiters: options.delimiters || 'foo'
+    delimiters: options.delimiters || 'readme'
   });
   function process(src, fn) {return fn(src);}
   var fallbackFn = function(src) {return src;};

@@ -78,7 +78,7 @@ module.exports = function(grunt) {
      */
     var templates;
     if(_.isEmpty(options.templates)) {
-      templates = root('../templates');
+      templates = root('templates');
     } else {
       templates = bind(options.templates);
     }
@@ -95,10 +95,10 @@ module.exports = function(grunt) {
      *   }
      */
     var docs;
-    var baseDocs = root('../docs');
-    if(_.isEmpty(options.docs)) {
+    var baseDocs = root('docs');
+    if(!options.docs) {
       docs = path.join.bind(options.docs, 'docs');
-    } else if(options.docs) {
+    } else if (options.docs) {
       docs = path.join.bind(process.cwd(), options.docs, '');
     } else {
       docs = baseDocs;
@@ -112,14 +112,14 @@ module.exports = function(grunt) {
      *   `./foo/README.tmpl.md`
      */
     var readmeTmpl;
-    // See if the `readme` option specifies a path to a template
     if (options.readme) {
+      // See if the `readme` option specifies a path to a template
       readmeTmpl = options.readme;
-    // If not, wherever the `docs` dir is, look for the README template there
     } else if (grunt.file.exists(docs('README.tmpl.md'))) {
+      // If not,  look for the README template in the `docs()` dir
       readmeTmpl = docs('README.tmpl.md');
-    // Last, if all else fails just use a fallback template from grunt-readme
     } else {
+      // As a last resort, grab a template from grunt-readme
       readmeTmpl = templates('README.tmpl.md');
     }
 
@@ -259,6 +259,6 @@ module.exports = function(grunt) {
 
   // The root of the project. This is where the Gruntfile is.
   var root = function(filepath) {
-    return path.join.bind(null, __dirname, filepath);
+    return path.join.bind(null, __dirname, '../', filepath);
   };
 };
