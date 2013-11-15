@@ -230,9 +230,12 @@ module.exports = function(grunt) {
 
     // Options for for defining an additional document
     if(!_.isUndefined(options.alt)) {
-      var alt = yaml.extract(options.alt).content;
-      var newName = name.base(options.alt) + '.md';
-      Utils.compileTemplate(alt, newName, templateConfig, Utils.revertBrackets);
+      options.alt = options.alt || {};
+      grunt.file.expand(options.alt.src).map(function(file) {
+        var altSrc = yaml.extract(file).content || '';
+        var altDest = path.join(options.alt.dest, name.base(file)) + '.md';
+        Utils.compileTemplate(altSrc, altDest, templateConfig, Utils.revertBrackets);
+      });
     }
 
     // Property for running tests.

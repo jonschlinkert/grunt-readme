@@ -55,9 +55,12 @@ module.exports = function(grunt) {
     },
 
     readme: {
+      // None of this config is needed, it's all for tests!!!
       options: {
-        docs: 'docs',
-        alt: 'docs/DOCS.tmpl.md',
+        alt: {
+          src: 'docs/DOCS.tmpl.md',
+          dest: './'
+        },
         // Run some tests.
         test: {
           src: ['test/fixtures/*.tmpl.md'],
