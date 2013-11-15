@@ -1,3 +1,7 @@
+v0.3.0:
+  date: 2013-11-15
+  changes:
+    - Updates function that reads in metadata from options to accept mixed formats.
 v0.2.4:
   date: 2013-11-08
   changes:
