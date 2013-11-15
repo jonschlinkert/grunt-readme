@@ -14,18 +14,22 @@
 var path = require('path');
 
 // node_modules
-var grunt   = require('grunt');
-var _       = grunt.util._;
-var glob    = require('glob-utils');
 var load    = require('resolve-dep');
 var name    = require('node-name');
 var yaml    = require('assemble-yaml');
 var makeTOC = require('marked-toc');
+var glob    = require('glob-utils');
+var grunt   = require('grunt');
+var _       = grunt.util._;
+
 
 
 module.exports = function(grunt) {
 
+  // Local utils
+  var Utils = require('./lib/utils');
   _.mixin(require('./lib/mixins'));
+
 
   // Add custom template delimiters for our templates.
   grunt.template.addDelimiters('readme', '{%', '%}');
@@ -47,62 +51,12 @@ module.exports = function(grunt) {
       contributing: false
     });
 
-    var resolve = options.resolve;
-
-    var dataFileReaderFactory = function(ext) {
-      var reader = grunt.file.readJSON;
-      switch(ext) {
-        case '.json':
-          grunt.verbose.writeln('>> Reading JSON'.yellow);
-          reader = grunt.file.readJSON;
-          break;
-        case '.yml':
-        case '.yaml':
-          grunt.verbose.writeln('>> Reading YAML'.yellow);
-          reader = grunt.file.readYAML;
-          break;
-      }
-      return reader;
-    };
-
 
     /**
      * options.metadata
      * @type {Object}
      */
-    var metadata;
-    if (_.isString(options.metadata) || _.isArray(options.metadata)) {
-      grunt.verbose.writeln('\n' + 'Processing data files: '.bold + '"' + options.metadata + '"');
-
-      grunt.file.expand(options.metadata).map(function(file) {
-        var ext         = path.extname(file);
-        var fileReader  = dataFileReaderFactory(ext);
-        var filecontent = grunt.file.read(file);
-
-        // Skip empty data files to avoid compiling errors
-        if (filecontent === '') {
-          grunt.verbose.writeln('Reading ' + file + '...empty, ' + 'skipping'.yellow);
-        } else {
-          metadata = _.extend({}, metadata, fileReader(file) || {});
-        }
-      });
-    } else if (_.isObject(options.metadata)) {
-      metadata = options.metadata;
-    } else {
-      metadata = {};
-    }
-    grunt.verbose.ok("Metadata: ".yellow, metadata);
-
-
-    // All of the following configs should work:
-    //   metadata: 'docs/one.json',
-    //   metadata: ['docs/one.json', 'docs/two.yml'],
-    //   metadata: 'docs/*.{json,yml}',
-    //   metadata: ['docs/*.{json,yml}'],
-    //   metadata: ['docs/*.json', 'docs/*.yml'],
-    //   metadata: {
-    //     name: "Bar"
-    //   }
+    var metadata = Utils.optionsDataFormatFactory(options.metadata);
 
 
     /**
@@ -110,7 +64,7 @@ module.exports = function(grunt) {
      * Root context object passed to templates with a value of "this"
      * @type {Object}
      */
-    var pkg  = require(path.resolve(process.cwd(), 'package.json'));
+    var pkg = require(path.resolve(process.cwd(), 'package.json'));
     var meta = _.defaults(metadata, pkg);
     grunt.verbose.writeln(">> Meta: \n".yellow, JSON.stringify(meta, null, 2));
 
@@ -131,9 +85,9 @@ module.exports = function(grunt) {
      * documented yet so don't get used to them because they might go away.
      * @type {String}
      */
-    resolve.cwd       = _.isEmpty(resolve.cwd)       ? '' : load.devDirname(resolve.cwd);
-    resolve.metadata  = _.isEmpty(resolve.metadata)  ? '' : load.devDirname(resolve.metadata);
-    resolve.templates = _.isEmpty(resolve.templates) ? '' : load.devDirname(resolve.templates);
+    options.resolve.cwd       = _.isEmpty(options.resolve.cwd)       ? '' : load.devDirname(options.resolve.cwd);
+    options.resolve.metadata  = _.isEmpty(options.resolve.metadata)  ? '' : load.devDirname(options.resolve.metadata);
+    options.resolve.templates = _.isEmpty(options.resolve.templates) ? '' : load.devDirname(options.resolve.templates);
 
     /**
      * Templates directory.
@@ -156,8 +110,8 @@ module.exports = function(grunt) {
      * directory in the root of your project. Override with the 'docs' option.
      */
     var docs;
-    if (resolve.docs) {
-      docs = path.join.bind(null, String(load.devDirname(resolve.docs)), '');
+    if (options.resolve.docs) {
+      docs = path.join.bind(null, String(load.devDirname(options.resolve.docs)), '');
     } else if(_.isEmpty(options.docs)) {
       docs = path.join.bind(options.docs, 'docs');
     } else if(options.docs) {
@@ -186,12 +140,12 @@ module.exports = function(grunt) {
     var tmpl;
     if (options.readme) {
       tmpl = options.readme;
-    } else if (options.docs || resolve.docs) {
+    } else if (options.docs || options.resolve.docs) {
       tmpl = docs('README.tmpl.md');
     } else if (grunt.file.exists('./docs/README.tmpl.md')) {
       tmpl = './docs/README.tmpl.md';
-    } else if (resolve.readme) {
-      tmpl = path.join(String(load.devDirname(resolve.readme)), 'README.tmpl.md') || '';
+    } else if (options.resolve.readme) {
+      tmpl = path.join(String(load.devDirname(options.resolve.readme)), 'README.tmpl.md') || '';
     } else {
       tmpl = templates('README.tmpl.md');
     }
@@ -219,14 +173,13 @@ module.exports = function(grunt) {
     // TODO: externalize these.
     _.mixin({
 
-      meta: function (key, opts) {
-        opts = opts || 2;
+      meta: function (key) {
         if (_.isUndefined(key)) {
-          return JSON.stringify(meta, null, opts) || {};
+          return JSON.stringify(meta, null, 2) || {};
         } else if (_.isString(meta[key])) {
           return meta[key] || "";
         } else if (_.isObject(meta[key])) {
-          return JSON.stringify(meta[key], null, opts) || {};
+          return JSON.stringify(meta[key], null, 2) || {};
         } else {
           return null;
         }
