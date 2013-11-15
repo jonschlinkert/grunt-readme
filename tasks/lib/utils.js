@@ -67,3 +67,23 @@ exports.optionsDataFormatFactory = function(data) {
   return metadata;
 };
 
+
+exports.compileTemplate = function (src, dest, options, fn) {
+  options = options || {};
+  options.data = options.data || {};
+  var output = grunt.template.process(src, {
+    data: options.data,
+    delimiters: options.delimiters || 'foo'
+  });
+  function process(src, fn) {return fn(src);}
+  var fallbackFn = function(src) {return src;};
+  output = process(output, fn || fallbackFn);
+
+  grunt.file.write(dest, output);
+  grunt.verbose.ok('Created:', dest);
+};
+
+
+exports.revertBrackets = function(str) {
+  return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}').replace(/^\s*/, '');
+};

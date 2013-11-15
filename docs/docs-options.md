@@ -5,15 +5,9 @@
 ```js
 readme: {
   options: {
+    readme: '',
     templates: '',
     metadata: '',
-    resolve: {
-      cwd: '',
-      readme: '',
-      docs: '',
-      templates: '',
-      metadata: ''
-    },
     sep: '\n',
     prefixes: [],
     contributing: true
@@ -127,86 +121,6 @@ readme: {
   }
 }
 ```
-
-
-## resolve
-
-All of the `resolve` options enable including content _from named NPM modules listed in `devDependencies`_.
-
-### resolve.readme
-Type: `String`
-Default: `undefined`
-
-Name of the npm module containing the `README.tmpl.md` file to use for the README template. The module must be listed in the `devDependencies` of your project, and the template must be defined in the `main` property of the named module.
-
-```js
-options: {
-  resolve: {
-    readme: 'my-npm-module'
-  }
-}
-```
-If defined properly in the `main` property of the `package.json` of `my-npm-module`, this would resolve to:  `./node_modules/my-npm-module/README.tmpl.md`.
-
-
-### resolve.docs
-Type: `String`
-Default: `undefined`
-
-If defined, `resolve.docs` becomes the `cwd` for files to be included using the `[%= _.doc() %]` mixin.
-
-```js
-options: {
-  resolve: {
-    docs: 'my-npm-module'
-  }
-}
-```
-
-This would resolve to:  `./node_modules/my-npm-module/`.
-
-
-### resolve.metadata
-Type: `String`
-Default: `undefined`
-
-The name of the module to use to _extend the data object_ that is passed as context into the templates. This works the same as `options.metadata` except that `resolve.metadata` will use the `main` property from the package.json of the specified module. As with other "resolve" options, for this to work the module must be specified in the `devDependencies` of your project's package.json, and it must be installed in `node_modules`.
-
-For example, let's say we have a project named **foo**, and this is the package.json for our project:
-
-```json
-{
-  "name": "foo",
-  "devDependencies": {
-    "bar": "*"
-  }
-}
-```
-Once we install our `devDependencies`, we might have a project structure like this:
-
-```
-docs
-node_modules
-  grunt-readme
-  bar
-    metadata.json
-    package.json // the "main" property specifies "./metadata.json"
-Gruntfile.js
-package.json
-```
-
-Now, in the Gruntfile for our project, "foo", to use the `metadata.json` file from "bar", we define the following in the `readme` task:
-
-```js
-readme: {
-  options: {
-    resolve: {
-      metadata: 'bar'
-    }
-  }
-}
-```
-
 
 
 ## blacklist

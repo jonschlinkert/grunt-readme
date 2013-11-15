@@ -1,21 +1,35 @@
-# Docs
+## grunt-readme
 
-[Also see examples →](./EXAMPLES.md)
+> Grunt plugin for generating a README from templates, including an optional table of contents. No Gruntfile config is necessary, just choose a starter template and you'll be ready to go.
 
-## Advanced configuration
+* [grunt-readme](#name)
+  * [Getting Started](#getting-started)
+  * [Example README template](#example-readme-template)
+  * [Contributing](#contributing)
+  * [Release History](#release-history)
+  * [Author](#author)
+  * [License](#license)
 
-To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
+
+## Overview
+_If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
+
+From the same directory as your project's [Gruntfile][Getting Started] and [package.json][], install this plugin with the following command:
+
+```bash
+npm install grunt-readme --save-dev
+```
+
+Once that's done, add this line to your project's Gruntfile:
 
 ```js
-grunt.initConfig({
-  // The "readme" task
-  readme: {
-    options: {}
-  }
-});
 grunt.loadNpmTasks('grunt-readme');
-grunt.registerTask('default', ['readme']);
 ```
+
+If the plugin has been installed correctly, run `grunt readme` at the command line. If the plugin has been installed properly, you should see a success message.
+
+_**That's it!** If you are happy with the defaults, **no additional Gruntfile configuration is required**._
+
 
 ## Options
 ### Overview of available options
@@ -209,7 +223,7 @@ or as a second parameter in the `include` or `doc` mixins.
 
 
 
-## mixins
+## Examples
 Mixins use the following formats:
 
 * `_.mixin()`: when used in JavaScript
@@ -338,23 +352,6 @@ Extract the homepage URL from the project's package.json. If a `homepage` proper
 
 
 
-# Heads up!
-To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
-
-## Author
-
-+ [github.com/jonschlinkert](https://github.com/jonschlinkert)
-+ [twitter.com/jonschlinkert](http://twitter.com/jonschlinkert)
-
-## License
+## License and Copyright
 Copyright (c) 2013 Jon Schlinkert, contributors.
 Released under the MIT license
-
-***
-
-_This file was generated on Friday, November 15, 2013._
-
-
-[grunt]: http://gruntjs.com/
-[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
-[package.json]: https://npmjs.org/doc/json.html

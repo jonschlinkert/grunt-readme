@@ -23,10 +23,6 @@ exports = module.exports = {};
 var config = require(path.resolve(process.cwd(),'package.json'));
 
 
-exports.replaceBrackets = function(str) {
-  return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}');
-};
-
 /**
  * `{% _.resolve("module-name") %}`
  *

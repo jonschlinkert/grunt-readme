@@ -23,7 +23,6 @@ var grunt   = require('grunt');
 var _       = grunt.util._;
 
 
-
 module.exports = function(grunt) {
 
   // Local utils
@@ -39,13 +38,6 @@ module.exports = function(grunt) {
     // The 'readme' task options.
     var options = this.options({
       templates: '',
-      resolve: {
-        cwd: '',
-        readme: '',
-        docs: '',
-        templates: '',
-        metadata: ''
-      },
       sep: '\n',
       blacklist: [],
       contributing: false
@@ -78,17 +70,6 @@ module.exports = function(grunt) {
     meta.username  = _.username();
     meta.shortname = _.shortname(meta.name);
 
-
-    /**
-     * Resolved paths to module to use as the cwd for metadata and templates.
-     * These options currently aren't used in the examples, and they aren't
-     * documented yet so don't get used to them because they might go away.
-     * @type {String}
-     */
-    options.resolve.cwd       = _.isEmpty(options.resolve.cwd)       ? '' : load.devDirname(options.resolve.cwd);
-    options.resolve.metadata  = _.isEmpty(options.resolve.metadata)  ? '' : load.devDirname(options.resolve.metadata);
-    options.resolve.templates = _.isEmpty(options.resolve.templates) ? '' : load.devDirname(options.resolve.templates);
-
     /**
      * Templates directory.
      * If `options: { templates: '' }` is not defined, then the task will use the
@@ -97,71 +78,64 @@ module.exports = function(grunt) {
      */
     var templates;
     if(_.isEmpty(options.templates)) {
-      templates = path.join.bind(null, __dirname, '../templates');
+      templates = root('../templates');
     } else {
-      templates = path.join.bind(options.templates, options.templates + '');
+      templates = bind(options.templates);
     }
-    grunt.verbose.writeln("templates: ", templates('README.tmpl.md'));
+    grunt.verbose.writeln('templates:', templates('README.tmpl.md'));
 
 
     /**
-     * options: { docs: '' }
-     * The directory where your docs will be stored. This defaults to the './docs'
-     * directory in the root of your project. Override with the 'docs' option.
+     * Docs directory
+     * The location where all of your docs will be stored
+     * This defaults to './docs' in the root of your project.
+     * @example:
+     *   options: {
+     *     docs: 'foo/'
+     *   }
      */
     var docs;
-    if (options.resolve.docs) {
-      docs = path.join.bind(null, String(load.devDirname(options.resolve.docs)), '');
-    } else if(_.isEmpty(options.docs)) {
+    var baseDocs = root('../docs');
+    if(_.isEmpty(options.docs)) {
       docs = path.join.bind(options.docs, 'docs');
     } else if(options.docs) {
       docs = path.join.bind(process.cwd(), options.docs, '');
     } else {
-      docs = path.join.bind(null, __dirname, '../docs');
+      docs = baseDocs;
     }
     grunt.verbose.writeln("docs: ", docs('test'));
 
+
     /**
-     * README.tmpl.md
-     *
-     *   a). If `options: { readme: ''}` is defined, use that custom template.
-     *   b). If (a) is undefined, use the directory defined by `options: { docs: ''}`
-     *   c). If (b) is undefined, see if README.tmpl.md exists in the `./docs` directory
-     *   d). if (c) is undefined, `options: { resolve: { readme: ''}}` attempts to
-     *       automagically use a README.tmpl.md template from node_modules. The module
-     *       must must be defined in devDependencies.
-     *   e). If (c) is undefined, use the fallback README.tmpl.md template from grunt-readme.
-     *
-     * Note that for a README.tmpl.md template to resolve properly from node_modules, the module
-     * being referenced must have the path to the template defined in the `main` property of
-     * the package.json for that project. This option might be useful if you can use the same
-     * README template for a number of projects.
+     * README template
+     * @example:
+     *   `./foo/README.tmpl.md`
      */
-    var tmpl;
+    var readmeTmpl;
+    // See if the `readme` option specifies a path to a template
     if (options.readme) {
-      tmpl = options.readme;
-    } else if (options.docs || options.resolve.docs) {
-      tmpl = docs('README.tmpl.md');
-    } else if (grunt.file.exists('./docs/README.tmpl.md')) {
-      tmpl = './docs/README.tmpl.md';
-    } else if (options.resolve.readme) {
-      tmpl = path.join(String(load.devDirname(options.resolve.readme)), 'README.tmpl.md') || '';
+      readmeTmpl = options.readme;
+    // If not, wherever the `docs` dir is, look for the README template there
+    } else if (grunt.file.exists(docs('README.tmpl.md'))) {
+      readmeTmpl = docs('README.tmpl.md');
+    // Last, if all else fails just use a fallback template from grunt-readme
     } else {
-      tmpl = templates('README.tmpl.md');
+      readmeTmpl = templates('README.tmpl.md');
     }
 
+
     // Extract and parse YAML front matter
-    var yfm = yaml.extract(tmpl).context;
+    var yfm = yaml.extract(readmeTmpl).context;
 
     // Extend context with data from YFM
     meta = _.extend({}, meta, yfm);
 
     // Extract content from template
-    tmpl = yaml.extract(tmpl).content;
+    readmeTmpl = yaml.extract(readmeTmpl).content;
 
 
     grunt.verbose.writeln("yfm: ", yfm);
-    grunt.verbose.writeln("tmpl: ", tmpl);
+    grunt.verbose.writeln("readmeTmpl: ", readmeTmpl);
     grunt.verbose.writeln("meta: ", meta);
 
 
@@ -172,29 +146,17 @@ module.exports = function(grunt) {
     // Add mixins for use in our templates.
     // TODO: externalize these.
     _.mixin({
-
       meta: function (key) {
-        if (_.isUndefined(key)) {
-          return JSON.stringify(meta, null, 2) || {};
-        } else if (_.isString(meta[key])) {
-          return meta[key] || "";
-        } else if (_.isObject(meta[key])) {
-          return JSON.stringify(meta[key], null, 2) || {};
-        } else {
-          return null;
-        }
+        return Utils.meta(key, meta);
       },
-
       doc: function (filepath, sep) {
         sep = sep || options.sep;
         return glob.content(docs(filepath), sep).replace(/^#/gm, '##');
       },
-
       include: function (filepath, sep) {
         sep = sep || options.sep;
         return glob.content(templates(filepath), sep).replace(/^#/gm, '##');
       }
-
     });
 
 
@@ -247,35 +209,53 @@ module.exports = function(grunt) {
      * Generate a Table of Contents
      * @usage: {%= toc %}
      */
-    meta.toc = makeTOC(tmpl);
+    meta.toc = makeTOC(readmeTmpl);
+
+
+    /**
+     * Generalized template configuration
+     */
+    var templateConfig = {
+      data: meta,
+      delimiters: 'readme'
+    };
 
 
     /**
      * Generate README
      */
-    var writeReadme = grunt.template.process(tmpl, {
-      data: meta,
-      delimiters: 'readme'
-    });
-
-
-    // Write the README.md file, and replace square brackets with curly braces.
-    grunt.file.write('README.md', _.replaceBrackets(writeReadme).replace(/^\s*/, ''));
+    Utils.compileTemplate(readmeTmpl, 'README.md', templateConfig, Utils.revertBrackets);
     grunt.log.ok('Created README.md');
+
 
     // Options for for defining an additional document
     if(!_.isUndefined(options.alt)) {
-      var altDocs = grunt.file.read(options.alt) || '';
-      var altDocsName = name.base(options.alt);
-      var writeAltDocs = grunt.template.process(altDocs, {
-        data: meta,
-        delimiters: 'readme'
+      var alt = yaml.extract(options.alt).content;
+      var newName = name.base(options.alt) + '.md';
+      Utils.compileTemplate(alt, newName, templateConfig, Utils.revertBrackets);
+    }
+
+    // Property for running tests.
+    if(!_.isUndefined(options.test)) {
+      options.test = options.test || {};
+      grunt.file.expand(options.test.src).map(function(file) {
+        var testSrc = yaml.extract(file).content || '';
+        var testDest = path.join(options.test.dest, name.base(file)) + '.md';
+        Utils.compileTemplate(testSrc, testDest, templateConfig, Utils.revertBrackets);
       });
-      grunt.file.write(altDocsName + '.md', _.replaceBrackets(writeAltDocs).replace(/^\s*/, ''));
-      grunt.log.ok('Created', altDocsName + '.md');
     }
 
     // Fail task if any errors were logged.
     if (this.errorCount > 0) {return false;}
   });
+
+
+  var bind = function(filepath) {
+    return path.join.bind(null, filepath, '');
+  };
+
+  // The root of the project. This is where the Gruntfile is.
+  var root = function(filepath) {
+    return path.join.bind(null, __dirname, filepath);
+  };
 };
