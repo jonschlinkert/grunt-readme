@@ -61,13 +61,14 @@ module.exports = function(grunt) {
      * @type {Object}
      */
     if(grunt.file.exists(path.resolve(process.cwd(),'package.json'))) {
-      options.config = grunt.file.readJSON(path.resolve(process.cwd(),'package.json'));
+      options.config = _.extend(require('./lib/pkg.js'), grunt.file.readJSON(path.resolve(process.cwd(),'package.json')));
     } else {
       options.config = require('./lib/pkg.js');
     }
     var meta = _.defaults(metadata, options.config);
     grunt.verbose.ok(">> Meta:".yellow, JSON.stringify(meta, null, 2));
 
+    console.log(meta);
 
     /**
      * Convenience variables.

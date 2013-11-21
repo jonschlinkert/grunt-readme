@@ -74,10 +74,10 @@ exports.pkg = function (key, opts) {
  *   {%= _.copyright('2012') %} => Copyright (c) 2012-2013 Jeffrey Herb, contributors.
  */
 exports.copyright = function (startYear) {
-  var author = config.author ? (config.author.name || config.author) : name;
-  var today = grunt.template.today('yyyy') + ' ';
+  var name = config.author.name ? config.author.name : name;
+  var today = grunt.template.today('yyyy');
   var date = startYear ? startYear + '-' + today : today;
-  return 'Copyright (c) ' + date + author + ', contributors.';
+  return 'Copyright (c) ' + date + ' ' + name + ', contributors.';
 };
 
 
