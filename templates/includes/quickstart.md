@@ -17,7 +17,7 @@ module.exports = function(grunt) {
     assemble: {
       options: {
         plugins: ['{%= name %}'],
-        {%= _.shortname(name) %}: {
+        {%= shortname %}: {
           // plugin options
         }
       },

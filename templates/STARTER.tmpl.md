@@ -13,12 +13,10 @@
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
-
+{% if (author.url) { %}
 ## Author
-
 + [github/{%= author.url %}]({%= author.url %})
-+ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %})
-
++ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %}){% } %}
 
 ## License
 {%= copyright %}

@@ -2,24 +2,21 @@
 
 > {%= description %}
 
-{%= _.doc("preface.md") %}
-
 ## Getting Started
-{%= _.doc("docs-getting-started.md") %}
+{%= _.include("docs-getting-started.md") %}
 
 ## Options
-{%= _.doc("docs-options.md") %}
+{%= _.include("docs-options.md") %}
 
 ## Usage Examples
-{%= _.doc("docs-examples.md") %}
+{%= _.include("docs-examples.md") %}
 
 ## Contributing
 Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
-
+{% if (author.url) { %}
 ## Author
-
 + [github/{%= author.url %}]({%= author.url %})
-+ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %})
++ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %}){% } %}
 
 {% if (changelog) { %}
 ## Release History
