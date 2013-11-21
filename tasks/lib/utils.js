@@ -110,6 +110,14 @@ var arr = [
   {
     pattern: /\s*\{{!(--)?.+(--)?}}/g,
     replacement: ''
+  },
+  {
+    pattern: /\[\[!/g,
+    replacement: '{{!'
+  },
+  {
+    pattern: /\]\]/g,
+    replacement: '}}'
   }
 ];
 

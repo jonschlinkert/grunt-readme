@@ -65,9 +65,9 @@ This is probably most useful when:
 Code comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:
 
 ```handlebars
-[[!-- foo --]]
-[[! foo ]]
-[[!foo]]
+{{!-- foo --}}
+{{! foo }}
+{{!foo}}
 ```
 
 ### Escaping
