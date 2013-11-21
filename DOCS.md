@@ -1,9 +1,38 @@
-# Docs
+# grunt-readme documentation
 
 [Also see examples →](./EXAMPLES.md)
 
-## Advanced configuration
+**Table of Contents**
+* [grunt-readme](#name)
+  * [Quickstart](#quickstart)
+  * [Example README template](#example-readme-template)
+  * [Contributing](#contributing)
+  * [Release History](#release-history)
+  * [Author](#author)
+  * [License](#license)
 
+
+## Quickstart
+_If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
+
+From the same directory as your project's [Gruntfile][Getting Started] and [package.json][], install this plugin with the following command:
+
+```bash
+npm install grunt-readme --save-dev
+```
+
+Once that's done, add this line to your project's Gruntfile:
+
+```js
+grunt.loadNpmTasks('grunt-readme');
+```
+
+If the plugin has been installed correctly, run `grunt readme` at the command line. If the plugin has been installed properly, you should see a success message.
+
+_**That's it!** If you are happy with the defaults, **no additional Gruntfile configuration is required**._
+
+
+## Advanced configuration
 To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
 
 ```js
@@ -16,6 +45,27 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
 ```
+## Features
+### Code Comments
+Code comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:
+
+```handlebars
+[[!-- foo --]]
+[[! foo ]]
+[[!foo]]
+```
+
+### Escaping
+
+#### Escaping hashes
+This task automatically adjusts heading levels in included templates. For example, `#` is adjusted to `##`, so that heading levels "line up" properly after the README is built.
+
+This can cause problems if you're using hashes for a reason other than headings, such as CSS Id's in code comments. So to prevent grunt-readme from converting `#id {}` to `##id {}`, just add a  single backtick before the hash: <code>`#id {}</code>.
+
+#### Escaping Lo-Dash templates
+To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (_as with code examples_), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
+
+
 
 ## Options
 ### Overview of available options
@@ -209,7 +259,7 @@ or as a second parameter in the `include` or `doc` mixins.
 
 
 
-## mixins
+## Mixins
 Mixins use the following formats:
 
 * `_.mixin()`: when used in JavaScript
@@ -352,7 +402,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Friday, November 15, 2013._
+_This file was generated on Wednesday, November 20, 2013._
 
 
 [grunt]: http://gruntjs.com/

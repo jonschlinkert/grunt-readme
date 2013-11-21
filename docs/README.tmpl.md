@@ -9,10 +9,11 @@ username: jonschlinkert
 
 Please [report any bugs or feature requests](https://github.com/helpers/{%= name %}/issues/new), thanks!
 
-## Getting Started
-{%= _.doc("docs-getting-started.md") %}
+## Quickstart
+{%= _.doc("docs-quickstart.md") %}
 
 ## Example README template
+When you first add grunt-readme to a project, the task will automatically add a readme if it doesn't find one.
 {%= _.doc("docs-example.md") %}
 
 ## Contributing

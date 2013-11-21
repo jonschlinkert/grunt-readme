@@ -62,8 +62,7 @@ module.exports = function(grunt) {
           src: 'docs/DOCS.tmpl.md',
           dest: './'
         },
-        // This is only for tests,
-        // don't use this in real projects!
+        // This is only for tests, don't use this in real projects!
         test: {
           src: ['test/fixtures/*.tmpl.md'],
           dest: 'test/actual/'

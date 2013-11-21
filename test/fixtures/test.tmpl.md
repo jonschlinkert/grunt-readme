@@ -9,8 +9,8 @@ username: jonschlinkert
 
 Please [report any bugs or feature requests](https://github.com/helpers/{%= name %}/issues/new), thanks!
 
-## Getting Started
-{%= _.doc("docs-getting-started.md") %}
+## Quickstart
+{%= _.doc("docs-quickstart.md") %}
 
 ## Example README template
 {%= _.doc("docs-example.md") %}

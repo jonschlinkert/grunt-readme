@@ -1,5 +1,3 @@
-# Features
-
 ## Code Comments
 Code comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:
 
@@ -9,5 +7,12 @@ Code comments may be used in markdown templates, and they will be stripped from 
 [[!foo]]
 ```
 
-## Escaping templates
+## Escaping
+
+### Escaping hashes
+This task automatically adjusts heading levels in included templates. For example, `#` is adjusted to `##`, so that heading levels "line up" properly after the README is built.
+
+This can cause problems if you're using hashes for a reason other than headings, such as CSS Id's in code comments. So to prevent grunt-readme from converting `#id {}` to `##id {}`, just add a  single backtick before the hash: <code>`#id {}</code>.
+
+### Escaping Lo-Dash templates
 To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (_as with code examples_), just use square brackets instead of curly braces in any templates that have similar patterns to these: `[%= .. %]`, `[%- .. %]`, and `[% .. %]`. The square brackets will be replaced with curly braces in the rendered output.

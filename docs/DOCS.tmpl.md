@@ -1,9 +1,14 @@
-# Docs
+# grunt-readme documentation
 
 [Also see examples →](./EXAMPLES.md)
 
-## Advanced configuration
+**Table of Contents**
+{%= toc %}
 
+## Quickstart
+{%= _.doc("docs-quickstart.md") %}
+
+## Advanced configuration
 To change the plugin's defaults, add a section to your project's Gruntfile named `{%= shortname %}` to the data object passed into `grunt.initConfig()`:
 
 ```js
@@ -16,11 +21,13 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
 ```
+## Features
+{%= _.doc("docs-features.md") %}
 
 ## Options
 {%= _.doc("docs-options.md") %}
 
-## mixins
+## Mixins
 {%= _.doc("docs-mixins.md") %}
 
 # Heads up!

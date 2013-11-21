@@ -3,7 +3,7 @@
 Feel free to use [any of the templates](./templates) included in this repo, or copy/past the blow example into `./docs/README.tmpl.md`:
 
 ```js
-# [%= name %]
+`# [%= name %]
 
 > [%= description %]
 

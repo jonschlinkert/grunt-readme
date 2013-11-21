@@ -5,7 +5,7 @@
 {%= toc %}
 
 ## Overview
-{%= _.doc("docs-getting-started.md") %}
+{%= _.doc("docs-quickstart.md") %}
 
 ## Options
 {%= _.doc("docs-options.md") %}
