@@ -12,7 +12,7 @@
 {%= _.include("docs-examples.md") %}
 
 ## Contributing
-Please see the [Contributing to {%= name %}]({%= _.homepage() %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
+Please see the [Contributing to {%= name %}]({%= homepage %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
 {% if (author.url) { %}
 ## Author
 + [github/{%= author.url %}]({%= author.url %})

@@ -27,9 +27,7 @@ _**That's it!** If you are happy with the defaults, **no additional Gruntfile co
 
 
 ## Example README template
-[Also see examples →](./EXAMPLES.md)
-
-Feel free to use [any of the templates](./templates) included in this repo, or copy/past the blow example into `./docs/README.tmpl.md`:
+When you first add grunt-readme to a project, the task will automatically add a readme if it doesn't find one. But it's recommended that you customize you're own README template. Feel free to use [any of the templates](./templates) included in this repo, or copy/past the blow example into `./docs/README.tmpl.md`:
 
 ```js
 # {%= name %}
@@ -53,6 +51,8 @@ Feel free to use [any of the templates](./templates) included in this repo, or c
 ```
 
 Then add `overview.md`, `options.md` and `examples.md` to the `./docs` directory. Of course, all of this is completely optional.
+
+Visit the [full documentation →](./DOCS.md) | [See examples →](./EXAMPLES.md)
 
 
 ## Contributing

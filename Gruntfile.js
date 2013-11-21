@@ -55,16 +55,17 @@ module.exports = function(grunt) {
     },
 
 
-    // None of this config is needed, it's all for tests!!!
     readme: {
       options: {
         alt: {
           src: 'docs/DOCS.tmpl.md',
           dest: './'
         },
-        // This is only for tests, don't use this in real projects!
+        // This is only for tests! For most projects, the readme task doesn't even
+        // need to be defined in the Gruntfile, and zero configuration is required.
+        metadata: ['test/fixtures/*.json'],
         test: {
-          src: ['test/fixtures/*.tmpl.md'],
+          src: ['test/fixtures/*.tmpl.md', 'templates/**/*.{tmpl.md,.md}'],
           dest: 'test/actual/'
         }
       }
