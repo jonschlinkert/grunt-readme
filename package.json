@@ -1,7 +1,7 @@
 {
   "name": "grunt-readme",
   "description": "Grunt plugin for generating a README from templates, including an optional table of contents. No Gruntfile config is necessary, just choose a starter template and you'll be ready to go.",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "homepage": "https://github.com/assemble/grunt-readme",
   "author": {
     "name": "Jon Schlinkert",
@@ -34,6 +34,7 @@
   "dependencies": {
     "acorn": "~0.3.1",
     "assemble-yaml": "~0.2.1",
+    "frep": "~0.1.2",
     "glob-utils": "~0.1.0",
     "lodash": "~2.3.0",
     "marked-toc": "~0.1.0",
