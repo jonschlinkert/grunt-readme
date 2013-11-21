@@ -20,7 +20,13 @@ var _           = grunt.util._;
 exports = module.exports = {};
 
 // Metadata
-var config = require(path.resolve(process.cwd(),'package.json'));
+// var config = require(path.resolve(process.cwd(),'package.json'));
+var config;
+if(grunt.file.exists(path.resolve(process.cwd(), 'package.json'))) {
+  config = grunt.file.readJSON(path.resolve(process.cwd(),'package.json'));
+} else {
+  config = require('./pkg.js');
+}
 
 
 /**

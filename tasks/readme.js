@@ -38,6 +38,9 @@ module.exports = function(grunt) {
     // The 'readme' task options.
     var options = this.options({
       templates: '',
+      includes: '',
+      readme: '',
+      config: '',
       sep: '\n',
       blacklist: [],
       contributing: false
@@ -51,13 +54,18 @@ module.exports = function(grunt) {
     var metadata = Utils.optionsDataFormatFactory(options.metadata);
     grunt.verbose.ok('README metadata:'.yellow, metadata);
 
+
     /**
      * meta: {}
      * Root context object passed to templates with a value of "this"
      * @type {Object}
      */
-    var pkg = require(path.resolve(process.cwd(), 'package.json'));
-    var meta = _.defaults(metadata, pkg);
+    if(grunt.file.exists(path.resolve(process.cwd(),'package.json'))) {
+      options.config = grunt.file.readJSON(path.resolve(process.cwd(),'package.json'));
+    } else {
+      options.config = require('./lib/pkg.js');
+    }
+    var meta = _.defaults(metadata, options.config);
     grunt.verbose.ok(">> Meta:".yellow, JSON.stringify(meta, null, 2));
 
 
@@ -76,13 +84,12 @@ module.exports = function(grunt) {
      * templates directory in the `./templates` directory of the grunt-readme task.
      * @type {String}
      */
-    var templates;
     if(_.isEmpty(options.templates)) {
-      templates = root('templates');
+      options.templates = root('templates');
     } else {
-      templates = bind(options.templates);
+      options.templates = bind(options.templates);
     }
-    grunt.verbose.writeln('templates:', templates('README.tmpl.md'));
+    var templates = options.templates;
 
 
     /**
@@ -103,7 +110,6 @@ module.exports = function(grunt) {
     } else {
       docs = baseDocs;
     }
-    grunt.verbose.writeln("docs: ", docs('test'));
 
 
     /**
@@ -139,10 +145,6 @@ module.exports = function(grunt) {
     grunt.verbose.writeln("meta: ", meta);
 
 
-    // Show all options flags in verbose mode.
-    grunt.verbose.writeflags(options, 'Options');
-
-
     // Add mixins for use in our templates.
     // TODO: externalize these.
     _.mixin({
@@ -155,10 +157,10 @@ module.exports = function(grunt) {
       },
       include: function (filepath, sep) {
         sep = sep || options.sep;
-        return glob.content(templates(filepath), sep).replace(/^#/gm, '##');
+        var includesPath = path.join(templates(filepath), 'includes');
+        return glob.content(includesPath, sep).replace(/^#/gm, '##');
       }
     });
-
 
 
     /**
@@ -224,7 +226,7 @@ module.exports = function(grunt) {
     /**
      * Generate README
      */
-    Utils.compileTemplate(readmeTmpl, 'README.md', templateConfig, Utils.revertBrackets);
+    Utils.compileTemplate(readmeTmpl, 'README.md', templateConfig, Utils.frep);
     grunt.log.ok('Created README.md');
 
 
@@ -234,7 +236,7 @@ module.exports = function(grunt) {
       grunt.file.expand(options.alt.src).map(function(file) {
         var altSrc = yaml.extract(file).content || '';
         var altDest = path.join(options.alt.dest, name.base(file)) + '.md';
-        Utils.compileTemplate(altSrc, altDest, templateConfig, Utils.revertBrackets);
+        Utils.compileTemplate(altSrc, altDest, templateConfig, Utils.frep);
       });
     }
 
@@ -244,7 +246,7 @@ module.exports = function(grunt) {
       grunt.file.expand(options.test.src).map(function(file) {
         var testSrc = yaml.extract(file).content || '';
         var testDest = path.join(options.test.dest, name.base(file)) + '.md';
-        Utils.compileTemplate(testSrc, testDest, templateConfig, Utils.revertBrackets);
+        Utils.compileTemplate(testSrc, testDest, templateConfig, Utils.frep);
       });
     }
 

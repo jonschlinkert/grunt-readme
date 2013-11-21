@@ -1,12 +1,11 @@
 /*!
- * get
- * http://github.com/jonschlinkert/grunt-get
+ * repos
+ * http://github.com/jonschlinkert/grunt-repos
  *
  * Copyright 2013 Jon Schlinkert
  * Licensed under the MIT License
  * http://opensource.org/licenses/MIT
  */
-
 
 'use strict';
 
