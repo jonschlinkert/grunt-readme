@@ -8,6 +8,7 @@ var path  = require('path');
 
 // node_modules
 var grunt = require('grunt');
+var frep = require('frep');
 var _ = require('lodash');
 
 
@@ -94,8 +95,31 @@ exports.compileTemplate = function (src, dest, options, fn) {
 
 
 /**
- * Revert [%= foo %] to {%= foo %}
+ * Replacement patterns
  */
-exports.revertBrackets = function(str) {
-  return str.replace(/\[\%/g, '{%').replace(/\%\]/g, '%}').replace(/^\s*/, '');
+var arr = [
+  {
+    pattern: /^`#/gm,
+    replacement: '#'
+  },
+  {
+    pattern: /\[\%/g,
+    replacement: '{%'
+  },
+  {
+    pattern: /\%\]/g,
+    replacement: '%}'
+  },
+  {
+    pattern: /^\s*/,
+    replacement: ''
+  },
+  {
+    pattern: /\s*\{{!(--)?.+(--)?}}/g,
+    replacement: ''
+  }
+];
+
+exports.frep = function(str) {
+  return frep.strWithArr(str, arr);
 };
