@@ -1,3 +1,16 @@
+## YAML Front Matter
+Add YAML front matter to documents to extend the metadata that is supplied to your project's templates.
+
+```yaml
+---
+username: jonschlinkert
+---
+```
+This is probably most useful when:
+1. You need to use the same or similar templates on a number of different projects
+1. You want to supply data to the templates that won't typically be found in package.json
+
+
 ## Code Comments
 Code comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:
 

@@ -1,51 +1,66 @@
-# grunt-readme documentation
+# Documentation
 
 [Also see examples →](./EXAMPLES.md)
 
 **Table of Contents**
-* [grunt-readme](#name)
-  * [Quickstart](#quickstart)
-  * [Example README template](#example-readme-template)
-  * [Contributing](#contributing)
-  * [Release History](#release-history)
+* [Documentation](#documentation)
+  * [Overview](#overview)
+  * [Advanced configuration](#advanced-configuration)
+  * [The "repos" task](#the-repos-task)
+  * [Features](#features)
+  * [Options](#options)
+  * [Mixins](#mixins)
   * [Author](#author)
   * [License](#license)
 
 
-## Quickstart
-_If you haven't used [grunt][] before, be sure to check out the [Getting Started][] guide._
+## Overview
+In general, the conventions used by this task are as follows:
 
-From the same directory as your project's [Gruntfile][Getting Started] and [package.json][], install this plugin with the following command:
-
-```bash
-npm install grunt-readme --save-dev
-```
-
-Once that's done, add this line to your project's Gruntfile:
-
-```js
-grunt.loadNpmTasks('grunt-readme');
-```
-
-If the plugin has been installed correctly, run `grunt readme` at the command line. If the plugin has been installed properly, you should see a success message.
-
-_**That's it!** If you are happy with the defaults, **no additional Gruntfile configuration is required**._
-
+**Templates**
+* Files with extension `.tmpl.md` are generally templates that will be compiled one-to-one into documents
+* Files with extension `.md` are generally intended to be used as includes.
+* `{%= _.doc("foo") %}` is used to included files from your project's `./docs` directory
+* `{%= _.include("foo") %}` is used to include boilerplate files from grunt-readme
 
 ## Advanced configuration
 To change the plugin's defaults, add a section to your project's Gruntfile named `readme` to the data object passed into `grunt.initConfig()`:
 
 ```js
 grunt.initConfig({
+  // The "repos" task
+  repos: {
+    options: {}
+  },
+
   // The "readme" task
   readme: {
-    options: {}
+    options: {
+      metadata: {}
+    }
   }
 });
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
 ```
+## The "repos" task
+Bundled in with `grunt-readme` is another task, `repos`, and this task has one simple purpose: to pull down a list of repos from the given user/org. For examples see the `repos` task config in the [README](./README.md).
+
+
 ## Features
+### YAML Front Matter
+Add YAML front matter to documents to extend the metadata that is supplied to your project's templates.
+
+```yaml
+---
+username: jonschlinkert
+---
+```
+This is probably most useful when:
+1. You need to use the same or similar templates on a number of different projects
+1. You want to supply data to the templates that won't typically be found in package.json
+
+
 ### Code Comments
 Code comments may be used in markdown templates, and they will be stripped from the rendered README as long as they adhere to the following syntax:
 
@@ -301,18 +316,24 @@ Same as the `include` mixin but is hard-coded to use the `docs/` folder of your 
 Use the `resolve` mixin in templates to include content _from named NPM modules listed in `devDependencies`_:
 
 ```js
-{%= _.resolve("my-npm-module") %}
+{%= _.resolve("my-boilerplate-readme") %}
 ```
 
-where `my-npm-module` is the name of a `devDependency` currently installed in `node_modules`. For the `resolve` mixin to work, the referenced file must be listed in the `devDependencies` of your project's `package.json`, it must be installed in `node_modules`, and the referenced project must have the file defined in the `main` property of that project's `package.json`. Last, in your templates make sure you _use the name of the module, not the name of the file to "include"_.
+where `my-boilerplate-readme` is the name of a `devDependency` currently installed in `node_modules`.
 
+For the `resolve` mixin to work:
 
-#### _.resolve() example
-Here is a `package.json` for a bogus project we created, `my-npm-module`, to store the template we want to use as an include:
+1. The referenced file must be listed in the `devDependencies` of your project's `package.json`,
+1. It must be installed in `node_modules`, and
+1. The referenced project must have the file defined in the `main` property of that project's `package.json`.
+1. Last, in your templates make sure you _use the name of the module, not the name of the file to "include"_.
+
+**example**
+In the `package.json` of the project that will store your templates, you might do something like:
 
 ```js
 {
-  "name": "my-npm-module",
+  "name": "my-boilerplate-readme",
   "main": "README.tmpl.md"
 }
 ```
@@ -334,7 +355,13 @@ A second paramter can be passed in to set the indentation on returned JSON: `{%=
 Also, if left undefined (`{%= _.meta() %}`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
 
 #### _.jsdocs()
-Parse and extract comments from specified JavaScript files.
+Parse and extract comments from specified JavaScript files to generate output for each code comment block encountered.
+
+```js
+{%= _.jsdocs("tasks/readme.js") %}
+```
+
+Currently, only the block is output and a link to the block in the source code is provided. This needs to be updated to only generate the markdown for jsdoc comments and to do something to make them more readable.
 
 
 #### _.copyright()
@@ -388,9 +415,6 @@ Extract the homepage URL from the project's package.json. If a `homepage` proper
 
 
 
-# Heads up!
-To prevent Lo-Dash from attempting to evaluat templates that shouldn't be (as in code examples), just use square brackets instead of curly braces in any templates that have similar patterns to these: `{%= .. %}`, `{%- .. %}`, and `{% .. %}`. The square brackets will be replaced with curly braces in the rendered output.
-
 ## Author
 
 + [github.com/jonschlinkert](https://github.com/jonschlinkert)
@@ -402,7 +426,7 @@ Released under the MIT license
 
 ***
 
-_This file was generated on Wednesday, November 20, 2013._
+_This file was generated on Thursday, November 21, 2013._
 
 
 [grunt]: http://gruntjs.com/

@@ -38,10 +38,11 @@ module.exports = function(grunt) {
     repos: {
       helpers: {
         options: {
-          path: '/orgs/helpers/'
+          path: '/orgs/helpers/',
+          namespace: 'helpers'
         },
         files: {
-          'tmp/helpers.json': ['repos?page=1&per_page=100']
+          'test/fixtures/data/helpers.json': ['repos?page=1&per_page=100']
         }
       },
       assemble: {
@@ -49,25 +50,24 @@ module.exports = function(grunt) {
           path: '/orgs/assemble/'
         },
         files: {
-          'tmp/assemble.json': ['repos?page=1&per_page=100']
+          'test/fixtures/data/assemble.json': ['repos?page=1&per_page=100']
         }
       }
     },
 
-
     readme: {
       options: {
         alt: {
-          src: 'docs/DOCS.tmpl.md',
+          src: ['docs/DOCS.tmpl.md', 'docs/EXAMPLES.tmpl.md'],
           dest: './'
         },
         // This is only for tests! For most projects, the readme task doesn't even
         // need to be defined in the Gruntfile, and zero configuration is required.
-        metadata: ['test/fixtures/*.json'],
-        test: {
-          src: ['test/fixtures/*.tmpl.md', 'templates/**/*.{tmpl.md,.md}'],
-          dest: 'test/actual/'
-        }
+        // metadata: ['test/fixtures/data/assemble.json', 'test/fixtures/data/helpers.json'],
+        // test: {
+        //   src: ['test/fixtures/*.(tmpl.md,md)', 'templates/**/*.{tmpl.md,md}'],
+        //   dest: 'test/actual/'
+        // }
       }
     }
 

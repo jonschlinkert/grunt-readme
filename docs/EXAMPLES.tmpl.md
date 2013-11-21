@@ -6,7 +6,7 @@
 ## Name
 
 ```js
-{%= name %}
+[%= name %]
 ```
 > grunt-readme
 
@@ -14,10 +14,10 @@
 ## Version
 
 ```js
-{%= version %}
-v{%= version %}
-{%= version ? " v" + version : "" %}
-{%= version ? " * @version " + version + "\\n" : "" %}
+[%= version %]
+v[%= version %]
+[%= version ? " v" + version : "" %]
+[%= version ? " * @version " + version + "\\n" : "" %]
 ```
 > 0.1.3
 > v0.1.3
@@ -27,8 +27,8 @@ v{%= version %}
 ## Description
 
 ```js
-{%= description %}
-{%= description ? " * " + description + "\\n" : "" %}
+[%= description %]
+[%= description ? " * " + description + "\\n" : "" %]
 ```
 > Generate your README from a template. If you already use Grunt, this is a no brainer.
 > * Generate your README from a template. If you already use Grunt, this is a no brainer.\n
@@ -38,9 +38,9 @@ v{%= version %}
 ## Homepage
 
 ```js
-{%= homepage ? " | " + homepage : "" %}
-{%= homepage ? " * " + homepage + "\n" : "" %}
-{%= homepage ? " * @docs " + homepage + "\\n" : "" %}
+[%= homepage ? " | " + homepage : "" %]
+[%= homepage ? " * " + homepage + "\n" : "" %]
+[%= homepage ? " * @docs " + homepage + "\\n" : "" %]
 ```
 >  | https://github.com/assemble/grunt-readme
 > * https://github.com/assemble/grunt-readme
@@ -56,13 +56,13 @@ v{%= version %}
 To use `author` data from `package.json`:
 
 ```js
-[{%= author.name %}]({%= author.url %})
+[[%= author.name %]]([%= author.url %])
 ```
 > [Jon schlinkert](http://github.com/jonschlinkert)
 
 ```js
-{%= author.name ? " * @author " + author.name + "\\n" : "" %}
-{%= author.url ? " * @link " + author.url + "\\n" : "" %}
+[%= author.name ? " * @author " + author.name + "\\n" : "" %]
+[%= author.url ? " * @link " + author.url + "\\n" : "" %]
 ```
 >  * @author Jon Schlinkert\n
 >  * @link https://github.com/jonschlinkert\n
@@ -70,7 +70,7 @@ To use `author` data from `package.json`:
 Or, if you prefer to use an `AUTHORS` file in the root of the project:
 
 ```js
-[{%= authors[0].name %}]({%= authors[0].url %})
+[[%= authors[0].name %]]([%= authors[0].url %])
 ```
 > [Jon schlinkert](http://github.com/jonschlinkert)
 > [Brian Woodward](http://github.com/doowb)
@@ -79,22 +79,22 @@ Or, if you prefer to use an `AUTHORS` file in the root of the project:
 ## Time and date
 
 ```js
-{%= grunt.template.today() %}
+[%= grunt.template.today() %]
 ```
 > Tue Sep 17 2013 18:38:42
 
 ```js
-{%= grunt.template.today("yyyy") %}
+[%= grunt.template.today("yyyy") %]
 ```
 > 2013
 
 ```js
-{%= grunt.template.today("yyyy-mm-dd") %}
+[%= grunt.template.today("yyyy-mm-dd") %]
 ```
 > 2013-09-17
 
 ```js
-_This file was generated on {%= grunt.template.date("fullDate") %}._
+_This file was generated on [%= grunt.template.date("fullDate") %]._
 ```
 > _This file was generated on Monday, September 30, 2013._
 
@@ -103,10 +103,10 @@ _This file was generated on {%= grunt.template.date("fullDate") %}._
 
 ```js
 /*!
- * {%= name %} v{%= version %},  {%= grunt.template.today("yyyy-mm-dd") %}
- * {%= homepage %}
- * Copyright (c) {%= grunt.template.today("yyyy") %} {%= author %}, contributors.
- * {%= _.license() %}.
+ * [%= name %] v[%= version %],  [%= grunt.template.today("yyyy-mm-dd") %]
+ * [%= homepage %]
+ * Copyright (c) [%= grunt.template.today("yyyy") %] [%= author %], contributors.
+ * [%= _.license() %].
  */
 ```
 
@@ -120,7 +120,7 @@ _This file was generated on {%= grunt.template.date("fullDate") %}._
 ## Changelog / Release History
 
 ```js
-{%= _.include("docs-changelog.md") %}
+[%= _.include("docs-changelog.md") %]
 ```
 
 > * 2013-09-21   **v0.1.3**   Completely refactored. Adds a lot of documentation.
@@ -130,7 +130,7 @@ _This file was generated on {%= grunt.template.date("fullDate") %}._
 Or:
 
 ```js
- * {%= grunt.template.today('yyyy') %}   v0.1.0   First commit
+ * [%= grunt.template.today('yyyy') %]   v0.1.0   First commit
 ```
 > * 2013   v0.1.0   First commit
 
@@ -139,7 +139,7 @@ Or:
 ## License
 
 ```
-{%= _.license() %}
+[%= _.license() %]
 ```
 > Released under the [MIT license](./LICENSE-MIT).
 
@@ -148,7 +148,7 @@ Or:
 ## Contributors
 
 ```js
-{%= _.contributors() %}
+[%= _.contributors() %]
 ```
 > Jon Schlinkert
 > Brian Woodward

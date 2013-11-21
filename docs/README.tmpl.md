@@ -1,19 +1,19 @@
 ---
 username: jonschlinkert
+org: assemble
 ---
-# {%= name %} [![NPM version](https://badge.fury.io/js/{%= name %}.png)](http://badge.fury.io/js/{%= name %}) {% if (travis) { %} [![Build Status]({%= travis %}.png)]({%= travis %}){% } %}
+# {%= name %} {%= _.badge('fury') %} {%= _.badge('travis') %}
 
 > {%= description %}
 
-[Also see examples →](./EXAMPLES.md) and [documentation →](./DOCS.md)
+[Documentation →](./DOCS.md) | [Examples →](./EXAMPLES.md)
 
-Please [report any bugs or feature requests](https://github.com/helpers/{%= name %}/issues/new), thanks!
+Please [report any bugs or feature requests](https://github.com/{%= org %}/{%= name %}/issues/new), thanks!
 
 ## Quickstart
 {%= _.doc("docs-quickstart.md") %}
 
 ## Example README template
-When you first add grunt-readme to a project, the task will automatically add a readme if it doesn't find one.
 {%= _.doc("docs-example.md") %}
 
 ## Contributing

@@ -39,18 +39,24 @@ Same as the `include` mixin but is hard-coded to use the `docs/` folder of your 
 Use the `resolve` mixin in templates to include content _from named NPM modules listed in `devDependencies`_:
 
 ```js
-[%= _.resolve("my-npm-module") %]
+[%= _.resolve("my-boilerplate-readme") %]
 ```
 
-where `my-npm-module` is the name of a `devDependency` currently installed in `node_modules`. For the `resolve` mixin to work, the referenced file must be listed in the `devDependencies` of your project's `package.json`, it must be installed in `node_modules`, and the referenced project must have the file defined in the `main` property of that project's `package.json`. Last, in your templates make sure you _use the name of the module, not the name of the file to "include"_.
+where `my-boilerplate-readme` is the name of a `devDependency` currently installed in `node_modules`.
 
+For the `resolve` mixin to work:
 
-### _.resolve() example
-Here is a `package.json` for a bogus project we created, `my-npm-module`, to store the template we want to use as an include:
+1. The referenced file must be listed in the `devDependencies` of your project's `package.json`,
+1. It must be installed in `node_modules`, and
+1. The referenced project must have the file defined in the `main` property of that project's `package.json`.
+1. Last, in your templates make sure you _use the name of the module, not the name of the file to "include"_.
+
+**example**
+In the `package.json` of the project that will store your templates, you might do something like:
 
 ```js
 {
-  "name": "my-npm-module",
+  "name": "my-boilerplate-readme",
   "main": "README.tmpl.md"
 }
 ```
@@ -72,7 +78,13 @@ A second paramter can be passed in to set the indentation on returned JSON: `[%=
 Also, if left undefined (`[%= _.meta() %]`) the mixin will return the entire metadata object (by default, this is the entire contents of `package.json`):
 
 ### _.jsdocs()
-Parse and extract comments from specified JavaScript files.
+Parse and extract comments from specified JavaScript files to generate output for each code comment block encountered.
+
+```js
+[%= _.jsdocs("tasks/readme.js") %]
+```
+
+Currently, only the block is output and a link to the block in the source code is provided. This needs to be updated to only generate the markdown for jsdoc comments and to do something to make them more readable.
 
 
 ### _.copyright()
