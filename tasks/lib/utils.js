@@ -76,21 +76,14 @@ exports.optionsDataFormatFactory = function(data) {
 };
 
 
-
 exports.compileTemplate = function (src, dest, options, fn) {
   options = options || {};
-
   var output = grunt.template.process(src, {
     data: options.data || {},
     delimiters: options.delimiters || 'readme'
   });
-
-  function postprocess(src, fn) {return fn(src);}
-  var fallbackFn = function(src) {return src;};
-  output = postprocess(output, fn || fallbackFn);
-
+  output = _.isFunction(fn) ? fn(output) : output;
   grunt.file.write(dest, output);
-  grunt.verbose.ok('Created:', dest);
 };
 
 

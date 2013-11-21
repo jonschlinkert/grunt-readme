@@ -6,10 +6,10 @@ grunt.initConfig({
   readme: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
+      'test/actual/': ['test/fixtures/*.js']
+    }
+  }
+});
 ```
 
 ## Custom Options
@@ -23,8 +23,8 @@ grunt.initConfig({
       punctuation: ' !!!',
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
+      'test/actual/': ['test/fixtures/*.js']
+    }
+  }
+});
 ```

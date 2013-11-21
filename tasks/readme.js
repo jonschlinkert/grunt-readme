@@ -101,47 +101,50 @@ module.exports = function(grunt) {
      *     docs: 'foo/'
      *   }
      */
-    var docs;
     var baseDocs = root('docs');
     if(!options.docs) {
-      docs = path.join.bind(options.docs, 'docs');
+      options.docs = path.join.bind(options.docs, 'docs');
     } else if (options.docs) {
-      docs = path.join.bind(process.cwd(), options.docs, '');
+      options.docs = path.join.bind(process.cwd(), options.docs, '');
     } else {
-      docs = baseDocs;
+      options.docs = baseDocs;
     }
+    var docs = options.docs;
 
 
     /**
-     * README template
+     * README template used to create README.md. Unless a template
+     * is defined in the task options, a start template from
+     * grunt-readme will be used.
+     *
      * @example:
-     *   `./foo/README.tmpl.md`
+     *   options: {
+     *     readme: './foo/README.tmpl.md'
+     *   }
      */
-    var readmeTmpl;
-    if (options.readme) {
-      // See if the `readme` option specifies a path to a template
-      readmeTmpl = options.readme;
-    } else if (grunt.file.exists(docs('README.tmpl.md'))) {
-      // If not,  look for the README template in the `docs()` dir
-      readmeTmpl = docs('README.tmpl.md');
+
+    // If `readme` option is defined with a readme template, use that,
+    // otherwise, see if the README template is in the `docs()` dir
+    if (!options.readme && grunt.file.exists(docs('README.tmpl.md'))) {
+      options.readme = docs('README.tmpl.md');
+    // As a last resort, use a template from grunt-readme
     } else {
-      // As a last resort, grab a template from grunt-readme
-      readmeTmpl = templates('README.tmpl.md');
+      options.readme = templates('README.tmpl.md');
     }
 
 
     // Extract and parse YAML front matter
-    var yfm = yaml.extract(readmeTmpl).context;
+    var yfm = yaml.extract(options.readme).context;
 
     // Extend context with data from YFM
     meta = _.extend({}, meta, yfm);
 
     // Extract content from template
-    readmeTmpl = yaml.extract(readmeTmpl).content;
+    options.readme = yaml.extract(options.readme).content;
 
 
     grunt.verbose.writeln("yfm: ", yfm);
-    grunt.verbose.writeln("readmeTmpl: ", readmeTmpl);
+    grunt.verbose.writeln("options.readme: ", options.readme);
     grunt.verbose.writeln("meta: ", meta);
 
 
@@ -159,6 +162,9 @@ module.exports = function(grunt) {
         sep = sep || options.sep;
         var includesPath = path.join(templates(filepath), 'includes');
         return glob.content(includesPath, sep).replace(/^#/gm, '##');
+      },
+      badge: function (badge) {
+        return grunt.file.read(templates('badges/' + badge + '.md'));
       }
     });
 
@@ -211,7 +217,7 @@ module.exports = function(grunt) {
      * Generate a Table of Contents
      * @usage: {%= toc %}
      */
-    meta.toc = makeTOC(readmeTmpl);
+    meta.toc = makeTOC(options.readme);
 
 
     /**
@@ -226,29 +232,23 @@ module.exports = function(grunt) {
     /**
      * Generate README
      */
-    Utils.compileTemplate(readmeTmpl, 'README.md', templateConfig, Utils.frep);
+    Utils.compileTemplate(options.readme, 'README.md', templateConfig, Utils.frep);
     grunt.log.ok('Created README.md');
 
-
-    // Options for for defining an additional document
-    if(!_.isUndefined(options.alt)) {
-      options.alt = options.alt || {};
-      grunt.file.expand(options.alt.src).map(function(file) {
-        var altSrc = yaml.extract(file).content || '';
-        var altDest = path.join(options.alt.dest, name.base(file)) + '.md';
-        Utils.compileTemplate(altSrc, altDest, templateConfig, Utils.frep);
-      });
+    function makeOptionsObject(foo) {
+      if(!_.isUndefined(options[foo])) {
+        options[foo] = options[foo] || {};
+        grunt.file.expand(options[foo].src).map(function(file) {
+          var fooSrc = yaml.extract(file).content || '';
+          var fooDest = path.join(options[foo].dest, name.base(file)) + '.md';
+          meta.toc = makeTOC(fooSrc);
+          Utils.compileTemplate(fooSrc, fooDest, templateConfig, Utils.frep);
+        });
+      }
     }
 
-    // Property for running tests.
-    if(!_.isUndefined(options.test)) {
-      options.test = options.test || {};
-      grunt.file.expand(options.test.src).map(function(file) {
-        var testSrc = yaml.extract(file).content || '';
-        var testDest = path.join(options.test.dest, name.base(file)) + '.md';
-        Utils.compileTemplate(testSrc, testDest, templateConfig, Utils.frep);
-      });
-    }
+    makeOptionsObject('alt');
+    makeOptionsObject('test');
 
     // Fail task if any errors were logged.
     if (this.errorCount > 0) {return false;}

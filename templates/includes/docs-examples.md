@@ -3,13 +3,13 @@ In this example, the default options are used to do something with whatever. So 
 
 ```js
 grunt.initConfig({
-  {%= _.shortname(name) %}: {
+  {%= shortname %}: {
     options: {},
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
+      'test/actual/': ['test/fixtures/*.js']
+    }
+  }
+});
 ```
 
 ## Custom Options
@@ -17,14 +17,14 @@ In this example, custom options are used to do something else with whatever else
 
 ```js
 grunt.initConfig({
-  {%= _.shortname(name) %}: {
+  {%= shortname %}: {
     options: {
       separator: ': ',
       punctuation: ' !!!',
     },
     files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-})
+      'test/actual/': ['test/fixtures/*.js']
+    }
+  }
+});
 ```

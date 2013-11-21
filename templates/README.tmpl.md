@@ -1,29 +1,30 @@
-# {%= name %} [![NPM version](https://badge.fury.io/js/{%= name %}.png)](http://badge.fury.io/js/{%= name %}) {% if (travis) { %} [![Build Status]({%= travis %}.png)]({%= travis %}){% } %}
+# {%= name %} {%= _.badge("fury") %} {%= _.badge("travis") %}
 
 > {%= description %}
 
 ## Getting Started
-{%= _.include("docs-getting-started.md") %}
+{%= _.doc("docs-getting-started.md") %}
 
 ## Options
-{%= _.include("docs-options.md") %}
+{%= _.doc("docs-options.md") %}
 
 ## Usage Examples
-{%= _.include("docs-examples.md") %}
+{%= _.doc("docs-examples.md") %}
 
 ## Contributing
-Please see the [Contributing to {%= name %}]({%= homepage %}/blob/master/CONTRIBUTING.md) guide for information on contributing to this project.
-{% if (author.url) { %}
+In lieu of a forma
+l styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
+{% if (author.name) { %}
 ## Author
-+ [github/{%= author.url %}]({%= author.url %})
-+ [twitter/{%= author.url %}](http://twitter.com/{%= author.url %}){% } %}
-
++ [github/{%= author.name %}]({%= author.name %})
++ [twitter/{%= author.name %}](http://twitter.com/{%= author.name %}){% } %}
 {% if (changelog) { %}
 ## Release History
 {%= _.include("docs-changelog.md") %} {% } %}
 
 ## License
-{%= _.include("docs-license.md") %}
+{%= copyright %}
+{%= license %}
 
 ***
 

@@ -3,12 +3,10 @@
 > Grunt plugin for generating a README from templates, including an optional table of contents. No Gruntfile config is necessary, just choose a starter template and you'll be ready to go.
 
 * [grunt-readme](#name)
-  * [Quickstart](#quickstart)
-  * [Example README template](#example-readme-template)
-  * [Contributing](#contributing)
-  * [Release History](#release-history)
-  * [Author](#author)
-  * [License](#license)
+  * [Overview](#overview)
+  * [Options](#options)
+  * [Examples](#examples)
+  * [License and Copyright](#license-and-copyright)
 
 
 ## Overview

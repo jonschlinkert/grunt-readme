@@ -39,7 +39,7 @@ if(grunt.file.exists(path.resolve(process.cwd(), 'package.json'))) {
  * are used in multiple projects.
  */
 exports.resolve = function (patterns) {
-  return load.dev(patterns).map(function(file) {
+  return load.all(patterns).map(function(file) {
     return grunt.file.read(file).replace(/^#/gm, '##');
   });
 };
@@ -138,6 +138,7 @@ exports.shortname = function (name, patterns) {
 };
 
 
+
 /**
  * jsdocs
  * @param  {[type]} file [description]
@@ -185,3 +186,4 @@ exports.jsdocs = function (file) {
   return output;
 
 };
+
