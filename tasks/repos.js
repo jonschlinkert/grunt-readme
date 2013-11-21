@@ -64,9 +64,9 @@ module.exports = function(grunt) {
               });
             });
 
-            var reposObj = {
-              repos: _(repos).sortBy('name')
-            };
+            var reposObj = {};
+            repos = _(repos).sortBy(options.sortBy || 'name');
+            reposObj[options.namespace || 'repos'] = repos;
 
             grunt.verbose.ok('repos:'.yellow, JSON.stringify(reposObj, null, 2));
             grunt.file.write(fp.dest, JSON.stringify(reposObj, null, 2));
