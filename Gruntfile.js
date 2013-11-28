@@ -14,34 +14,22 @@ module.exports = function(grunt) {
   grunt.initConfig({
 
     jshint: {
-      all: ['Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>'],
+      all: ['Gruntfile.js', 'tasks/*.js'],
       options: {
         jshintrc: '.jshintrc'
       }
-    },
-
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js'],
     },
 
     // Pull down a list of repos from Github.
     repos: {
       helpers: {
         options: {
-          path: '/orgs/helpers/',
-          namespace: 'helpers'
+          username: 'assemble',
+          include: ['grunt'],
+          exclude: ['grunt-assemble', 'example', 'data', 'init', 'gruntjs', 'readme']
         },
         files: {
-          'test/fixtures/data/helpers.json': ['repos?page=1&per_page=100']
-        }
-      },
-      assemble: {
-        options: {
-          path: '/orgs/assemble/'
-        },
-        files: {
-          'test/fixtures/data/assemble.json': ['repos?page=1&per_page=100']
+          'docs/tasks.json': ['repos?page=1&per_page=100']
         }
       }
     },
@@ -49,12 +37,12 @@ module.exports = function(grunt) {
     readme: {
       options: {
         alt: {
-          src: ['docs/DOCS.tmpl.md', 'docs/EXAMPLES.tmpl.md'],
+          src: ['docs/DOCS.tmpl.md'],
           dest: './'
         },
         // This is only for tests! For most projects, the readme task doesn't even
         // need to be defined in the Gruntfile, and zero configuration is required.
-        metadata: ['test/fixtures/data/assemble.json', 'test/fixtures/data/helpers.json'],
+        metadata: ['docs/tasks.json'],
         test: {
           src: ['test/fixtures/*.{tmpl.md,md}', 'templates/**/*.{tmpl.md,md}'],
           dest: 'test/actual/'
@@ -68,11 +56,10 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  // grunt.loadNpmTasks('grunt-repos');
+  grunt.loadNpmTasks('grunt-repos');
 
-  // Run this task, then test the results.
-  grunt.registerTask('test', ['readme', 'nodeunit']);
+  // Docs
+  grunt.registerTask('docs', ['repos', 'readme']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'readme']);

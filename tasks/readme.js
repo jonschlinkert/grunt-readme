@@ -44,7 +44,7 @@ module.exports = function(grunt) {
       readme: '',
       config: '',
       sep: '\n',
-      blacklist: [],
+      remove: [],
       contributing: false
     });
 
@@ -164,6 +164,11 @@ module.exports = function(grunt) {
       include: function (filepath, sep) {
         sep = sep || options.sep;
         var includesPath = path.join(templates('includes'), filepath);
+        return glob.content(includesPath, sep).replace(/^#/gm, '##');
+      },
+      contrib: function (filepath, sep) {
+        sep = sep || options.sep;
+        var includesPath = path.join(templates('contrib'), filepath);
         return glob.content(includesPath, sep).replace(/^#/gm, '##');
       },
       badge: function (badge) {

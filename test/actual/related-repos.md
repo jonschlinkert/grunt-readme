@@ -1,10 +1,4 @@
-To update these lists, from the root of the project run `node docs/repos && grunt`.
-
-## Helpers
-A listing of each plugin and the current version included in this package is listed below.
-      
-
-
+Here are some related projects you might be interested in from the [Assemble](http://assemble.io) core team.  
 
 ### [grunt-convert](https://github.com/assemble/grunt-convert) [![NPM version](https://badge.fury.io/js/grunt-convert.png)](http://badge.fury.io/js/grunt-convert)
 > Grunt task to convert to or from JSON, YAML, XML, PLIST or CSV.  
@@ -22,6 +16,4 @@ A listing of each plugin and the current version included in this package is lis
 > Use Grunt to pull down a list of repos from GitHub.  
 
 ### [grunt-toc](https://github.com/assemble/grunt-toc) [![NPM version](https://badge.fury.io/js/grunt-toc.png)](http://badge.fury.io/js/grunt-toc)
-> Grunt plugin for generating a markdown Table of Contents (TOC).  
-
-
+> Grunt plugin for generating a markdown Table of Contents (TOC). 

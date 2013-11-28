@@ -143,8 +143,8 @@ exports.contributors = function (prefix) {
  */
 exports.safename = function (name, patterns) {
   var prefixes = ['grunt', 'helper', 'handlebars-helper', 'mixin', 'assemble-contrib', 'assemble'];
-  var blacklist = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
-  var re = new RegExp('^(?:' + blacklist.join('|') + ')[-_]?');
+  var remove = _.unique(_.flatten(_.union([], prefixes, patterns || [])));
+  var re = new RegExp('^(?:' + remove.join('|') + ')[-_]?');
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
 exports.shortname = function (name, patterns) {

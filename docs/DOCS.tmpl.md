@@ -32,8 +32,6 @@ grunt.initConfig({
 grunt.loadNpmTasks('grunt-readme');
 grunt.registerTask('default', ['readme']);
 ```
-## The "repos" task
-{%= _.doc("repos-task.md") %}
 
 ## Features
 {%= _.doc("docs-features.md") %}
@@ -47,10 +45,11 @@ grunt.registerTask('default', ['readme']);
 ## Examples
 {%= _.doc("docs-examples.md") %}
 
-## Author
+## Contributing
+{%= _.contrib("contributing.md") %}
 
-+ [github.com/{%= username %}](https://github.com/{%= username %})
-+ [twitter.com/{%= username %}](http://twitter.com/{%= username %})
+## Authors
+{%= _.contrib("authors.md") %}
 
 ## License
 {%= copyright %}
@@ -58,9 +57,4 @@ grunt.registerTask('default', ['readme']);
 
 ***
 
-_This file was generated on {%= grunt.template.date("fullDate") %}._
-
-
-[grunt]: http://gruntjs.com/
-[Getting Started]: https://github.com/gruntjs/grunt/blob/devel/docs/getting_started.md
-[package.json]: https://npmjs.org/doc/json.html
+{%= _.include("footer.md") %}

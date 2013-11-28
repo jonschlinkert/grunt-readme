@@ -1,38 +1,17 @@
-## Related Projects
-You might also be interested in these other plugins from the Assemble core team:  
+### [grunt-convert](https://github.com/assemble/grunt-convert) [![NPM version](https://badge.fury.io/js/grunt-convert.png)](http://badge.fury.io/js/grunt-convert)
+> Grunt task to convert to or from JSON, YAML, XML, PLIST or CSV.  
 
-### [assemble-contrib-anchors](https://github.com/assemble/assemble-contrib-anchors) [![NPM version](https://badge.fury.io/js/assemble-contrib-anchors.png)](http://badge.fury.io/js/assemble-contrib-anchors)
-> Assemble plugin for creating anchor tags from generated html.  
+### [grunt-firebase](https://github.com/assemble/grunt-firebase) [![NPM version](https://badge.fury.io/js/grunt-firebase.png)](http://badge.fury.io/js/grunt-firebase)
+> Grunt task for updating firebase data.  
 
-### [assemble-contrib-anchors-example](https://github.com/assemble/assemble-contrib-anchors-example) [![NPM version](https://badge.fury.io/js/assemble-contrib-anchors-example.png)](http://badge.fury.io/js/assemble-contrib-anchors-example)
-> Usage examples for assemble-contrib-anchors, an Assemble plugin for generating adding anchors to headings.  
+### [grunt-github-api](https://github.com/assemble/grunt-github-api) [![NPM version](https://badge.fury.io/js/grunt-github-api.png)](http://badge.fury.io/js/grunt-github-api)
+> Grunt plugin used to query the Github API and save the returned JSON files locally.  
 
-### [assemble-contrib-contextual](https://github.com/assemble/assemble-contrib-contextual) [![NPM version](https://badge.fury.io/js/assemble-contrib-contextual.png)](http://badge.fury.io/js/assemble-contrib-contextual)
-> Generates a JSON file containing the context of each page. Basic plugin to help see what's happening in the build.  
+### [grunt-matter](https://github.com/assemble/grunt-matter) [![NPM version](https://badge.fury.io/js/grunt-matter.png)](http://badge.fury.io/js/grunt-matter)
+> Add, extend, sort, and strip YAML front matter. Also has options for populating randomized mock data.  
 
-### [assemble-contrib-lunr](https://github.com/assemble/assemble-contrib-lunr) [![NPM version](https://badge.fury.io/js/assemble-contrib-lunr.png)](http://badge.fury.io/js/assemble-contrib-lunr)
-> Assemble plugin for creating a search engine within your static site using lunr.js.  
+### [grunt-repos](https://github.com/assemble/grunt-repos) [![NPM version](https://badge.fury.io/js/grunt-repos.png)](http://badge.fury.io/js/grunt-repos)
+> Use Grunt to pull down a list of repos from GitHub.  
 
-### [assemble-contrib-lunr-examples](https://github.com/assemble/assemble-contrib-lunr-examples) [![NPM version](https://badge.fury.io/js/assemble-contrib-lunr-examples.png)](http://badge.fury.io/js/assemble-contrib-lunr-examples)
-> Usages examples for assemble-contrib-lunr, a search plugin for Assemble.  
-
-### [assemble-contrib-markdown](https://github.com/assemble/assemble-contrib-markdown) [![NPM version](https://badge.fury.io/js/assemble-contrib-markdown.png)](http://badge.fury.io/js/assemble-contrib-markdown)
-> Convert markdown files to HTML using marked.js. This plugin is an alternative to Assemble's markdown Handlebars helpers. Both are useful in different scenarios.  
-
-### [assemble-contrib-permalinks](https://github.com/assemble/assemble-contrib-permalinks) [![NPM version](https://badge.fury.io/js/assemble-contrib-permalinks.png)](http://badge.fury.io/js/assemble-contrib-permalinks)
-> Permalinks plugin for Assemble, the static site generator for Grunt.js and Yeoman. This plugin enables powerful and configurable URI replacement patterns, presets, uses Moment.js for parsing dates, and much more.  
-
-### [assemble-contrib-rss](https://github.com/assemble/assemble-contrib-rss) [![NPM version](https://badge.fury.io/js/assemble-contrib-rss.png)](http://badge.fury.io/js/assemble-contrib-rss)
-> Plugin for creating RSS feeds with Assemble, the static site generator for Node.js, Grunt.js and Yeoman.   
-
-### [assemble-contrib-sitemap](https://github.com/assemble/assemble-contrib-sitemap) [![NPM version](https://badge.fury.io/js/assemble-contrib-sitemap.png)](http://badge.fury.io/js/assemble-contrib-sitemap)
-> Sitemap generator plugin for Assemble  
-
-### [assemble-contrib-toc](https://github.com/assemble/assemble-contrib-toc) [![NPM version](https://badge.fury.io/js/assemble-contrib-toc.png)](http://badge.fury.io/js/assemble-contrib-toc)
-> Create a table of contents in the generated HTML, using Cheerio.js  
-
-### [assemble-contrib-toc-example](https://github.com/assemble/assemble-contrib-toc-example) [![NPM version](https://badge.fury.io/js/assemble-contrib-toc-example.png)](http://badge.fury.io/js/assemble-contrib-toc-example)
-> Example for generating a Table of Contents using Assemble.  
-
-### [assemble-contrib-wordcount](https://github.com/assemble/assemble-contrib-wordcount) [![NPM version](https://badge.fury.io/js/assemble-contrib-wordcount.png)](http://badge.fury.io/js/assemble-contrib-wordcount)
-> Assemble plugin for displaying a word-count on blog posts or pages.                                                   
+### [grunt-toc](https://github.com/assemble/grunt-toc) [![NPM version](https://badge.fury.io/js/grunt-toc.png)](http://badge.fury.io/js/grunt-toc)
+> Grunt plugin for generating a markdown Table of Contents (TOC). 

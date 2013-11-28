@@ -1,1 +1,0 @@
-Bundled in with `grunt-readme` is another task, `repos`, and this task has one simple purpose: to pull down a list of repos from the given user/org. For examples see the `repos` task config in the [README](./README.md).

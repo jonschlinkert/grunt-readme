@@ -123,16 +123,16 @@ readme: {
 ```
 
 
-## blacklist
+## remove
 Type: `Array`
 Default: `grunt|helper|mixin`
 
-Any blacklist defined will be removed from content passed in using the `[%= _.shortname() %]` template. Example:
+Any string defined in the remove will be removed from the content passed in using the `[%= _.shortname() %]` template. Example:
 
 ```js
 readme: {
   options: {
-    blacklist: ["foo", "bar", "baz"]
+    remove: ["foo", "bar", "baz"]
   }
 }
 ```
