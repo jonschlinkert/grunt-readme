@@ -163,7 +163,7 @@ module.exports = function(grunt) {
       },
       include: function (filepath, sep) {
         sep = sep || options.sep;
-        var includesPath = path.join(templates(filepath), 'includes');
+        var includesPath = path.join(templates('includes'), filepath);
         return glob.content(includesPath, sep).replace(/^#/gm, '##');
       },
       badge: function (badge) {
