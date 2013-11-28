@@ -18,6 +18,7 @@ var load    = require('resolve-dep');
 var name    = require('node-name');
 var yaml    = require('assemble-yaml');
 var makeTOC = require('marked-toc');
+var marked  = require('marked');
 var glob    = require('glob-utils');
 var grunt   = require('grunt');
 var _       = grunt.util._;
@@ -28,6 +29,7 @@ module.exports = function(grunt) {
   // Local utils
   var Utils = require('./lib/utils');
   _.mixin(require('./lib/mixins'));
+  _.mixin(require('./lib/badges'));
 
 
   // Add custom template delimiters for our templates.
@@ -54,7 +56,6 @@ module.exports = function(grunt) {
     var metadata = Utils.optionsDataFormatFactory(options.metadata);
     grunt.verbose.ok('README metadata:'.yellow, metadata);
 
-
     /**
      * meta: {}
      * Root context object passed to templates with a value of "this"
@@ -68,16 +69,17 @@ module.exports = function(grunt) {
     var meta = _.defaults(metadata, options.config);
     grunt.verbose.ok(">> Meta:".yellow, JSON.stringify(meta, null, 2));
 
-    console.log(meta);
-
     /**
      * Convenience variables.
      */
     meta.copyright = _.copyright();
     meta.homepage  = _.homepage();
     meta.license   = _.license();
-    meta.username  = _.username();
+    meta.n         = '\n';
+    meta.safename  = _.safename(meta.name);
     meta.shortname = _.shortname(meta.name);
+    meta.username  = _.username();
+    meta.repo      = _.username() + '/' + meta.name;
 
     /**
      * Templates directory.
@@ -224,7 +226,7 @@ module.exports = function(grunt) {
     /**
      * Generalized template configuration
      */
-    var templateConfig = {
+    var tmplConfig = {
       data: meta,
       delimiters: 'readme'
     };
@@ -233,17 +235,28 @@ module.exports = function(grunt) {
     /**
      * Generate README
      */
-    Utils.compileTemplate(options.readme, 'README.md', templateConfig, Utils.frep);
+    var newReadme = Utils.compileTmpl(options.readme, tmplConfig, Utils.frep);
+    grunt.file.write('README.md', newReadme);
     grunt.log.ok('Created README.md');
 
-    function makeOptionsObject(foo) {
-      if(!_.isUndefined(options[foo])) {
-        options[foo] = options[foo] || {};
-        grunt.file.expand(options[foo].src).map(function(file) {
-          var fooSrc = yaml.extract(file).content || '';
-          var fooDest = path.join(options[foo].dest, name.base(file)) + '.md';
-          meta.toc = makeTOC(fooSrc);
-          Utils.compileTemplate(fooSrc, fooDest, templateConfig, Utils.frep);
+    // Optionally generate a HTML page from the README.
+    if(options.html) {
+      meta.content = marked(newReadme);
+      meta.content = meta.content.replace(/\{%=/g, '[%=').replace(/%}/g, '%]');
+      var layout = grunt.file.read(templates('html/layout.html'));
+      var html = Utils.compileTmpl(layout, tmplConfig, Utils.frep);
+      grunt.file.write(options.html, html);
+    }
+
+    function makeOptionsObject(prop) {
+      if(!_.isUndefined(options[prop])) {
+        options[prop] = options[prop] || {};
+        grunt.file.expand(options[prop].src).map(function(file) {
+          var propSrc = yaml.extract(file).content || '';
+          var propDest = path.join(options[prop].dest, name.base(file)) + '.md';
+          meta.toc = makeTOC(propSrc);
+          var output = Utils.compileTmpl(propSrc, tmplConfig, Utils.frep);
+          grunt.file.write(propDest, output);
         });
       }
     }

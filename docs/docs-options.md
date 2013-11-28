@@ -1,6 +1,6 @@
 ## Overview of available options
 
-[Also see examples →](./EXAMPLES.md)
+[Also see examples →](./DOCS.md#examples)
 
 ```js
 readme: {
@@ -112,7 +112,7 @@ readme: {
 Type: `String`
 Default: `./node_modules/grunt-readme/tasks/templates/` (relative to your project)
 
-Override the default `cwd` for files included by using `[%= _.include('foo.md') %]`. By default, the `include` mixin will look for files in `./node_modules/grunt-readme/tasks/templates` directory, where some starter templates are stored. (also see [EXAMPLES.md](./EXAMPLES.md))
+Override the default `cwd` for files included by using `[%= _.include('foo.md') %]`. By default, the `include` mixin will look for files in `./node_modules/grunt-readme/tasks/templates` directory, where some starter templates are stored. ([Also see examples →](./DOCS.md#examples))
 
 ```js
 readme: {

@@ -8,8 +8,8 @@ var path  = require('path');
 
 // node_modules
 var grunt = require('grunt');
-var frep = require('frep');
-var _ = require('lodash');
+var frep  = require('frep');
+var _     = require('lodash');
 
 
 exports.meta = function (key, obj) {
@@ -76,14 +76,13 @@ exports.optionsDataFormatFactory = function(data) {
 };
 
 
-exports.compileTemplate = function (src, dest, options, fn) {
+exports.compileTmpl = function (src, options, fn) {
   options = options || {};
   var output = grunt.template.process(src, {
     data: options.data || {},
     delimiters: options.delimiters || 'readme'
   });
-  output = _.isFunction(fn) ? fn(output) : output;
-  grunt.file.write(dest, output);
+  return _.isFunction(fn) ? fn(output) : output;
 };
 
 

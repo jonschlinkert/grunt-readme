@@ -1,7 +1,5 @@
 # Documentation
 
-[Also see examples →](./EXAMPLES.md)
-
 **Table of Contents**
 {%= toc %}
 
@@ -45,6 +43,9 @@ grunt.registerTask('default', ['readme']);
 
 ## Mixins
 {%= _.doc("docs-mixins.md") %}
+
+## Examples
+{%= _.doc("docs-examples.md") %}
 
 ## Author
 

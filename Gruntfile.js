@@ -12,21 +12,12 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+
     jshint: {
+      all: ['Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>'],
       options: {
-        curly: true,
-        eqeqeq: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        sub: true,
-        undef: true,
-        boss: true,
-        eqnull: true,
-        node: true
-      },
-      all: ['Gruntfile.js', 'tasks/*.js', '<%= nodeunit.tests %>']
+        jshintrc: '.jshintrc'
+      }
     },
 
     // Unit tests.
@@ -63,14 +54,13 @@ module.exports = function(grunt) {
         },
         // This is only for tests! For most projects, the readme task doesn't even
         // need to be defined in the Gruntfile, and zero configuration is required.
-        // metadata: ['test/fixtures/data/assemble.json', 'test/fixtures/data/helpers.json'],
-        // test: {
-        //   src: ['test/fixtures/*.(tmpl.md,md)', 'templates/**/*.{tmpl.md,md}'],
-        //   dest: 'test/actual/'
-        // }
+        metadata: ['test/fixtures/data/assemble.json', 'test/fixtures/data/helpers.json'],
+        test: {
+          src: ['test/fixtures/*.{tmpl.md,md}', 'templates/**/*.{tmpl.md,md}'],
+          dest: 'test/actual/'
+        }
       }
     }
-
   });
 
   // Actually load this plugin's task(s).
@@ -79,6 +69,7 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
+  // grunt.loadNpmTasks('grunt-repos');
 
   // Run this task, then test the results.
   grunt.registerTask('test', ['readme', 'nodeunit']);

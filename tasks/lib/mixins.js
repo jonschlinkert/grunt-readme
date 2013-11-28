@@ -7,20 +7,23 @@
 
 'use strict';
 
+// Node.js
+var path  = require('path');
+var url   = require('url');
+
 // node_modules
-var grunt       = require('grunt');
-var acorn       = require('acorn');
-var path        = require('path');
-var load        = require('resolve-dep');
-var _           = grunt.util._;
+var acorn = require('acorn');
+var load  = require('resolve-dep');
+var grunt = require('grunt');
+var _     = require('lodash');
 
 
 
 // Export the utils module.
 exports = module.exports = {};
 
+
 // Metadata
-// var config = require(path.resolve(process.cwd(),'package.json'));
 var config;
 if(grunt.file.exists(path.resolve(process.cwd(), 'package.json'))) {
   config = grunt.file.readJSON(path.resolve(process.cwd(),'package.json'));
@@ -94,12 +97,19 @@ exports.license = function (prepend) {
 };
 
 
-exports.username = function () {
-  if(config.homepage) {
-    return config.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
-  } else {
-    return config.repository.url.replace(/^([^:]+):(.+)/, '$1');
+
+exports.username = function (name) {
+  var username = '';
+  if (name) {
+    username = name;
+  } else if (config.username) {
+    username = config.username;
+  } else if (config.homepage) {
+    username = config.homepage.replace(/^([^:]+):\/\/(?:.+)\/(.+)\/(?:.+)/, '$2');
+  } else if (config.repository.url) {
+    username = config.repository.url.replace(/^([^:]+):(.+)/, '$1');
   }
+  return username;
 };
 
 
@@ -107,16 +117,20 @@ exports.homepage = function () {
   if(config.homepage) {
     return config.homepage;
   } else {
-    return config.repository.url.replace(/^git@([^:]+):(.+)(?:.git)/, 'https://$1/$2');
+    return config.repository.url.replace(/^(?:git@)?([^:]+):(.+)(?:.git)/, 'https://$1/$2');
   }
 };
 
 
-exports.contributors = function (sep) {
-  sep = sep || "";
+exports.contributors = function (prefix) {
+  prefix = prefix || '* ';
   if(config.contributors) {
-    return _.pluck(config.contributors, "name").join("\n") + sep;
-  } else {return; }
+    return config.contributors.map(function(contributor) {
+      return prefix + contributor.name || 'Name not found';
+    }).join('\n');
+  } else {
+    return '_(No contributors found)_';
+  }
 };
 
 
@@ -134,7 +148,7 @@ exports.safename = function (name, patterns) {
   return name.replace(re, '').replace(/[\W_]+/g, '_').replace(/^(\d)/, '_$1');
 };
 exports.shortname = function (name, patterns) {
-  return _.safename(name, patterns);
+  return exports.safename(name, patterns);
 };
 
 
@@ -178,7 +192,7 @@ exports.jsdocs = function (file) {
     output += '/*' + comments[i].text + '*/\n';
     output += '```\n';
     output += '[View Source Code]({0}{1}#L{2}-{3})'.
-      replace('{0}', _.homepage()).
+      replace('{0}', exports.homepage()).
       replace('{1}', file).
       replace('{2}', comments[i].start.line).
       replace('{3}', comments[i].end.line);

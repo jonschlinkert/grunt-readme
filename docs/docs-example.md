@@ -23,4 +23,4 @@ When you first add grunt-readme to a project, the task will automatically add a 
 
 Then add `overview.md`, `options.md` and `examples.md` to the `./docs` directory. Of course, all of this is completely optional.
 
-Visit the [full documentation →](./DOCS.md) | [See examples →](./EXAMPLES.md)
+Visit the [full documentation →](./DOCS.md) | [See examples →](./DOCS.md#examples)

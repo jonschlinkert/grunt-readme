@@ -6,7 +6,7 @@ org: assemble
 
 > {%= description %}
 
-[Documentation →](./DOCS.md) | [Examples →](./EXAMPLES.md)
+[Documentation →](./DOCS.md) | [Examples →](./DOCS.md#examples)
 
 Please [report any bugs or feature requests](https://github.com/{%= org %}/{%= name %}/issues/new), thanks!
 
