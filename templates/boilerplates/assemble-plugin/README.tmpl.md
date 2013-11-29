@@ -2,19 +2,23 @@
 
 > {%= description %}
 
-# Quickstart
+## Quickstart
 {%= _.doc("quickstart.md") %}
 
-# Examples
+## Options
+{%= _.doc("options.md") %}
+
+## Usage Examples
 {%= _.doc("examples.md") %}
 
 ## Contributing
 {%= _.contrib("contributing.md") %}
 
-## Related projects
+## Assemble plugins
 {%= _.include("related-repos.md") %}
+Visit [assemble.io/plugins](http:/assemble.io/plugins/) for more information about [Assemble](http:/assemble.io/) plugins.
 
-## Author
+## Authors
 {%= _.contrib("authors.md") %}
 
 ## License
