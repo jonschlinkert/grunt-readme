@@ -28,6 +28,7 @@ module.exports = function(grunt) {
 
   // Local utils
   var Utils = require('./lib/utils');
+
   _.mixin(require('./lib/mixins'));
   _.mixin(require('./lib/badges'));
 
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
      * options.metadata
      * @type {Object}
      */
-    var metadata = Utils.optionsDataFormatFactory(options.metadata);
+    var metadata = Utils.readOptionsData(options.metadata);
     grunt.verbose.ok('README metadata:'.yellow, metadata);
 
     /**

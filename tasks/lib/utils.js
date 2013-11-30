@@ -25,7 +25,13 @@ exports.meta = function (key, obj) {
 };
 
 
-exports.dataFileReaderFactory = function(filepath) {
+/**
+ * Data file reader factory
+ * Automatically determines the reader based on extension.
+ * Use instead of grunt.file.readJSON or grunt.file.readYAML
+ */
+
+exports.readData = function(filepath) {
   var ext = path.extname(filepath);
   var reader = grunt.file.readJSON;
   switch(ext) {
@@ -43,10 +49,17 @@ exports.dataFileReaderFactory = function(filepath) {
 };
 
 
-exports.optionsDataFormatFactory = function(data) {
+/**
+ * Data format reader factory (see ./docs/methods.md)
+ * Reads in data from a string, object or array
+ * Enables all of the following configs to work in task options:
+ * (basically throw any data config format and it 'should' work)
+ */
+
+exports.readOptionsData = function(data) {
   var metadata;
   if (_.isString(data) || _.isArray(data)) {
-
+    data = Array.isArray(data) ? data : [data];
     data.map(function(val) {
       grunt.verbose.ok('Type:'.yellow, grunt.util.kindOf(val));
       // Skip empty data files to avoid compiler errors
@@ -56,7 +69,7 @@ exports.optionsDataFormatFactory = function(data) {
           if (checkForContent.length === 0 || checkForContent === '') {
             grunt.verbose.warn('Skipping empty path:'.yellow, val);
           } else {
-            var parsedData = exports.dataFileReaderFactory(filepath);
+            var parsedData = exports.readData(filepath);
             metadata = grunt.config.process(_.extend({}, metadata, parsedData));
             grunt.verbose.ok('metadata:'.yellow, metadata);
           }
@@ -75,6 +88,10 @@ exports.optionsDataFormatFactory = function(data) {
   return metadata;
 };
 
+
+/**
+ * Compile Lo-Dash templates
+ */
 
 exports.compileTmpl = function (src, options, fn) {
   options = options || {};
