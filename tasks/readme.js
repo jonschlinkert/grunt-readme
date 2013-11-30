@@ -249,7 +249,7 @@ module.exports = function(grunt) {
     if(options.html) {
       meta.content = marked(newReadme);
       meta.content = meta.content.replace(/\{%=/g, '[%=').replace(/%}/g, '%]');
-      var layout = grunt.file.read(templates('html/layout.html'));
+      var layout =  grunt.file.read(options.layout || templates('html/layout.tmpl'));
       var html = Utils.compileTmpl(layout, tmplConfig, Utils.frep);
       grunt.file.write(options.html, html);
     }

@@ -1,4 +1,4 @@
-# {%= name %} [![NPM version](https://badge.fury.io/js/{%= name %}.png)](http://badge.fury.io/js/{%= name %}) {% if (travis) { %} [![Build Status]({%= travis %}.png)]({%= travis %}){% } %}
+# {%= name %} {%= _.badge("fury") %}
 
 > {%= description %}
 
@@ -15,8 +15,7 @@
 {%= _.contrib("contributing.md") %}
 
 ## Assemble plugins
-{%= _.include("related-repos.md") %}
-Visit [assemble.io/plugins](http:/assemble.io/plugins/) for more information about [Assemble](http:/assemble.io/) plugins.
+{%= _.include("related-repos-list.md") %}
 
 ## Authors
 {%= _.contrib("authors.md") %}

@@ -407,8 +407,15 @@ grunt.initConfig({
 ```
 
 
+***
+
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][].
+Find a bug? Have a feature request? Please [create an Issue](https://github.com/assemble/grunt-readme/issues).
+
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][], and build the documentation with [grunt-readme](https://github.com/assemble/grunt-readme).
+
+Pull requests are also encouraged, and if you find this project useful please consider "starring" it to show your support! Thanks!
+
 
 ## Release History
 
@@ -421,26 +428,19 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
  * 2013-09-19   v0.1.0   First commmit.
 
 
-## Related projects
-Here are some related projects you might be interested in from the [Assemble](http://assemble.io) core team.  
+## Other Grunt tasks
++ [assemble](http://assemble.io): Static site generator for Grunt.js, Yeoman and Node.js. Used by H5BP/Effeckt, Topcoat, Web Experience Toolkit, and hundreds of other projects to build sites, themes, components, documentation, blogs and gh-pages.
+Here are some related projects you might be interested in from the [Assemble](http://assemble.io) core team.
 
-#### [grunt-convert](https://github.com/assemble/grunt-convert) [![NPM version](https://badge.fury.io/js/grunt-convert.png)](http://badge.fury.io/js/grunt-convert)
-> Grunt task to convert to or from JSON, YAML, XML, PLIST or CSV.  
++ [grunt-convert](https://github.com/assemble/grunt-convert): Grunt task to convert to or from JSON, YAML, XML, PLIST or CSV. 
++ [grunt-firebase](https://github.com/assemble/grunt-firebase): Grunt task for updating firebase data. 
++ [grunt-github-api](https://github.com/assemble/grunt-github-api): Grunt plugin used to query the Github API and save the returned JSON files locally. 
++ [grunt-matter](https://github.com/assemble/grunt-matter): Add, extend, sort, and strip YAML front matter. Also has options for populating randomized mock data. 
++ [grunt-repos](https://github.com/assemble/grunt-repos): Use Grunt to pull down a list of repos from GitHub. 
++ [grunt-toc](https://github.com/assemble/grunt-toc): Grunt plugin for generating a markdown Table of Contents (TOC). 
 
-#### [grunt-firebase](https://github.com/assemble/grunt-firebase) [![NPM version](https://badge.fury.io/js/grunt-firebase.png)](http://badge.fury.io/js/grunt-firebase)
-> Grunt task for updating firebase data.  
+Visit [assemble.io/plugins](http:/assemble.io/plugins/) for more information about [Assemble](http:/assemble.io/) plugins.
 
-#### [grunt-github-api](https://github.com/assemble/grunt-github-api) [![NPM version](https://badge.fury.io/js/grunt-github-api.png)](http://badge.fury.io/js/grunt-github-api)
-> Grunt plugin used to query the Github API and save the returned JSON files locally.  
-
-#### [grunt-matter](https://github.com/assemble/grunt-matter) [![NPM version](https://badge.fury.io/js/grunt-matter.png)](http://badge.fury.io/js/grunt-matter)
-> Add, extend, sort, and strip YAML front matter. Also has options for populating randomized mock data.  
-
-#### [grunt-repos](https://github.com/assemble/grunt-repos) [![NPM version](https://badge.fury.io/js/grunt-repos.png)](http://badge.fury.io/js/grunt-repos)
-> Use Grunt to pull down a list of repos from GitHub.  
-
-#### [grunt-toc](https://github.com/assemble/grunt-toc) [![NPM version](https://badge.fury.io/js/grunt-toc.png)](http://badge.fury.io/js/grunt-toc)
-> Grunt plugin for generating a markdown Table of Contents (TOC). 
 
 
 ## Authors

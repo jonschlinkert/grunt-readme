@@ -17,3 +17,5 @@ Here are some related projects you might be interested in from the [Assemble](ht
 
 ### [grunt-toc](https://github.com/assemble/grunt-toc) [![NPM version](https://badge.fury.io/js/grunt-toc.png)](http://badge.fury.io/js/grunt-toc)
 > Grunt plugin for generating a markdown Table of Contents (TOC). 
+
+Visit [assemble.io/plugins](http:/assemble.io/plugins/) for more information about [Assemble](http:/assemble.io/) plugins.
