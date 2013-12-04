@@ -14,12 +14,6 @@
 ## Contributing
 {%= _.include("docs-contributing.md") %}
 
-## Related Projects
-{%= _.include("related-repos.md") %}
-
-## Contributing
-{%= _.contrib("contributing.md") %}
-
 ## Authors
 {%= _.contrib("authors.md") %}
 
