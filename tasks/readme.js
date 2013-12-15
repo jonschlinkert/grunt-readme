@@ -116,6 +116,18 @@ module.exports = function(grunt) {
     var docs = options.docs;
 
 
+    if(!_.isEmpty(options.boilerplate)) {
+      var boilerplate = root(path.join('templates', 'boilerplates'))(options.boilerplate);
+
+      if(grunt.file.isDir(boilerplate)) {
+        grunt.file.recurse(boilerplate, function(filepath, rootdir, subdir, filename) {
+          if(!grunt.file.exists(docs(filename))) {
+            grunt.file.copy(filepath, docs(filename));
+          }
+        });
+      }
+    }
+
     /**
      * README template used to create README.md. Unless a template
      * is defined in the task options, a start template from
@@ -274,7 +286,6 @@ module.exports = function(grunt) {
     if (this.errorCount > 0) {return false;}
   });
 
-
   var bind = function(filepath) {
     return path.join.bind(null, filepath, '');
   };
@@ -283,4 +294,6 @@ module.exports = function(grunt) {
   var root = function(filepath) {
     return path.join.bind(null, __dirname, '../', filepath);
   };
+
 };
+
