@@ -69,21 +69,21 @@
      *   }
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L119-128)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L131-140)
 
 ```js
 /**
      * TRAVIS
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L181-183)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L193-195)
 
 ```js
 /**
      * CHANGELOG
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L191-193)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L203-205)
 
 ```js
 /**
@@ -91,14 +91,14 @@
      * Copy contributing guide from templates.
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L201-204)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L213-216)
 
 ```js
 /**
      * AUTHORS
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L212-214)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L224-226)
 
 ```js
 /**
@@ -106,18 +106,18 @@
      * @usage: 
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L225-228)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L237-240)
 
 ```js
 /**
      * Generalized template configuration
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L232-234)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L244-246)
 
 ```js
 /**
      * Generate README
      */
 ```
-[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L241-243)
+[View Source Code](https://github.com/assemble/grunt-readme/tasks/readme.js#L253-255)
