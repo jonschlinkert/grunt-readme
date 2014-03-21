@@ -1,6 +1,6 @@
 # DEPRECATED. Please use [Verb](https://github.com/assemble/verb) instead.
 
-grunt-readme was pretty useful, but it was buggy and limited in scope to be worth _really_ digging in and making it awesome. 
+grunt-readme was pretty useful, but it was buggy and too limited in scope to be worth _really_ digging in and making it awesome. 
 
 [Verb](https://github.com/assemble/verb) is a new project that, while sharing the same roots and inspiration as grunt-reamde, is far more powerful, flexible and can be used globally from the command line.
 
